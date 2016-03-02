@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.settings.modify.ModifyActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_press_white">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/layout_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            android:background="@color/item_color"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="当前帐号"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/modify_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="48dp"
+                android:text="138****1369"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:background="@color/item_color"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="当前密码"
+                android:textSize="16sp"/>
+            <EditText
+                android:id="@+id/modify_old_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="48dp"
+                android:textSize="16sp"
+                android:background="@null"
+                style="?android:attr/textViewStyle"/>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+    
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            android:background="@color/item_color"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="新密码"
+                android:textSize="16sp"/>
+            <EditText
+                android:id="@+id/modify_new_pwd1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="64dp"
+                android:textSize="16sp"
+                android:background="@null"
+                style="?android:attr/textViewStyle"/>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+        <LinearLayout
+            android:id="@+id/ll_phone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:background="@color/item_color"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/setting_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="确认密码"
+                android:textSize="16sp"/>
+            <EditText
+                android:id="@+id/modify_new_pwd2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="48dp"
+                android:textSize="16sp"
+                android:background="@null"
+                style="?android:attr/textViewStyle"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/modify_btn"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginLeft="88dp"
+            android:layout_marginRight="88dp"
+            android:background="@drawable/btn_selector"
+            android:text="确认更改"
+            android:textSize="20sp"
+            android:textColor="@color/color_login_white">
+
+        </Button>
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
