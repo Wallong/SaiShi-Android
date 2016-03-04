@@ -8,6 +8,7 @@ import java.util.List;
 
 import cn.edu.twt.saishi_android.api.ApiClient;
 import cn.edu.twt.saishi_android.bean.DataItem;
+import cn.edu.twt.saishi_android.bean.ImageInfo;
 import cn.edu.twt.saishi_android.support.LogHelper;
 import cn.edu.twt.saishi_android.ui.main.list.OnGetDataItemsCallback;
 import cz.msebera.android.httpclient.Header;
@@ -23,25 +24,48 @@ public class DataInteractorImpl implements DataInteractor {
         ApiClient.getData(type, page, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                LogHelper.v(LOG_TAG, responseString.toString());
+
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Gson gson = new Gson();
-                DataItem [] dataItems = null;
-                LogHelper.v(LOG_TAG, responseString.toString());
                 boolean res = responseString.contains("result_code");
                 if(res){
-                    onGetDataItemsCallback.onFailure("请登录");
+                    onGetDataItemsCallback.onFailure("请重新登录");
                 }else{
+                    Gson gson = new Gson();
+                    DataItem [] dataItems = null;
+                    LogHelper.v(LOG_TAG, responseString.toString());
                     dataItems = gson.fromJson(responseString, DataItem[].class);
                     List<DataItem> datum = null;
                     if(!(dataItems == null)){
                         datum = Arrays.asList(dataItems);
                     }
-                    LogHelper.v(LOG_TAG, datum==null?"":datum.toString());
-                    onGetDataItemsCallback.onSuccess(datum);
+                    if(datum != null) {
+                        for (int i = (datum.get(0) == null ? 1 : 0); i < datum.size(); i++) {
+                            ApiClient.getImage(datum.get(i).icon, new TextHttpResponseHandler() {
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                    onGetDataItemsCallback.onSuccess(null, null);
+                                }
+
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                                    LogHelper.e(LOG_TAG, "居然成功了" + responseString);
+                                    Gson gson1 = new Gson();
+                                    if (responseString.contains("url")) {
+                                        ImageInfo imageInfo = gson1.fromJson(responseString, ImageInfo.class);
+                                        onGetDataItemsCallback.onSuccess(null, imageInfo);
+                                    } else {
+                                        onGetDataItemsCallback.onSuccess(null, null);
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+                    LogHelper.e(LOG_TAG, datum == null ? "" : datum.toString());
+                    onGetDataItemsCallback.onSuccess(datum, null);
                 }
             }
         });

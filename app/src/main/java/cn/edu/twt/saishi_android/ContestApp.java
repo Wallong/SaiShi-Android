@@ -45,14 +45,6 @@ public class ContestApp extends Application {
         return objectGraph.plus(modules);
     }
 
-    public static boolean isAppLunched() {
-        return sIsAppLunched;
-    }
-
-    public static void setAppLunchState(Boolean argState) {
-        sIsAppLunched = argState;
-    }
-
     private void initImageLoader(Context context) {
         File cacheDir = StorageUtils.getCacheDirectory(context);
 /*        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(

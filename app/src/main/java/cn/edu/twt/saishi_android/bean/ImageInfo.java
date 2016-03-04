@@ -5,6 +5,10 @@ package cn.edu.twt.saishi_android.bean;
  */
 public class ImageInfo {
 
+    public String result_code;
+
+    public String msg;
+
     public String id;
 
     public String createtime;

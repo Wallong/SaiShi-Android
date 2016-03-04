@@ -3,6 +3,9 @@ package cn.edu.twt.saishi_android.support;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import cn.edu.twt.saishi_android.ContestApp;
 import cn.edu.twt.saishi_android.bean.UserInfo;
 
@@ -28,6 +31,10 @@ public class PrefUtils {
 
     private static final String PREF_ICON_URL = "iconurl";
 
+    private static final String PREF_FILE_URL_JSON = "fileurl";
+
+    private static final String PREF_PASSWORD = "password";
+
     public static SharedPreferences getDefaultSharedPreferences() {
         return PreferenceManager.getDefaultSharedPreferences(ContestApp.getContext());
     }
@@ -40,7 +47,16 @@ public class PrefUtils {
                 .putString(PREF_DANWEI, userInfo.danwei)
                 .putString(PREF_ICON, userInfo.icon)
                 .putString(PREF_USERNAME, userInfo.username)
+                .putString(PREF_PASSWORD, userInfo.password)
                 .apply();
+    }
+
+    public static void setDefaultPrefFileUrlJson(String json){
+        getDefaultSharedPreferences().edit().putString(PREF_FILE_URL_JSON, json).apply();
+    }
+
+    public static String getPrefFileUrlJson() {
+        return getDefaultSharedPreferences().getString(PREF_FILE_URL_JSON, null);
     }
 
     public static void setDefaultPrefUserIcon(String iconUrl){
@@ -53,6 +69,14 @@ public class PrefUtils {
 
     public static void setLogin(boolean isLogin){
         getDefaultSharedPreferences().edit().putBoolean(PREF_IS_LOGIN, isLogin).apply();
+    }
+
+    public static String getPrefPassword(){
+        return getDefaultSharedPreferences().getString(PREF_PASSWORD, null);
+    }
+
+    public static void setPrePassword(String password){
+        getDefaultSharedPreferences().edit().putString(PREF_PASSWORD, password).apply();
     }
 
     public static String getToken() {
@@ -90,4 +114,5 @@ public class PrefUtils {
     public static String getPrefIconUrl() {
         return getDefaultSharedPreferences().getString(PREF_ICON_URL, null);
     }
+
 }

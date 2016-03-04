@@ -2,21 +2,32 @@ package cn.edu.twt.saishi_android.ui.file;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.media.Image;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.TreeSet;
 
 import cn.edu.twt.saishi_android.R;
 import cn.edu.twt.saishi_android.bean.FileInfo;
+import cn.edu.twt.saishi_android.bean.FileUrl;
 import cn.edu.twt.saishi_android.interactor.FileInteractor;
 import cn.edu.twt.saishi_android.support.LogHelper;
 import cn.edu.twt.saishi_android.support.MIMETypeUtils;
+import cn.edu.twt.saishi_android.support.NetWorkHelper;
+import cn.edu.twt.saishi_android.support.PrefUtils;
+import cn.edu.twt.saishi_android.support.StringUtils;
 
 /**
  * Created by clifton on 16-2-28.
@@ -34,7 +45,8 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback, OnGe
 
     private boolean isLoadMore = false;
     private boolean isFirstTimeLoad = true;
-//    private int page = 1;
+    private String fileId;
+    private FileInfo fileInfo;
 
     private boolean isRefreshing = false;
 
@@ -53,7 +65,22 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback, OnGe
     }
 
     private void getFileItems() {
-        this._fileInteractor.getFileItems(this);
+        SQLiteDatabase db = _fileView.getCacheDbHelper().getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from CacheList where date = " + Integer.MAX_VALUE, null);
+        if (cursor.moveToFirst()) {
+            String json = cursor.getString(cursor.getColumnIndex("json"));
+            Gson gson = new Gson();
+            FileInfo[] items = gson.fromJson(json, FileInfo[].class);
+            List<FileInfo> fileInfos = Arrays.asList(items);
+
+            handlItems(fileInfos);
+        }
+        if(NetWorkHelper.isOnline()) {
+            this._fileInteractor.getFileItems(this);
+        }else{
+            _fileView.toastMessage("网络未连接");
+            this._fileView.stopRefresh();
+        }
     }
 
     @Override
@@ -75,13 +102,53 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback, OnGe
 
     @Override
     public void onItemClicked(View v, int position) {
+        fileInfo = FileAdapter._FileSet.get(position);
+        fileId = fileInfo.file;
+        Gson gson = new Gson();
+        if(PrefUtils.getPrefFileUrlJson() != null && PrefUtils.getPrefFileUrlJson().contains("[")){
+            FileUrl[] urls = gson.fromJson(PrefUtils.getPrefFileUrlJson(), FileUrl[].class);
+            List<FileUrl> fileList = new ArrayList<>();
+            Collections.addAll(fileList, urls);
+            for(int i = 0; i < fileList.size(); i++){
+                if(fileList.get(i).id.equals(fileId)){
+                    String path = makedirs().toString() + File.separator
+                            + StringUtils.cutString(fileList.get(i).url, 4);
+                    File file = new File(path);
+                    LogHelper.e(LOG_TAG, file.toString());
+                    if(fileIsExists(file)){
+                        openFile(file);
+                    }else {
+                        doFile(v, position);
+                    }
+                }
+            }
+        }else {
+            doFile(v, position);
+        }
 
-        imageView = (ImageView)v.findViewById(R.id.iv_download);
+    }
+
+    private void doFile(View v, int position){
+        if(!NetWorkHelper.isOnline()){
+            _fileView.toastMessage("网络未连接");
+            return;
+        }
+        imageView = (ImageView) v.findViewById(R.id.iv_download);
         _fileView.showProgressBar();
         _fileView.downFile(position);
         LogHelper.v(LOG_TAG, "文件已经下载");
+    }
 
 
+    private boolean fileIsExists(File file){
+        try{
+            if(!file.exists()){
+                return false;
+            }
+        }catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -97,16 +164,86 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback, OnGe
                 LogHelper.v(LOG_TAG, "创建目录失败");
                 return null;
             } else{
-                LogHelper.v(LOG_TAG, "创建目录成功");
+                LogHelper.v(LOG_TAG, "创建目录成功" + fileStorageDir.toString());
             }
         }
         return fileStorageDir;
     }
 
     @Override
-    public void onSuccess(List<FileInfo> fileInfos) {
+    public void onSuccess(List<FileInfo> fileInfos, String responseString) {
         this._fileView.stopRefresh();
 
+        SQLiteDatabase db = _fileView.getCacheDbHelper().getWritableDatabase();
+        db.execSQL("replace into CacheList(date,json) values(" + Integer.MAX_VALUE + ",' " + responseString + "')");
+        db.close();
+
+        handlItems(fileInfos);
+    }
+
+    @Override
+    public void onSuccess(File file,FileUrl fileUrl) {
+        if(!(file == null)) {
+            _fileView.hideProgressBar();
+            imageView.setImageResource(R.drawable.ic_downloaded);
+
+            openFile(file);
+        }else if(!(fileUrl == null)){
+            LogHelper.e(LOG_TAG, "此处记录开始");
+            String strJson = "";
+            String strJsons = PrefUtils.getPrefFileUrlJson();
+            Gson gson = new Gson();
+            if(PrefUtils.getPrefFileUrlJson() == null) {
+                strJson = "[" + gson.toJson(fileUrl) + "]";
+                LogHelper.e(LOG_TAG, "此处记录中...1");
+            }else {
+                FileUrl[] urls = gson.fromJson(PrefUtils.getPrefFileUrlJson(), FileUrl[].class);
+                List<FileUrl> fileList = new ArrayList<>();
+                Collections.addAll(fileList, urls);
+                fileList.add(fileUrl);
+                strJsons = strJsons.substring(1,strJsons.length()-1);
+                for(int i =1; i<fileList.size(); i++){
+                    strJsons = strJsons + "," + gson.toJson(fileList.get(i));
+                }
+                strJson = "[" + strJsons + "]";
+                LogHelper.e(LOG_TAG, "此处记录中...2");
+
+            }
+            PrefUtils.setDefaultPrefFileUrlJson(strJson);
+            LogHelper.e(LOG_TAG, "此处记录结束");
+        }
+    }
+
+    @Override
+    public void onFailure(String errorString) {
+        if(errorString.equals("请重新登录")) {
+            _fileView.startLoginActivity();
+        }
+        _fileView.hideProgressBar();
+        _fileView.toastMessage(errorString);
+
+    }
+
+    private void openFile(File file){
+        Uri path1 = Uri.fromFile(file);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        //设置intent的Action属性
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //获取文件file的MIME类型
+        String type = MIMETypeUtils.getMIMEType(file);
+        //设置intent的data和Type属性。
+        intent.setDataAndType(path1, type);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        try {
+            _fileView.startActivity(intent);
+        }
+        catch (ActivityNotFoundException e) {
+            _fileView.toastMessage("没有可以打开该文件的应用");
+        }
+    }
+
+    private void handlItems(List<FileInfo> fileInfos){
         if(fileInfos != null){
             List<FileInfo> items = fileInfos;
             if(isLoadMore) {
@@ -126,38 +263,5 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback, OnGe
         }
         isLoadMore = false;
         isRefreshing = false;
-    }
-
-    @Override
-    public void onSuccess(File file) {
-        _fileView.hideProgressBar();
-        imageView.setImageResource(R.drawable.ic_downloaded);
-        _fileView.startContentActivity(file);
-
-        LogHelper.e(LOG_TAG, file.toString());
-
-        Uri path1 = Uri.fromFile(file);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        //设置intent的Action属性
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //获取文件file的MIME类型
-        String type = MIMETypeUtils.getMIMEType(file);
-        //设置intent的data和Type属性。
-        intent.setDataAndType(path1, type);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        try {
-            _fileView.startActivity(intent);
-        }
-        catch (ActivityNotFoundException e) {
-            System.out.println("打开失败");
-        }
-
-    }
-
-    @Override
-    public void onFailure(String errorString) {
-        _fileView.hideProgressBar();
-        _fileView.toastMessage(errorString);
     }
 }

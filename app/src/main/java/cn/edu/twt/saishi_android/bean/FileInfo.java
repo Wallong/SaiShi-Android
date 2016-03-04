@@ -18,4 +18,10 @@ public class FileInfo implements Serializable {
     public String file;
 
     public String type;
+
+    public String tag;
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 }

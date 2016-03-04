@@ -25,4 +25,6 @@ public interface DataListView {
     void showFooter();
 
     void hideFooter();
+
+    void notifySomething();
 }

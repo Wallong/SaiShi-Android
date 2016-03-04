@@ -2,6 +2,7 @@ package cn.edu.twt.saishi_android.ui.main;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.TreeSet;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,7 +24,7 @@ import cn.edu.twt.saishi_android.ui.common.ImageHelper;
 import cn.edu.twt.saishi_android.ui.common.OnGetImageCallback;
 import cn.edu.twt.saishi_android.ui.file.FileFragment;
 import cn.edu.twt.saishi_android.ui.main.list.DataFragment;
-import cn.edu.twt.saishi_android.ui.schedule.ScheduleActivity;
+import cn.edu.twt.saishi_android.ui.schedule.ScheduleFragment;
 import cn.edu.twt.saishi_android.ui.settings.SettingsActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -29,6 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by clifton on 16-2-28.
  */
 public class MenuFragment extends Fragment implements View.OnClickListener, OnGetImageCallback {
+    private static final String LOG_TAG = MenuFragment.class.getSimpleName();
 
     @Bind(R.id.nav_settings)
     TextView mTvSettings;
@@ -56,9 +60,16 @@ public class MenuFragment extends Fragment implements View.OnClickListener, OnGe
     private final static String HUIWU = "Huiwu";
     private final static String DONGTAI = "Dongtai";
     private final static String TONGZHI = "Tongzhi";
+    private final static String RICHENG = "Richeng";
+    private int tag = 0;
+    private int tagg = 0;
+    private TreeSet<Integer> tags = new TreeSet<>();
 
     private Activity mActivity;
-    private DataFragment dataFragment;
+    private DataFragment dataFragment_one;
+    private DataFragment dataFragment_two;
+    private DataFragment dataFragment_three;
+    private ScheduleFragment scheduleFragment;
     private FileFragment fileFragment;
     private Fragment fragment = null;
 
@@ -72,7 +83,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, OnGe
         tv_name.setText(PrefUtils.getPrefUsername());
         tv_profile_username.setText("帐号:" + PrefUtils.getPrefPhone());
         tv_profile_phone.setText("电话:" + PrefUtils.getPrefPhone());
-        tv_profile_position.setText("单位职务:" + PrefUtils.getPrefDanwei() + PrefUtils.getPrefZhiwu());
+        tv_profile_position.setText("单位:" + PrefUtils.getPrefDanwei());
         ImageHelper.downLoadImage(PrefUtils.getPrefIcon(), this);
 
         mTvSettings.setOnClickListener(this);
@@ -81,6 +92,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener, OnGe
         mTvSchedule.setOnClickListener(this);
         mTvFile.setOnClickListener(this);
         mTvConference.setOnClickListener(this);
+
+
 
         return view;
     }
@@ -105,60 +118,137 @@ public class MenuFragment extends Fragment implements View.OnClickListener, OnGe
                 break;
             case R.id.nav_notice:
                 type = TONGZHI;
+                tagg = 1;
                 intiFragment(type);
+                tag = 1;
                 break;
             case R.id.nav_explore:
                 type = DONGTAI;
+                tagg = 2;
                 intiFragment(type);
+                tag = 2;
                 break;
             case R.id.nav_schedule:
-                ((MainActivity)mActivity).closeMenu();
-                intent = new Intent(this.getActivity(), ScheduleActivity.class);
-                startActivity(intent);
+                if(scheduleFragment == null){
+                    scheduleFragment = new ScheduleFragment();
+                    LogHelper.e(LOG_TAG, "这是初始化日程" + tag);
+                }
+                fragment = scheduleFragment;
+                ((MainActivity)mActivity).setToolbar("日程");
+                tagg = 3;
+                changeFragment(fragment);
+                tag = 3;
                 break;
             case R.id.nav_file:
-                fileFragment = FileFragment.getInstance();
-                ((MainActivity)mActivity).closeMenu();
+                if(fileFragment == null){
+                    fileFragment = FileFragment.getInstance();
+                    fragment = fileFragment;
+                }
                 fragment = fileFragment;
+                ((MainActivity)mActivity).setToolbar("文件");
+                LogHelper.e(LOG_TAG, "这里是文件fragment2");
+                tagg = 4;
                 changeFragment(fragment);
+                tag = 4;
                 break;
             case R.id.nav_conference:
                 type = HUIWU;
+                tagg = 5;
                 intiFragment(type);
+                tag = 5;
                 break;
         }
+        tags.add(tag);
 
     }
 
     private void intiFragment(String type){
-        dataFragment = DataFragment.getInstance(type);
+
         switch (type){
             case TONGZHI:
                 ((MainActivity)mActivity).setToolbar("通知");
+                if(dataFragment_one == null){
+                    dataFragment_one = DataFragment.getInstance(type);
+                }
+                changeFragment(dataFragment_one);
                 break;
             case DONGTAI:
                 ((MainActivity)mActivity).setToolbar("动态");
+                if(dataFragment_two == null){
+                    dataFragment_two = DataFragment.getInstance(type);
+                }
+                changeFragment(dataFragment_two);
                 break;
             case HUIWU:
                 ((MainActivity)mActivity).setToolbar("会务");
+                if(dataFragment_three == null){
+                    dataFragment_three = DataFragment.getInstance(type);
+                }
+                changeFragment(dataFragment_three);
                 break;
         }
         ((MainActivity)mActivity).closeMenu();
-        fragment = dataFragment;
-        changeFragment(fragment);
     }
     private void changeFragment(Fragment fragment){
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fl_content,
-                        fragment).commit();
+        if(tags.contains(tagg)){
+            replaceFragment(fragment);
+        }else {
+            addFragment(fragment);
+        }
         ((MainActivity)mActivity).closeMenu();
+    }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        switch (tag){
+            case 1:
+                transaction.hide(dataFragment_one).show(fragment).commit();
+                break;
+            case 2:
+                transaction.hide(dataFragment_two).show(fragment).commit();
+                break;
+            case 3:
+                transaction.hide(scheduleFragment).show(fragment).commit();
+                break;
+            case 4:
+                transaction.hide(fileFragment).show(fragment).commit();
+                break;
+            case 5:
+                transaction.hide(dataFragment_three).show(fragment).commit();
+                break;
+            default:
+                transaction.add(R.id.fl_content, fragment).commit();
+                break;
+        }
+    }
+
+    private void addFragment(Fragment fragment){
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        switch (tag){
+            case 1:
+                transaction.hide(dataFragment_one).add(R.id.fl_content, fragment).commit();
+                break;
+            case 2:
+                transaction.hide(dataFragment_two).add(R.id.fl_content, fragment).commit();
+                break;
+            case 3:
+                transaction.hide(scheduleFragment).add(R.id.fl_content, fragment).commit();
+                break;
+            case 4:
+                transaction.hide(fileFragment).add(R.id.fl_content, fragment).commit();
+                break;
+            case 5:
+                transaction.hide(dataFragment_three).add(R.id.fl_content, fragment).commit();
+                break;
+            default:
+                transaction.add(R.id.fl_content, fragment).commit();
+                break;
+        }
     }
 
     @Override
     public void onSuccess(ImageInfo imageInfo) {
         PrefUtils.setDefaultPrefUserIcon(imageInfo.url);
-
         ImageHelper.getImageLoder().displayImage(
                 ApiClient.getBaseUrl() + imageInfo.url,
                 iv_profile_icon, ImageHelper.getDisplayImageOptions());

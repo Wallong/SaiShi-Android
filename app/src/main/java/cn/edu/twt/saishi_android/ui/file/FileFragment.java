@@ -1,5 +1,6 @@
 package cn.edu.twt.saishi_android.ui.file;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,9 +23,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.edu.twt.saishi_android.R;
 import cn.edu.twt.saishi_android.bean.FileInfo;
+import cn.edu.twt.saishi_android.support.CacheDbHelper;
 import cn.edu.twt.saishi_android.support.LogHelper;
+import cn.edu.twt.saishi_android.support.PrefUtils;
 import cn.edu.twt.saishi_android.ui.BaseFragment;
 import cn.edu.twt.saishi_android.ui.common.OnItemClickListener;
+import cn.edu.twt.saishi_android.ui.login.LoginActivity;
+import cn.edu.twt.saishi_android.ui.main.MainActivity;
 
 /**
  * Created by clifton on 16-2-28.
@@ -105,6 +110,12 @@ public class FileFragment extends BaseFragment implements FileView, SwipeRefresh
     }
 
     @Override
+    public void startLoginActivity() {
+        Intent intent = new Intent(this.getActivity(), LoginActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void startRefresh() {
         if(!_swipeRefreshLayout.isRefreshing()){
             _swipeRefreshLayout.setRefreshing(true);
@@ -137,19 +148,15 @@ public class FileFragment extends BaseFragment implements FileView, SwipeRefresh
     }
 
 
-
-    @Override
-    public void startContentActivity(File file) {
-        LogHelper.v(LOG_TAG, "startContentActivity");
-//        Intent intent = new Intent(this.getActivity(),ContentActivity.class);
-//        intent.putExtra("bean", dataItem);
-//        startActivity(intent);
-    }
-
     @Override
     public void downFile(int position){
         fileInfo = _fileAdapter.getItem(position);
         _filePresenter.downloadFile(fileInfo.file);
+    }
+
+    @Override
+    public CacheDbHelper getCacheDbHelper() {
+        return ((MainActivity)this.getActivity()).getDbHelper();
     }
 
     @Override

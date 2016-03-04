@@ -12,13 +12,11 @@ import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.edu.twt.saishi_android.ContestApp;
 import cn.edu.twt.saishi_android.R;
-import cn.edu.twt.saishi_android.bean.ImageInfo;
+import cn.edu.twt.saishi_android.support.CacheDbHelper;
 import cn.edu.twt.saishi_android.support.ExitApplication;
-import cn.edu.twt.saishi_android.support.PrefUtils;
-import cn.edu.twt.saishi_android.ui.common.ImageHelper;
-import cn.edu.twt.saishi_android.ui.main.list.DataFragment;
+import cn.edu.twt.saishi_android.support.NetWorkHelper;
+import cn.edu.twt.saishi_android.ui.schedule.ScheduleFragment;
 
 public class MainActivity extends AppCompatActivity
         implements MainView{
@@ -30,28 +28,34 @@ public class MainActivity extends AppCompatActivity
 
     private long firstTime;
     private Toolbar toolbar;
+    private CacheDbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        ContestApp.setAppLunchState(true);
         ExitApplication.getInstance().addActivity(this);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        toolbar.setTitle("日程");
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
+        dbHelper = new CacheDbHelper(this, 1);
 
+        getFragmentManager().beginTransaction().commit();
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fl_content, DataFragment.getInstance("Tongzhi")).commit();
+                .replace(R.id.fl_content,
+                        new ScheduleFragment()).commit();
 
+        if(!NetWorkHelper.isOnline()) {
+            toastMessage("网络未连接");
+        }
     }
 
 
@@ -75,6 +79,11 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public CacheDbHelper getDbHelper(){
+        return dbHelper;
+    }
+
+
     @Override
     public void setToolbar(String title) {
         toolbar.setTitle(title);
@@ -97,7 +106,7 @@ public class MainActivity extends AppCompatActivity
                 sb.show();
                 firstTime = secondTime;
             } else {
-                finish();
+                ExitApplication.getInstance().exit();
             }
         }
 

@@ -1,5 +1,6 @@
 package cn.edu.twt.saishi_android.ui.login;
 
+import cn.edu.twt.saishi_android.api.ApiClient;
 import cn.edu.twt.saishi_android.bean.UserInfo;
 import cn.edu.twt.saishi_android.interactor.LoginInteractor;
 import cn.edu.twt.saishi_android.support.NetWorkHelper;
@@ -12,6 +13,7 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginCallback{
 
     private LoginView mLoginView;
     private LoginInteractor mLoginInteractor;
+    private String password;
 
     public LoginPresenterImpl(LoginView loginView, LoginInteractor loginInteractor){
         this.mLoginView = loginView;
@@ -27,10 +29,12 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginCallback{
         }
         mLoginView.showProgressBar();
         mLoginInteractor.login(username, password, this);
+        this.password = password;
     }
 
     @Override
     public void onSuccess(UserInfo userInfo) {
+        userInfo.setPassword(password);
         PrefUtils.setDefaultPrefUserInfo(userInfo);
         PrefUtils.setLogin(true);
         mLoginView.hideProgressBar();
@@ -38,9 +42,19 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginCallback{
     }
 
     @Override
-    public void onFailure(String errorString) {
+    public void onFailure(int errorCode) {
         mLoginView.hideProgressBar();
-        mLoginView.toastMessage(errorString);
+        switch (errorCode){
+            case ApiClient.NO_USER_CODE:
+                mLoginView.usernameError("用户名不存在");
+                break;
+            case ApiClient.PWD_ERROR_CODE:
+                mLoginView.passwordError("密码错误");
+                break;
+            case ApiClient.LOG_IN_FAILURE_CODE:
+                mLoginView.toastMessage("登录失败，请重试");
+                break;
+        }
 
     }
 }

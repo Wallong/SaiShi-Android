@@ -53,7 +53,6 @@ public class DataFragment extends BaseFragment implements DataListView, SwipeRef
 
     public static DataFragment getInstance(String type){
         DataFragment dataFragment = new DataFragment();
-        LogHelper.v(LOG_TAG, "new ExploreFragment:" + type);
         Bundle bundle = new Bundle();
         bundle.putString(DataFragment.PARAM_TYPE, type);
         dataFragment.setArguments(bundle);
@@ -76,7 +75,6 @@ public class DataFragment extends BaseFragment implements DataListView, SwipeRef
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        return super.onCreateView(inflater, container, savedInstanceState);
         LogHelper.v(LOG_TAG, "onCreateView" + type);
 
         View rootView = inflater.inflate(R.layout.fragment_data_list, container, false);
@@ -177,5 +175,9 @@ public class DataFragment extends BaseFragment implements DataListView, SwipeRef
     public void onItemClicked(View view, int position) {
         LogHelper.v(LOG_TAG, "get position: "  + position);
         _dataPresenter.onItemClicked(view, position);
+    }
+    @Override
+    public void notifySomething(){
+        _dataAdapter.notifyDataSetChanged();
     }
 }

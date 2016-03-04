@@ -1,12 +1,20 @@
 package cn.edu.twt.saishi_android.ui.settings.modify;
 
+import android.app.AlertDialog;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,14 +26,17 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.edu.twt.saishi_android.R;
+import cn.edu.twt.saishi_android.support.LogHelper;
 import cn.edu.twt.saishi_android.support.PrefUtils;
 import cn.edu.twt.saishi_android.ui.BaseActivity;
+import cn.edu.twt.saishi_android.ui.common.ToastDIY;
 
 /**
  * Created by clifton on 16-2-29.
  */
 public class ModifyActivity extends BaseActivity implements View.OnClickListener, ModifyView {
 
+    private static final String LOG_TAG = ModifyActivity.class.getSimpleName();
 
     @Inject
     ModifyPresenter mModifyPresenter;
@@ -59,8 +70,69 @@ public class ModifyActivity extends BaseActivity implements View.OnClickListener
         });
 
         tv_modify_phone.setText(PrefUtils.getPrefPhone());
-        modify_btn.setOnClickListener(this);
+
+
+        ev_old_pwd.setOnFocusChangeListener(new android.view.View.
+                OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                } else {
+                    // 此处为失去焦点时的处理内容
+                    if (ev_old_pwd.getText().toString().equals(PrefUtils.getPrefPassword())) {
+                        toastMessage("请输入新密码");
+                    } else {
+                        toastMessage("当前密码错误请重新填写");
+                    }
+                }
+            }
+        });
+
+        ev_new_pwd2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (s.toString().equals(ev_new_pwd1.getText().toString())) {
+                    modify_btn.setBackgroundResource(R.drawable.btn_selector);
+                    modify_btn.setOnClickListener(ModifyActivity.this);
+                    LogHelper.e(LOG_TAG, "修改按钮点击属性3");
+                }
+            }
+        });
+        ev_new_pwd1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if(s.toString().equals(ev_new_pwd2.getText().toString())){
+                    modify_btn.setBackgroundResource(R.drawable.btn_selector);
+                    modify_btn.setOnClickListener(ModifyActivity.this);
+                    LogHelper.e(LOG_TAG, "修改按钮点击属性3");
+                }
+            }
+        });
     }
+
 
     @Override
     public void onClick(View v) {
@@ -94,6 +166,13 @@ public class ModifyActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void toastMessage(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        if(msg.equals("密码修改成功")){
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+            PrefUtils.setPrePassword(ev_new_pwd2.getText().toString());
+            this.finish();
+        } else {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

@@ -23,6 +23,12 @@ public class DataItem implements Serializable {
 
     public String subtitle;
 
+    public String url;
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "DataItem{" +

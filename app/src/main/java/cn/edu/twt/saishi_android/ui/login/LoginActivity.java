@@ -93,12 +93,12 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
 
     @Override
     public void usernameError(String errorString) {
-
+        mEtUsername.setError(errorString);
     }
 
     @Override
     public void passwordError(String errorString) {
-
+        mEtPassword.setError(errorString);
     }
 
     @Override

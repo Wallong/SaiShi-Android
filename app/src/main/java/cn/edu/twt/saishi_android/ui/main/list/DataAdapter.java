@@ -1,14 +1,11 @@
 package cn.edu.twt.saishi_android.ui.main.list;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,10 +16,13 @@ import java.util.TreeSet;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.edu.twt.saishi_android.R;
+import cn.edu.twt.saishi_android.api.ApiClient;
 import cn.edu.twt.saishi_android.bean.DataItem;
 import cn.edu.twt.saishi_android.support.LogHelper;
 import cn.edu.twt.saishi_android.support.StringUtils;
+import cn.edu.twt.saishi_android.ui.common.ImageHelper;
 import cn.edu.twt.saishi_android.ui.common.OnItemClickListener;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by clifton on 16-2-27.
@@ -65,6 +65,8 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         TextView _tvSubtitle;
         @Bind(R.id.tv_data_item_time)
         TextView _tvTime;
+        @Bind(R.id.iv_data_item_icon)
+        CircleImageView _ivIcon;
 
 
         public ItemHolder(View itemView){
@@ -83,6 +85,8 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         TextView _tvSubtitle;
         @Bind(R.id.tv_time)
         TextView _tvTopic;
+        @Bind(R.id.iv_data_item_icon_up)
+        CircleImageView _ivIcon;
 
 
         public ItemUpHolder(View itemView){
@@ -103,6 +107,8 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         TextView _tvTime;
         @Bind(R.id.tv_time)
         TextView _tvTopic;
+        @Bind(R.id.iv_data_item_icon)
+        CircleImageView _ivIcon;
 
 
         public ItemBigHolder(View itemView){
@@ -181,53 +187,70 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
         if(getItemViewType(position) == ITEM_VIEW_TYPE_ITEM) {
+            LogHelper.e(LOG_TAG, "小item提供");
             DataItem dataItem = _DataSet.get(position);
             ItemHolder itemHolder = (ItemHolder) holder;
-
             if(!(dataItem == null)) {
+                itemHolder._ivIcon.setVisibility(View.GONE);
                 itemHolder._tvTitle.setText(dataItem.title);
                 itemHolder._tvSubtitle.setText(dataItem.subtitle);
                 itemHolder._tvTime.setText(StringUtils.cutString(dataItem.createtime, 2));
-                itemHolder._tvType.setText("消息");
-                if (dataItem.type.equals(TONGZHI)) {
-                    itemHolder._tvType.setText("通知");
-                } else if (dataItem.type.equals(YIJIAN)) {
-                    itemHolder._tvType.setText("意见");
-                } else if (dataItem.type.equals(BIAOZHUN)) {
-                    itemHolder._tvType.setText("标准");
-                } else if (dataItem.type.equals(DONGTAI)) {
-                    itemHolder._tvType.setText("动态");
-                } else if (dataItem.type.equals(HUIWU)) {
-                    itemHolder._tvType.setText("会务");
+                if(dataItem.url == null) {
+                    itemHolder._tvType.setText("消息");
+                    if (dataItem.type.equals(TONGZHI)) {
+                        itemHolder._tvType.setText("通知");
+                    } else if (dataItem.type.equals(YIJIAN)) {
+                        itemHolder._tvType.setText("意见");
+                    } else if (dataItem.type.equals(BIAOZHUN)) {
+                        itemHolder._tvType.setText("标准");
+                    } else if (dataItem.type.equals(DONGTAI)) {
+                        itemHolder._tvType.setText("动态");
+                    } else if (dataItem.type.equals(HUIWU)) {
+                        itemHolder._tvType.setText("会务");
+                    }
+                } else {
+                    ImageHelper.getImageLoder().displayImage(
+                            ApiClient.getBaseUrl() + dataItem.url,
+                            itemHolder._ivIcon, ImageHelper.getDisplayImageOptions());
+                    itemHolder._ivIcon.setVisibility(View.VISIBLE);
                 }
 
                 ((CardView)(itemHolder._tvTitle.getParent()).getParent()).setOnClickListener(onClickListener);
             }
         } else if (getItemViewType(position) == ITEM_VIEW_TYPE_UP_ITEM){
+            LogHelper.e(LOG_TAG, "大item提供");
             DataItem dataItem = _DataSet.get(position);
             ItemUpHolder itemUpHolder = (ItemUpHolder) holder;
-
 
             if(!(dataItem == null)) {
                 itemUpHolder._tvTitle.setText(dataItem.title);
                 itemUpHolder._tvSubtitle.setText(dataItem.subtitle);
                 itemUpHolder._tvTopic.setText(StringUtils.cutString(dataItem.createtime, 0));
-                itemUpHolder._tvType.setText("消息");
-                if (dataItem.type.equals(TONGZHI)) {
-                    itemUpHolder._tvType.setText("通知");
-                } else if (dataItem.type.equals(YIJIAN)) {
-                    itemUpHolder._tvType.setText("意见");
-                } else if (dataItem.type.equals(BIAOZHUN)) {
-                    itemUpHolder._tvType.setText("标准");
-                } else if (dataItem.type.equals(DONGTAI)) {
-                    itemUpHolder._tvType.setText("动态");
-                } else if (dataItem.type.equals(HUIWU)) {
-                    itemUpHolder._tvType.setText("会务");
+                if(dataItem.url == null) {
+                    itemUpHolder._ivIcon.setVisibility(View.GONE);
+                    itemUpHolder._tvType.setText("消息");
+                    if (dataItem.type.equals(TONGZHI)) {
+                        itemUpHolder._tvType.setText("通知");
+                    } else if (dataItem.type.equals(YIJIAN)) {
+                        itemUpHolder._tvType.setText("意见");
+                    } else if (dataItem.type.equals(BIAOZHUN)) {
+                        itemUpHolder._tvType.setText("标准");
+                    } else if (dataItem.type.equals(DONGTAI)) {
+                        itemUpHolder._tvType.setText("动态");
+                    } else if (dataItem.type.equals(HUIWU)) {
+                        itemUpHolder._tvType.setText("会务");
+                    }
+                }else{
+                    ImageHelper.getImageLoder().displayImage(
+                            ApiClient.getBaseUrl() + dataItem.url,
+                            itemUpHolder._ivIcon, ImageHelper.getDisplayImageOptions());
+                    itemUpHolder._ivIcon.setVisibility(View.VISIBLE);
                 }
 
                 ((CardView) (itemUpHolder._tvTitle.getParent()).getParent()).setOnClickListener(onClickListener);
             }
         } else if (getItemViewType(position) == ITEM_VIEW_TYPE_BIG_ITEM){
+            LogHelper.e(LOG_TAG, "中item提供");
             DataItem dataItem = _DataSet.get(position);
             ItemBigHolder itemBigHolder = (ItemBigHolder) holder;
 
@@ -237,17 +260,25 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 itemBigHolder._tvSubtitle.setText(dataItem.subtitle);
                 itemBigHolder._tvTopic.setText(StringUtils.cutString(dataItem.createtime, 1));
                 itemBigHolder._tvTime.setText(StringUtils.cutString(dataItem.createtime, 2));
-                itemBigHolder._tvType.setText("消息");
-                if (dataItem.type.equals(TONGZHI)) {
-                    itemBigHolder._tvType.setText("通知");
-                } else if (dataItem.type.equals(YIJIAN)) {
-                    itemBigHolder._tvType.setText("意见");
-                } else if (dataItem.type.equals(BIAOZHUN)) {
-                    itemBigHolder._tvType.setText("标准");
-                } else if (dataItem.type.equals(DONGTAI)) {
-                    itemBigHolder._tvType.setText("动态");
-                } else if (dataItem.type.equals(HUIWU)) {
-                    itemBigHolder._tvType.setText("会务");
+                if(dataItem.url == null) {
+                    itemBigHolder._ivIcon.setVisibility(View.GONE);
+                    itemBigHolder._tvType.setText("消息");
+                    if (dataItem.type.equals(TONGZHI)) {
+                        itemBigHolder._tvType.setText("通知");
+                    } else if (dataItem.type.equals(YIJIAN)) {
+                        itemBigHolder._tvType.setText("意见");
+                    } else if (dataItem.type.equals(BIAOZHUN)) {
+                        itemBigHolder._tvType.setText("标准");
+                    } else if (dataItem.type.equals(DONGTAI)) {
+                        itemBigHolder._tvType.setText("动态");
+                    } else if (dataItem.type.equals(HUIWU)) {
+                        itemBigHolder._tvType.setText("会务");
+                    }
+                }else {
+                    ImageHelper.getImageLoder().displayImage(
+                            ApiClient.getBaseUrl() + dataItem.url,
+                            itemBigHolder._ivIcon, ImageHelper.getDisplayImageOptions());
+                    itemBigHolder._ivIcon.setVisibility(View.VISIBLE);
                 }
 
                 ((CardView) (itemBigHolder._tvTitle.getParent()).getParent()).setOnClickListener(onClickListener);

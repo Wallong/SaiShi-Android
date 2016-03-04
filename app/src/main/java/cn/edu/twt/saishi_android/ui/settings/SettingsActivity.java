@@ -78,7 +78,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         tv_name.setText(PrefUtils.getPrefUsername());
         tv_phone.setText("帐号:" + PrefUtils.getPrefPhone());
         tv_setting_phone.setText(PrefUtils.getPrefPhone());
-        tv_position.setText("单位职务:" + PrefUtils.getPrefDanwei() + PrefUtils.getPrefZhiwu());
+        tv_position.setText("单位:" + PrefUtils.getPrefDanwei());
 
         ll_phone.setOnClickListener(this);
         ll_version.setOnClickListener(this);

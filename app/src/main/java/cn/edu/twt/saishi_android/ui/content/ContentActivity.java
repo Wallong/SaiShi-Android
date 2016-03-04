@@ -74,13 +74,13 @@ public class ContentActivity extends AppCompatActivity {
         //设置缩放工具显示
         mWebView.getSettings().setBuiltInZoomControls(true);
 
-        int a = 16;
+        int a = 12;
         String html= "<html> \n" +
                 "<head> \n" +
                 "<style type=\"text/css\"> \n" +
-                "p {text-indent:2em; margin-top:"+(a+a)+"px}" +
-                "body {text-align:justify; font-size: "+a+"px; line-height: "+(a+2)+"px}\n" +
-                "body {padding-left: "+a+"px;padding-right: "+a+"px;} " +
+                "p {text-indent:2em; margin-top:"+(a+a)+"pt}" +
+                "body {text-align:justify; font-size: "+a+"pt; line-height: "+(a+4)+"pt}\n" +
+                "body {padding-left: "+a+"pt;padding-right: "+a+"pt;} " +
                 "</style> \n" +
                 "</head> \n" +
                 "<body><h3>" + dataItem.subtitle + "</h3>"+

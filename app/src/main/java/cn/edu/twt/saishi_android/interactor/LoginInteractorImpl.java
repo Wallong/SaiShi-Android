@@ -30,8 +30,7 @@ public class LoginInteractorImpl implements LoginInteractor {
                 LogHelper.v(LOG_TAG, response.toString());
                 try {
                     int resultCode = response.getInt(ApiClient.RESP_RESULT_CODE_KEY);
-                    switch (resultCode) {
-                        case ApiClient.LOG_IN_SUCCESS_CODE:
+                    if(resultCode == ApiClient.LOG_IN_SUCCESS_CODE) {
                             Gson gson = new Gson();
                             UserInfo userInfo = gson.fromJson(response.toString(), UserInfo.class);
                             ApiClient.getUserInfo(new TextHttpResponseHandler() {
@@ -47,11 +46,9 @@ public class LoginInteractorImpl implements LoginInteractor {
                                     onLoginCallback.onSuccess(userInfo);
                                 }
                             });
-                            onLoginCallback.onSuccess(userInfo);
-                            break;
-                        case ApiClient.LOG_IN_FAILURE_CODE:
-                            onLoginCallback.onFailure(response.getString(ApiClient.RESP_MSG_KEY));
-                            break;
+//                            onLoginCallback.onSuccess(userInfo);
+                    }else {
+                        onLoginCallback.onFailure(resultCode);
                     }
 
                 } catch (JSONException e) {

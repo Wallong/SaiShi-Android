@@ -10,7 +10,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -18,7 +23,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.edu.twt.saishi_android.R;
 import cn.edu.twt.saishi_android.bean.FileInfo;
+import cn.edu.twt.saishi_android.bean.FileUrl;
 import cn.edu.twt.saishi_android.support.LogHelper;
+import cn.edu.twt.saishi_android.support.PrefUtils;
 import cn.edu.twt.saishi_android.support.StringUtils;
 import cn.edu.twt.saishi_android.ui.common.OnItemClickListener;
 
@@ -39,9 +46,8 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context _context;
     private OnItemClickListener _onItemClicked;
 
-    private ArrayList<FileInfo> _FileSet = new ArrayList<>();
+    public static ArrayList<FileInfo> _FileSet = new ArrayList<>();
     private TreeSet _fileBigSet = new TreeSet();
-
     private String eachTime;
     private String anotherTime;
     private boolean _useFooter;
@@ -49,6 +55,7 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public FileAdapter(Context context, OnItemClickListener onItemClickListener){
         _context = context;
         _onItemClicked = onItemClickListener;
+
     }
 
     public static class ItemHolder extends RecyclerView.ViewHolder{
@@ -60,7 +67,6 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView _tvTime;
         @Bind(R.id.iv_download)
         ImageView _ivDownload;
-
 
         public ItemHolder(View itemView){
             super(itemView);
@@ -149,6 +155,10 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             FileInfo fileInfo = _FileSet.get(position);
             ItemHolder itemHolder = (ItemHolder) holder;
 
+            if(!(fileInfo.tag == null)){
+                itemHolder._ivDownload.setImageResource(R.drawable.ic_downloaded);
+            }
+
             if(fileInfo.title.contains("《")){
                 itemHolder._tvTitle.setText(fileInfo.title);
             }else{
@@ -163,16 +173,14 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else if (fileInfo.type.equals(BIAOZHUN)){
                 itemHolder._tvType.setText("标准");
             }
-            itemHolder._ivDownload.setTag(0);
-            itemHolder._tvType.setTag(0);
-            itemHolder._tvTime.setTag(0);
-            itemHolder._tvTitle.setTag(0);
 
             ((CardView)(itemHolder._tvTitle.getParent()).getParent()).setOnClickListener(onClickListener);
         }else if(getItemViewType(position) == ITEM_VIEW_TYPE_BIG_ITEM){
             FileInfo fileInfo = _FileSet.get(position);
             ItemBigHolder itemBigHolder = (ItemBigHolder) holder;
-
+            if(!(fileInfo.tag == null)){
+                itemBigHolder._ivDownload.setImageResource(R.drawable.ic_downloaded);
+            }
 
             if(fileInfo.title.contains("《")){
                 itemBigHolder._tvTitle.setText(fileInfo.title);
@@ -189,15 +197,31 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else if (fileInfo.type.equals(BIAOZHUN)){
                 itemBigHolder._tvType.setText("标准");
             }
-            itemBigHolder._ivDownload.setTag(0);
-            itemBigHolder._tvType.setTag(0);
-            itemBigHolder._tvTime.setTag(0);
-            itemBigHolder._tvTitle.setTag(0);
 
             ((CardView)(itemBigHolder._tvTitle.getParent()).getParent()).setOnClickListener(onClickListener);
         }
 
     }
+
+    private void markFileInfo(List<FileInfo> items) {
+        if (PrefUtils.getPrefFileUrlJson() != null && PrefUtils.getPrefFileUrlJson().contains("[")) {
+            Gson gson = new Gson();
+            FileUrl[] urls = gson.fromJson(PrefUtils.getPrefFileUrlJson(), FileUrl[].class);
+            List<FileUrl> fileList = new ArrayList<>();
+            Collections.addAll(fileList, urls);
+            for (int i = 0; i < fileList.size(); i++) {
+                for (int j = 0; j < items.size(); j++) {
+                    if (fileList.get(i).id.equals(items.get(j).file)) {
+                        items.get(j).setTag("1");
+                        LogHelper.e(LOG_TAG, "这里是标记每一个元素1");
+                    }
+                    LogHelper.e(LOG_TAG, "这里是标记每一个元素2");
+                }
+                LogHelper.e(LOG_TAG, "这里是标记每一个元素3");
+            }
+        }
+    }
+
 
     @Override
     public int getItemCount() {
@@ -221,13 +245,18 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void updateFile(List<FileInfo> items){
+        markFileInfo(items);
+        ArrayList <FileInfo> list = new ArrayList<>();
+        list.addAll(items);
         _FileSet.clear();
-        _FileSet.addAll(items);
+        _FileSet.addAll(list);
         selectItem();
         notifyDataSetChanged();
+
     }
 
     public void addFile(List<FileInfo> items){
+        markFileInfo(items);
         _FileSet.addAll(items);
         selectItem();
         notifyDataSetChanged();

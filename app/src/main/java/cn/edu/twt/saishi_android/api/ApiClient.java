@@ -53,6 +53,10 @@ public class ApiClient {
         sClient.addHeader("User-Agent", getUserAgent());
     }
 
+    public static String getImageUrl() {
+        return IMAGE_GET_URL;
+    }
+
     public static String getBaseUrl() {
         return BASE_URL;
     }

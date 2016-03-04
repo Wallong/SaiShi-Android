@@ -2,11 +2,15 @@ package cn.edu.twt.saishi_android.ui.main.list;
 
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.edu.twt.saishi_android.bean.DataItem;
+import cn.edu.twt.saishi_android.bean.ImageInfo;
 import cn.edu.twt.saishi_android.interactor.DataInteractor;
 import cn.edu.twt.saishi_android.support.LogHelper;
+import cn.edu.twt.saishi_android.support.NetWorkHelper;
+import cn.edu.twt.saishi_android.ui.common.ImageProvider;
 
 /**
  * Created by clifton on 16-2-14.
@@ -18,9 +22,13 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
     private DataListView _dataListView;
     private DataInteractor _dataInteractor;
 
+    private ArrayList<ImageInfo> imageInfos = new ArrayList<>();
+    private List<DataItem> dataItems = null;
     private boolean isLoadMore = false;
     private boolean isFirstTimeLoad = true;
     private int page = 1;
+    private static int total = 0;
+
 
     private boolean isRefreshing = false;
 
@@ -41,6 +49,11 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
     }
 
     private void getDataItems(String type) {
+        if(!NetWorkHelper.isOnline()){
+            _dataListView.toastMessage("网络未连接");
+            this._dataListView.stopRefresh();
+        }
+        total = 0;
         this._dataInteractor.getDataItems(type, page, this);
     }
 
@@ -70,34 +83,53 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
     }
 
     @Override
-    public void onSuccess(List<DataItem> datum) {
-
-
-        this._dataListView.stopRefresh();
-
+    public void onSuccess(List<DataItem> datum, ImageInfo imageInfo) {
+        total ++;
         if(datum != null){
-            List<DataItem> items = datum;
+            dataItems = datum;
+        }else if(imageInfo != null){
+            imageInfos.add(imageInfo);
+        }
+        if((dataItems != null) &&(dataItems.get(0)==null?(total == dataItems.size()):(total==dataItems.size()+1))){
+            for(int i = (dataItems.get(0)==null?1:0); i < dataItems.size(); i++){
+                for(int j = 0; j < imageInfos.size(); j++){
+                    if(dataItems.get(i).icon.equals(imageInfos.get(j).id)){
+                        dataItems.get(i).setUrl(imageInfos.get(j).url);
+                    }
+                }
+            }
+
+            this._dataListView.stopRefresh();
             if(isLoadMore) {
-                _dataListView.addListData(items);
+                _dataListView.addListData(dataItems);
+                LogHelper.e(LOG_TAG, "这里在执行loadmore操作");
+
                 isLoadMore = false;
             } else {
-                _dataListView.updateListData(items);
+                _dataListView.updateListData(dataItems);
                 if(isFirstTimeLoad){
                     _dataListView.hideFooter();
                     isFirstTimeLoad = !isFirstTimeLoad;
                 }
+                isLoadMore = false;
             }
-        } else {
+
+            imageInfos.clear();
+            dataItems = null;
+            total = 0;
+        }else if(dataItems == null){
+            isLoadMore = false;
             _dataListView.hideFooter();
             this._dataListView.toastMessage("触底了～没有更多信息");
         }
-        isLoadMore = false;
         isRefreshing = false;
+
+
     }
 
     @Override
     public void onFailure(String errorString) {
-        if(errorString.equals("请登录")) {
+        if(errorString.equals("请重新登录")) {
             _dataListView.startLoginActivity();
         }
         page -= 1;
@@ -105,5 +137,6 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
         this._dataListView.toastMessage(errorString);
         isLoadMore = false;
         isRefreshing = false;
+
     }
 }

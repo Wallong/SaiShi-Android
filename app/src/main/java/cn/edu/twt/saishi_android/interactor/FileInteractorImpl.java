@@ -32,12 +32,16 @@ public class FileInteractorImpl implements FileInteractor {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Gson gson = new Gson();
-                LogHelper.v(LOG_TAG, responseString);
-                FileInfo[] items = gson.fromJson(responseString, FileInfo[].class);
-                List<FileInfo> fileInfos = Arrays.asList(items);
-                LogHelper.v(LOG_TAG, fileInfos.toString());
-                onGetFileCallback.onSuccess(fileInfos);
+                boolean res = responseString.contains("result_code");
+                if(res){
+                    onGetFileCallback.onFailure("请重新登录");
+                }else {
+                    Gson gson = new Gson();
+                    FileInfo[] items = gson.fromJson(responseString, FileInfo[].class);
+                    List<FileInfo> fileInfos = Arrays.asList(items);
+                    LogHelper.v(LOG_TAG, fileInfos.toString());
+                    onGetFileCallback.onSuccess(fileInfos, responseString);
+                }
             }
         });
     }
@@ -55,6 +59,8 @@ public class FileInteractorImpl implements FileInteractor {
                 Gson gson = new Gson();
                 LogHelper.e(LOG_TAG, responseString);
                 FileUrl fileUrl = gson.fromJson(responseString, FileUrl.class);
+                onGetFileLoadedCallback.onSuccess(null, fileUrl);
+
                 ApiClient.haveDownloadFile(fileUrl.url, new FileAsyncHttpResponseHandler(filePath) {
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
@@ -63,8 +69,8 @@ public class FileInteractorImpl implements FileInteractor {
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, File file) {
-                        LogHelper.v(LOG_TAG, "下载成功");
-                        onGetFileLoadedCallback.onSuccess(file);
+                        LogHelper.e(LOG_TAG, "下载成功");
+                        onGetFileLoadedCallback.onSuccess(file, null);
                     }
                 });
 

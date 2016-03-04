@@ -29,4 +29,9 @@ public class UserInfo {
 
     public String icon;
 
+    public String password;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

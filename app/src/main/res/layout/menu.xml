@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_username"
             android:layout_below="@id/tv_user_profile_phone"
-            android:text="单位职务:"
+            android:text="单位:"
             android:textSize="@dimen/nav_drawer_text_size"
             android:textColor="@color/color_nav_text_white" />
 

@@ -2,53 +2,43 @@ package cn.edu.twt.saishi_android.ui.schedule;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.support.v7.widget.Toolbar;
 
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.edu.twt.saishi_android.ContestApp;
 import cn.edu.twt.saishi_android.R;
 import cn.edu.twt.saishi_android.api.ApiClient;
-import cn.edu.twt.saishi_android.support.ExitApplication;
 
 /**
  * Created by clifton on 16-2-27.
  */
-public class ScheduleActivity extends AppCompatActivity{
+public class ScheduleFragment extends Fragment {
 
-    private static final String LOG_TAG = ScheduleActivity.class.getSimpleName();
+    private static final String LOG_TAG = ScheduleFragment.class.getSimpleName();
 
     @Bind(R.id.wv_schedule)
     WebView mWebView;
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schedule);
-        ButterKnife.bind(this);
-        ContestApp.setAppLunchState(true);
-        ExitApplication.getInstance().addActivity(this);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+        ButterKnife.bind(this, view);
+        loadSchedule();
 
-        mToolbar.setTitle("日程");
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        return view;
+    }
 
 
 
-        mWebView = (WebView) findViewById(R.id.wv_schedule);
+    private void loadSchedule(){
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         // 开启DOM storage API 功能
