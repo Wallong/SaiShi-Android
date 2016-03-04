@@ -154,6 +154,7 @@ public class DataFragment extends BaseFragment implements DataListView, SwipeRef
     public void startLoginActivity() {
         Intent intent = new Intent(this.getActivity(), LoginActivity.class);
         startActivity(intent);
+        this.getActivity().finish();
     }
 
     @Override

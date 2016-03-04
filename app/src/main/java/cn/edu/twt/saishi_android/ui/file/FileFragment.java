@@ -113,6 +113,7 @@ public class FileFragment extends BaseFragment implements FileView, SwipeRefresh
     public void startLoginActivity() {
         Intent intent = new Intent(this.getActivity(), LoginActivity.class);
         startActivity(intent);
+        this.getActivity().finish();
     }
 
     @Override
