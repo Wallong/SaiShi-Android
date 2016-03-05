@@ -44,7 +44,7 @@
                 />
 
             <TextView
-                android:id="@+id/tv_setting_username"
+                android:id="@+id/tv_user_setting_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="杨漫路"
@@ -53,12 +53,12 @@
                 android:textColor="@color/material_grey_600"/>
 
             <TextView
-                android:id="@+id/tv_user_setting_name"
+                android:id="@+id/tv_setting_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/settings_layout_padding"
                 android:layout_gravity="center_horizontal"
-                android:text="帐号:"
+                android:text="电话:"
                 android:textSize="@dimen/settings_text_size"
                 android:textColor="@color/material_grey_600"/>
 
@@ -79,34 +79,9 @@
             android:background="@color/color_press_white"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/ll_phone"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="32dp"
-                android:orientation="horizontal"
-                android:background="@color/unfocused"
-                android:gravity="center_vertical">
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:duplicateParentState="true"
-                    android:text="电话"
-                    android:textSize="16sp"/>
-                <TextView
-                    android:id="@+id/setting_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="48dp"
-                    android:duplicateParentState="true"
-                    android:text="138****1369"
-                    android:textSize="16sp"/>
-
-            </LinearLayout>
             <View
                 android:layout_width="match_parent"
+                android:layout_marginTop="32dp"
                 android:layout_height="1dp"></View>
             <LinearLayout
                 android:id="@+id/ll_version"
@@ -120,17 +95,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:duplicateParentState="true"
-                    android:text="更新"
+                    android:text="检查更新"
                     android:textSize="16sp"/>
                 <ImageView
                     android:id="@+id/setting_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="48dp"/>
+                    android:layout_marginLeft="32dp"/>
 
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
                 android:layout_height="1dp"></View>
             <LinearLayout
                 android:id="@+id/ll_modify"
@@ -150,6 +126,7 @@
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
                 android:layout_height="1dp"></View>
 
             <LinearLayout
@@ -164,26 +141,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:duplicateParentState="true"
-                    android:text="注销"
+                    android:text="退出登录"
                     android:textSize="16sp"/>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_exit"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                android:background="@color/item_color"
-                android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:duplicateParentState="true"
-                    android:text="退出"
-                    android:textSize="16sp"/>
             </LinearLayout>
 
 
