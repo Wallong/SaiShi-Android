@@ -31,8 +31,6 @@ dependencies {
     provided 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'de.hdodenhof:circleimageview:2.0.0'
-    compile 'com.squareup.dagger:dagger:1.2.2'
-    provided 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'com.google.code.gson:gson:2.6'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.balysv:material-ripple:1.0.2'

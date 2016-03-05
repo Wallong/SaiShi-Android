@@ -42,7 +42,7 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginCallback{
     }
 
     @Override
-    public void onFailure(int errorCode) {
+    public void onFailure(String errorCode) {
         mLoginView.hideProgressBar();
         switch (errorCode){
             case ApiClient.NO_USER_CODE:

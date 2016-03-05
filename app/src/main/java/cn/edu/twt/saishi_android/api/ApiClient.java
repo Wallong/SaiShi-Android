@@ -19,18 +19,18 @@ public class ApiClient {
     public static final String RESP_MSG_KEY = "msg";
     public static final String RESP_RESULT_CODE_KEY = "result_code";
 
-    public static final int NO_USER_CODE = 00000;
-    public static final int PWD_ERROR_CODE = 00001;
-    public static final int LOG_IN_FAILURE_CODE = 00002;
-    public static final int LOG_IN_SUCCESS_CODE = 00003;
-    public static final int LOG_OUT_SUCCESS_CODE = 00004;
-    public static final int LOG_OUT_FAILURE_CODE = 00005;
-    public static final int NO_LOG_IN_CODE = 00006;
-    public static final int LOG_IN_TIME_OUT_CODE = 00007;
-    public static final int PWD_CHANGE_FAILURE_CODE = 8;
-    public static final int PWD_CHANGE_SUCCESS_CODE = 9;
-    public static final int FILE_NO_FOUND_CODE = 00010;
-    public static final int IMG_NO_FOUND_CODE = 00011;
+    public static final String NO_USER_CODE = "00000";
+    public static final String PWD_ERROR_CODE = "00001";
+    public static final String LOG_IN_FAILURE_CODE = "00002";
+    public static final String LOG_IN_SUCCESS_CODE = "00003";
+    public static final String LOG_OUT_SUCCESS_CODE = "00004";
+    public static final String LOG_OUT_FAILURE_CODE = "00005";
+    public static final String NO_LOG_IN_CODE = "00006";
+    public static final String LOG_IN_TIME_OUT_CODE = "00007";
+    public static final String PWD_CHANGE_FAILURE_CODE = "00008";
+    public static final String PWD_CHANGE_SUCCESS_CODE = "00009";
+    public static final String FILE_NO_FOUND_CODE = "00010";
+    public static final String IMG_NO_FOUND_CODE = "00011";
 
     private static final AsyncHttpClient sClient = new AsyncHttpClient();
     private static final PersistentCookieStore sCookieStore = new PersistentCookieStore(ContestApp.getContext());

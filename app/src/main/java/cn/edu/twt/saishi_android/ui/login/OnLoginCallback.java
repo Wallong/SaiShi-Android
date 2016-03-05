@@ -9,5 +9,5 @@ public interface OnLoginCallback {
 
     void onSuccess(UserInfo userInfo);
 
-    void onFailure(int errorCode);
+    void onFailure(String errorCode);
 }

@@ -29,8 +29,8 @@ public class LoginInteractorImpl implements LoginInteractor {
                 super.onSuccess(statusCode, headers, response);
                 LogHelper.v(LOG_TAG, response.toString());
                 try {
-                    int resultCode = response.getInt(ApiClient.RESP_RESULT_CODE_KEY);
-                    if(resultCode == ApiClient.LOG_IN_SUCCESS_CODE) {
+                    String resultCode = response.getString(ApiClient.RESP_RESULT_CODE_KEY);
+                    if(resultCode.equals(ApiClient.LOG_IN_SUCCESS_CODE)) {
                             Gson gson = new Gson();
                             UserInfo userInfo = gson.fromJson(response.toString(), UserInfo.class);
                             ApiClient.getUserInfo(new TextHttpResponseHandler() {
