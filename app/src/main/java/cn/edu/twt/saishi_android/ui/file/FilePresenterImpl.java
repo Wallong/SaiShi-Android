@@ -65,16 +65,16 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback, OnGe
     }
 
     private void getFileItems() {
-        SQLiteDatabase db = _fileView.getCacheDbHelper().getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from CacheList where date = " + Integer.MAX_VALUE, null);
-        if (cursor.moveToFirst()) {
-            String json = cursor.getString(cursor.getColumnIndex("json"));
-            Gson gson = new Gson();
-            FileInfo[] items = gson.fromJson(json, FileInfo[].class);
-            List<FileInfo> fileInfos = Arrays.asList(items);
-
-            handlItems(fileInfos);
-        }
+//        SQLiteDatabase db = _fileView.getCacheDbHelper().getReadableDatabase();
+//        Cursor cursor = db.rawQuery("select * from CacheList where date = " + Integer.MAX_VALUE, null);
+//        if (cursor.moveToFirst()) {
+//            String json = cursor.getString(cursor.getColumnIndex("json"));
+//            Gson gson = new Gson();
+//            FileInfo[] items = gson.fromJson(json, FileInfo[].class);
+//            List<FileInfo> fileInfos = Arrays.asList(items);
+//
+//            handlItems(fileInfos);
+//        }
         if(NetWorkHelper.isOnline()) {
             this._fileInteractor.getFileItems(this);
         }else{
@@ -102,54 +102,9 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback, OnGe
 
     @Override
     public void onItemClicked(View v, int position) {
-        fileInfo = FileAdapter._FileSet.get(position);
-        fileId = fileInfo.file;
-        Gson gson = new Gson();
-        if(PrefUtils.getPrefFileUrlJson() != null && PrefUtils.getPrefFileUrlJson().contains("[")){
-            FileUrl[] urls = gson.fromJson(PrefUtils.getPrefFileUrlJson(), FileUrl[].class);
-            List<FileUrl> fileList = new ArrayList<>();
-            Collections.addAll(fileList, urls);
-            for(int i = 0; i < fileList.size(); i++){
-                if(fileList.get(i).id.equals(fileId)){
-                    String path = makedirs().toString() + File.separator
-                            + StringUtils.cutString(fileList.get(i).url, 4);
-                    File file = new File(path);
-                    LogHelper.e(LOG_TAG, file.toString());
-                    if(fileIsExists(file)){
-                        openFile(file);
-                    }else {
-                        doFile(v, position);
-                    }
-                }
-            }
-        }else {
-            doFile(v, position);
-        }
-
+        _fileView.startFileContentActivity(position);
     }
 
-    private void doFile(View v, int position){
-        if(!NetWorkHelper.isOnline()){
-            _fileView.toastMessage("网络未连接");
-            return;
-        }
-        imageView = (ImageView) v.findViewById(R.id.iv_download);
-        _fileView.showProgressBar();
-        _fileView.downFile(position);
-        LogHelper.v(LOG_TAG, "文件已经下载");
-    }
-
-
-    private boolean fileIsExists(File file){
-        try{
-            if(!file.exists()){
-                return false;
-            }
-        }catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public void downloadFile(String fileId) {
@@ -188,29 +143,6 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback, OnGe
             imageView.setImageResource(R.drawable.ic_downloaded);
 
             openFile(file);
-        }else if(!(fileUrl == null)){
-            LogHelper.e(LOG_TAG, "此处记录开始");
-            String strJson = "";
-            String strJsons = PrefUtils.getPrefFileUrlJson();
-            Gson gson = new Gson();
-            if(PrefUtils.getPrefFileUrlJson() == null) {
-                strJson = "[" + gson.toJson(fileUrl) + "]";
-                LogHelper.e(LOG_TAG, "此处记录中...1");
-            }else {
-                FileUrl[] urls = gson.fromJson(PrefUtils.getPrefFileUrlJson(), FileUrl[].class);
-                List<FileUrl> fileList = new ArrayList<>();
-                Collections.addAll(fileList, urls);
-                fileList.add(fileUrl);
-                strJsons = strJsons.substring(1,strJsons.length()-1);
-                for(int i =1; i<fileList.size(); i++){
-                    strJsons = strJsons + "," + gson.toJson(fileList.get(i));
-                }
-                strJson = "[" + strJsons + "]";
-                LogHelper.e(LOG_TAG, "此处记录中...2");
-
-            }
-            PrefUtils.setDefaultPrefFileUrlJson(strJson);
-            LogHelper.e(LOG_TAG, "此处记录结束");
         }
     }
 

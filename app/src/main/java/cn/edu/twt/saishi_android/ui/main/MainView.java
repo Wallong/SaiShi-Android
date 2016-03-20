@@ -5,13 +5,9 @@ package cn.edu.twt.saishi_android.ui.main;
  */
 public interface MainView {
 
-    void replaceFragment(String type);
+    void checkForUpdate(String type);
 
     void closeMenu();
-
-    void startScheduleActivity();
-
-    void startSettingsActivity();
 
     void setToolbar(String title);
 

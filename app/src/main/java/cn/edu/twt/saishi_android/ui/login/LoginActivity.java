@@ -3,6 +3,8 @@ package cn.edu.twt.saishi_android.ui.login;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -44,9 +46,9 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     @Bind(R.id.tv_login_password)
     EditText mEtPassword;
     @Bind(R.id.btn_login)
-//    Button mBtnLogin;
+    Button mBtnLogin;
 //    @Bind(R.id.btn_test)
-    Button mBtnTest;
+//    Button mBtnTest;
     @Bind(R.id.pb_login)
     ProgressBar mPbLogin;
     @Bind(R.id.tv_question)
@@ -59,8 +61,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         ButterKnife.bind(this);
         ExitApplication.getInstance().addActivity(this);
 
-//        mBtnLogin.setOnClickListener(this);
-        mBtnTest.setOnClickListener(this);
+        mBtnLogin.setOnClickListener(this);
         mTvQuestion.setOnClickListener(this);
 
     }
@@ -74,19 +75,6 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
             case R.id.tv_question:
                 toastMessage("初始账户和密码均为您的手机号");
                 break;
-//            case R.id.btn_test:
-//                ApiClient.getUserInfo(new TextHttpResponseHandler() {
-//                    @Override
-//                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                        LogHelper.v(LOG_TAG, responseString);
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(int statusCode, Header[] headers, String responseString) {
-//                        LogHelper.v(LOG_TAG, responseString);
-//                    }
-//                });
-//                break;
         }
 
     }

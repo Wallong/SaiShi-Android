@@ -97,7 +97,8 @@ public class DataFragment extends BaseFragment implements DataListView, SwipeRef
                 }
             }
         });
-        int spacingInPixels = 1;
+        //设置CardView之间的间隔
+        int spacingInPixels = 8;
         _recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
         _dataPresenter.firstTimeLoadExploreItems(type);
@@ -145,6 +146,7 @@ public class DataFragment extends BaseFragment implements DataListView, SwipeRef
     public void startContentActivity(int position) {
         LogHelper.v(LOG_TAG, "startContentActivity");
         DataItem dataItem = _dataAdapter.getItem(position);
+        _dataPresenter.addViews(dataItem.id);
         Intent intent = new Intent(this.getActivity(),ContentActivity.class);
         intent.putExtra("bean", dataItem);
         startActivity(intent);

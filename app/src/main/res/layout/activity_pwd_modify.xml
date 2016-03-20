@@ -140,7 +140,7 @@
             android:background="@color/btn_press"
             android:text="确认更改"
             android:textSize="20sp"
-            android:textColor="@color/color_login_white">
+            android:textColor="@color/color_white">
 
         </Button>
 

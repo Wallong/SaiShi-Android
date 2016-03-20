@@ -37,9 +37,10 @@ public class FileInteractorImpl implements FileInteractor {
                     onGetFileCallback.onFailure("请重新登录");
                 }else {
                     Gson gson = new Gson();
+                    LogHelper.e(LOG_TAG, responseString);
                     FileInfo[] items = gson.fromJson(responseString, FileInfo[].class);
                     List<FileInfo> fileInfos = Arrays.asList(items);
-                    LogHelper.v(LOG_TAG, fileInfos.toString());
+                    LogHelper.e(LOG_TAG, fileInfos.toString());
                     onGetFileCallback.onSuccess(fileInfos, responseString);
                 }
             }

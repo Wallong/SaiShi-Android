@@ -3,9 +3,9 @@
     <color name="colorPrimary">#03A9F4</color>
     <color name="colorPrimaryDark">#0288D1</color>
     <color name="colorAccent">#00BFA5</color>
-    <color name="color_login_blue">#bbdefb</color>
-    <color name="color_login_green">#1b5e20</color>
-    <color name="color_login_white">#e8f5e9</color>
+    <color name="color_welcome_blue">#90caf9</color>
+    <color name="color_login_blue">#0091ea</color>
+    <color name="color_login_text_blue">#bbdefb</color>
     <color name="color_nav_text_white">#e8f5e9</color>
     <color name="color_item_avatar_blue">#1de9b6</color>
     <color name="color_white">#ffffff</color>
@@ -13,9 +13,16 @@
     <color name="color_black">#B2000000</color>
     <color name="color_text_primary">#212121</color>
     <color name="unfocused">#ffffff</color>
-    <color name="pressed">#FFF0F0F0</color>
+    <color name="pressed">#FFE0E0E0</color>
     <color name="btn_press">#ff616161</color>
-    <color name="btn_normal">#ff009688</color>
+    <color name="btn_normal">#0091ea</color>
     <color name="color_grey_text">#ff666666</color>
     <color name="color_red_text">#b0120a</color>
+    <color name="icon_press_blue">#0288D1</color>
+    <color name="icon_normal_black">#212121</color>
+    <color name="icon_normal_grey">#757575</color>
+    <color name="menu_item_normal">#ffffff</color>
+    <color name="menu_item_selected">#b3e5fc</color>
+    <color name="color_settings_blue">#bbdefd</color>
+    <color name="color_modify_blue">#0091ea</color>
 </resources>

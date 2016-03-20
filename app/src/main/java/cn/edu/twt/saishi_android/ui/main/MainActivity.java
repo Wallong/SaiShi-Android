@@ -10,13 +10,19 @@ import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.edu.twt.saishi_android.R;
+import cn.edu.twt.saishi_android.api.ApiClient;
+import cn.edu.twt.saishi_android.bean.UpdateInfo;
+import cn.edu.twt.saishi_android.interactor.SettingsInteractorImpl;
 import cn.edu.twt.saishi_android.support.CacheDbHelper;
 import cn.edu.twt.saishi_android.support.ExitApplication;
 import cn.edu.twt.saishi_android.support.NetWorkHelper;
+import cn.edu.twt.saishi_android.support.PrefUtils;
 import cn.edu.twt.saishi_android.ui.schedule.ScheduleFragment;
+import cn.edu.twt.saishi_android.ui.settings.OnUpdateCallback;
 
 public class MainActivity extends AppCompatActivity
         implements MainView{
@@ -26,9 +32,12 @@ public class MainActivity extends AppCompatActivity
     @Bind(R.id.fl_content)
     FrameLayout mFrameLayout;
 
+    private final static String TYPE = "0";
+
     private long firstTime;
     private Toolbar toolbar;
     private CacheDbHelper dbHelper;
+    private SettingsInteractorImpl settingsInteractorImpl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,28 +64,14 @@ public class MainActivity extends AppCompatActivity
 
         if(!NetWorkHelper.isOnline()) {
             toastMessage("网络未连接");
+        }else {
+            checkForUpdate(TYPE);
         }
-    }
-
-
-    @Override
-    public void replaceFragment(String type) {
-
     }
 
     @Override
     public void closeMenu() {
         mDrawerLayout.closeDrawers();
-    }
-
-    @Override
-    public void startScheduleActivity() {
-
-    }
-
-    @Override
-    public void startSettingsActivity() {
-
     }
 
     public CacheDbHelper getDbHelper(){
@@ -110,6 +105,24 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+    }
+    @Override
+    public void checkForUpdate(String type) {
+        settingsInteractorImpl = new SettingsInteractorImpl();
+        settingsInteractorImpl.getUpdateInfo(type, new OnUpdateCallback() {
+            @Override
+            public void onSuccess(UpdateInfo updateInfo) {
+                if(updateInfo.getResult_code().equals(ApiClient.UPDATE_NEW_CODE)){
+                    PrefUtils.setDefaultPrefUpdate(ApiClient.UPDATE_NEW_CODE);
+                    toastMessage(updateInfo.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+
+            }
+        });
     }
 
 }

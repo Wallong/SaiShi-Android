@@ -23,6 +23,10 @@ public class DataItem implements Serializable {
 
     public String subtitle;
 
+    public String paixu;
+
+    public String fwl;
+
     public String url;
 
     public void setUrl(String url) {
@@ -40,6 +44,9 @@ public class DataItem implements Serializable {
                 ", type='" + type + '\'' +
                 ", isup='" + isup + '\'' +
                 ", subtitle='" + subtitle + '\'' +
+                ", paixu='" + paixu + '\'' +
+                ", fwl='" + fwl + '\'' +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

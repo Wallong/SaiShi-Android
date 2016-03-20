@@ -34,4 +34,9 @@ public class InteractorsModule {
         return new ModifyInteractorImpl();
     }
 
+    @Provides @Singleton
+    public SettingsInteractor provideSettingsInteractor() {
+        return new SettingsInteractorImpl();
+    }
+
 }

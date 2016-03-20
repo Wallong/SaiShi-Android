@@ -1,0 +1,35 @@
+[33mcommit 24f68446c2a0120af887d9e8c3e69375d59715e8[m
+Author: wallong <wallong@tju.edu.cn>
+Date:   Sat Mar 5 15:12:51 2016 +0800
+
+    修改了drawer和settings页面
+
+[33mcommit a07687507c5e650f4d40b466b89dc2b0ed7841ab[m
+Author: wallong <wallong@tju.edu.cn>
+Date:   Sat Mar 5 14:36:16 2016 +0800
+
+    把result_code全部换成String类型
+
+[33mcommit f6a8cff7a2054bd1f00b6ccc96f8f5d7c711a35e[m
+Author: wallong <wallong@tju.edu.cn>
+Date:   Fri Mar 4 16:08:24 2016 +0800
+
+    未登录跳转finish原activity
+
+[33mcommit 8e13d2539e8ef5c6c25b37a5a78d08e47c6bbc5f[m
+Author: wallong <wallong@tju.edu.cn>
+Date:   Fri Mar 4 15:10:47 2016 +0800
+
+    finish all?
+
+[33mcommit 2b477e47a8c0384b237ddcbf3820d1b488c6789f[m
+Author: wallong <wallong@tju.edu.cn>
+Date:   Wed Mar 2 20:47:59 2016 +0800
+
+    commit SaiShi firstly
+
+[33mcommit 6b0d3d38ca25e4b2c7bae921703a17b5e6a45d9e[m
+Author: wallong <wallong@tju.edu.cn>
+Date:   Wed Mar 2 20:30:56 2016 +0800
+
+    first commit

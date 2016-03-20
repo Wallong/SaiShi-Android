@@ -21,8 +21,6 @@ public interface FileView {
 
     void updateListFile(List<FileInfo> items);
 
-    void addListFile(List<FileInfo> items);
-
     void startActivity(Intent intent);
 
     void showFooter();
@@ -33,7 +31,7 @@ public interface FileView {
 
     void hideProgressBar();
 
-    void downFile(int positon);
+    void startFileContentActivity(int position);
 
     void startLoginActivity();
 

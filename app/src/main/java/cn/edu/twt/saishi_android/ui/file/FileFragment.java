@@ -28,6 +28,7 @@ import cn.edu.twt.saishi_android.support.LogHelper;
 import cn.edu.twt.saishi_android.support.PrefUtils;
 import cn.edu.twt.saishi_android.ui.BaseFragment;
 import cn.edu.twt.saishi_android.ui.common.OnItemClickListener;
+import cn.edu.twt.saishi_android.ui.file.filecontent.FileContentActivity;
 import cn.edu.twt.saishi_android.ui.login.LoginActivity;
 import cn.edu.twt.saishi_android.ui.main.MainActivity;
 
@@ -144,15 +145,11 @@ public class FileFragment extends BaseFragment implements FileView, SwipeRefresh
     }
 
     @Override
-    public void addListFile(List<FileInfo> items) {
-        _fileAdapter.addFile(items);
-    }
-
-
-    @Override
-    public void downFile(int position){
+    public void startFileContentActivity(int position) {
         fileInfo = _fileAdapter.getItem(position);
-        _filePresenter.downloadFile(fileInfo.file);
+        Intent intent = new Intent(this.getActivity(),FileContentActivity.class);
+        intent.putExtra("bean", fileInfo);
+        startActivity(intent);
     }
 
     @Override

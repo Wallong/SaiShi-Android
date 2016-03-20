@@ -1,6 +1,7 @@
 package cn.edu.twt.saishi_android.ui.file;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,10 +40,6 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int ITEM_VIEW_TYPE_BIG_ITEM = 1;
     private static final int ITEM_VIEW_TYPE_FOOTER = 2;
 
-    private static final String TONGZHI = "tongzhi";
-    private static final String YIJIAN = "yijian";
-    private static final String BIAOZHUN = "biaozhun";
-
     private Context _context;
     private OnItemClickListener _onItemClicked;
 
@@ -51,6 +48,9 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private String eachTime;
     private String anotherTime;
     private boolean _useFooter;
+    private int r;
+    private int g;
+    private int b;
 
     public FileAdapter(Context context, OnItemClickListener onItemClickListener){
         _context = context;
@@ -65,8 +65,6 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView _tvTitle;
         @Bind(R.id.tv_file_item_time)
         TextView _tvTime;
-        @Bind(R.id.iv_download)
-        ImageView _ivDownload;
 
         public ItemHolder(View itemView){
             super(itemView);
@@ -82,8 +80,6 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView _tvTitle;
         @Bind(R.id.tv_file_item_time)
         TextView _tvTime;
-        @Bind(R.id.iv_download)
-        ImageView _ivDownload;
         @Bind(R.id.tv_file_time)
         TextView _tvFileTime;
 
@@ -155,32 +151,25 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             FileInfo fileInfo = _FileSet.get(position);
             ItemHolder itemHolder = (ItemHolder) holder;
 
-            if(!(fileInfo.tag == null)){
-                itemHolder._ivDownload.setImageResource(R.drawable.ic_downloaded);
-            }
-
             if(fileInfo.title.contains("《")){
                 itemHolder._tvTitle.setText(fileInfo.title);
             }else{
                 itemHolder._tvTitle.setText("《" + fileInfo.title + "》");
             }
             itemHolder._tvTime.setText(StringUtils.cutString(fileInfo.createtime, 2));
-            itemHolder._tvType.setText("文件");
-            if(fileInfo.type.equals(TONGZHI)){
-                itemHolder._tvType.setText("通知");
-            } else if (fileInfo.type.equals(YIJIAN)){
-                itemHolder._tvType.setText("意见");
-            } else if (fileInfo.type.equals(BIAOZHUN)){
-                itemHolder._tvType.setText("标准");
-            }
+            itemHolder._tvType.setText(fileInfo.tag);
+            r = Integer.parseInt(fileInfo.r);
+            g = Integer.parseInt(fileInfo.g);
+            b = Integer.parseInt(fileInfo.b);
+            itemHolder._tvType.setBackgroundColor(Color.parseColor("#"
+                    + StringUtils.cutString(Integer.toHexString(r), 5)
+                    + StringUtils.cutString(Integer.toHexString(g), 5)
+                    + StringUtils.cutString(Integer.toHexString(b), 5)));
 
             ((CardView)(itemHolder._tvTitle.getParent()).getParent()).setOnClickListener(onClickListener);
         }else if(getItemViewType(position) == ITEM_VIEW_TYPE_BIG_ITEM){
             FileInfo fileInfo = _FileSet.get(position);
             ItemBigHolder itemBigHolder = (ItemBigHolder) holder;
-            if(!(fileInfo.tag == null)){
-                itemBigHolder._ivDownload.setImageResource(R.drawable.ic_downloaded);
-            }
 
             if(fileInfo.title.contains("《")){
                 itemBigHolder._tvTitle.setText(fileInfo.title);
@@ -188,39 +177,43 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 itemBigHolder._tvTitle.setText("《" + fileInfo.title + "》");
             }
             itemBigHolder._tvTime.setText(StringUtils.cutString(fileInfo.createtime, 2));
-            itemBigHolder._tvType.setText("文件");
+            itemBigHolder._tvType.setText(fileInfo.tag);
+            r = Integer.parseInt(fileInfo.r);
+            g = Integer.parseInt(fileInfo.g);
+            b = Integer.parseInt(fileInfo.b);
+            LogHelper.e(LOG_TAG, "#"
+                    + StringUtils.cutString(Integer.toHexString(r), 5)
+                    + StringUtils.cutString(Integer.toHexString(g), 5)
+                    + StringUtils.cutString(Integer.toHexString(b), 5));
+            itemBigHolder._tvType.setBackgroundColor(Color.parseColor("#"
+                    + StringUtils.cutString(Integer.toHexString(r), 5)
+                    + StringUtils.cutString(Integer.toHexString(g), 5)
+                    + StringUtils.cutString(Integer.toHexString(b), 5)));
             itemBigHolder._tvFileTime.setText(StringUtils.cutString(fileInfo.createtime, 1));
-            if(fileInfo.type.equals(TONGZHI)){
-                itemBigHolder._tvType.setText("通知");
-            } else if (fileInfo.type.equals(YIJIAN)){
-                itemBigHolder._tvType.setText("意见");
-            } else if (fileInfo.type.equals(BIAOZHUN)){
-                itemBigHolder._tvType.setText("标准");
-            }
 
             ((CardView)(itemBigHolder._tvTitle.getParent()).getParent()).setOnClickListener(onClickListener);
         }
 
     }
 
-    private void markFileInfo(List<FileInfo> items) {
-        if (PrefUtils.getPrefFileUrlJson() != null && PrefUtils.getPrefFileUrlJson().contains("[")) {
-            Gson gson = new Gson();
-            FileUrl[] urls = gson.fromJson(PrefUtils.getPrefFileUrlJson(), FileUrl[].class);
-            List<FileUrl> fileList = new ArrayList<>();
-            Collections.addAll(fileList, urls);
-            for (int i = 0; i < fileList.size(); i++) {
-                for (int j = 0; j < items.size(); j++) {
-                    if (fileList.get(i).id.equals(items.get(j).file)) {
-                        items.get(j).setTag("1");
-                        LogHelper.e(LOG_TAG, "这里是标记每一个元素1");
-                    }
-                    LogHelper.e(LOG_TAG, "这里是标记每一个元素2");
-                }
-                LogHelper.e(LOG_TAG, "这里是标记每一个元素3");
-            }
-        }
-    }
+//    private void markFileInfo(List<FileInfo> items) {
+//        if (PrefUtils.getPrefFileUrlJson() != null && PrefUtils.getPrefFileUrlJson().contains("[")) {
+//            Gson gson = new Gson();
+//            FileUrl[] urls = gson.fromJson(PrefUtils.getPrefFileUrlJson(), FileUrl[].class);
+//            List<FileUrl> fileList = new ArrayList<>();
+//            Collections.addAll(fileList, urls);
+//            for (int i = 0; i < fileList.size(); i++) {
+//                for (int j = 0; j < items.size(); j++) {
+//                    if (fileList.get(i).id.equals(items.get(j).file)) {
+//                        items.get(j).setMark("1");
+//                        LogHelper.e(LOG_TAG, "这里是标记每一个元素1");
+//                    }
+//                    LogHelper.e(LOG_TAG, "这里是标记每一个元素2");
+//                }
+//                LogHelper.e(LOG_TAG, "这里是标记每一个元素3");
+//            }
+//        }
+//    }
 
 
     @Override
@@ -245,7 +238,7 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void updateFile(List<FileInfo> items){
-        markFileInfo(items);
+//        markFileInfo(items);
         ArrayList <FileInfo> list = new ArrayList<>();
         list.addAll(items);
         _FileSet.clear();
@@ -253,13 +246,6 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         selectItem();
         notifyDataSetChanged();
 
-    }
-
-    public void addFile(List<FileInfo> items){
-        markFileInfo(items);
-        _FileSet.addAll(items);
-        selectItem();
-        notifyDataSetChanged();
     }
 
     public void setUseFooter(boolean useFooter){

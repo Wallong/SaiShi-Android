@@ -14,11 +14,11 @@
 
     <fragment
         android:id="@+id/nav_menu_fragment"
-        android:name="cn.edu.twt.saishi_android.ui.main.MenuFragment"
-        android:layout_width="300dp"
+        android:name="cn.edu.twt.saishi_android.ui.main.drawer.MenuFragment"
+        android:layout_width="304dp"
         android:clickable="true"
         android:layout_height="match_parent"
-        android:layout_gravity="left" />
+        android:layout_gravity="start" />
 
     <!--<android.support.design.widget.NavigationView-->
         <!--android:id="@+id/nav_view"-->

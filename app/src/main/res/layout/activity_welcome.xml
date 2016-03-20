@@ -2,13 +2,102 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_vertical">
+    android:background="@drawable/welcome_background">
+
 
     <ImageView
-        android:id="@+id/iv_welcome"
+        android:id="@+id/iv_welcome_background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"/>
+        android:layout_height="wrap_content"
+        android:scaleType="fitEnd"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/welcome_new"/>
+
+    <LinearLayout
+        android:id="@+id/ll_welcome_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="32dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/welcome_logo_left"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/iv_welcome_logo_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/welcome_logo_right"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_welcome_tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/ll_welcome_logo">
+
+        <cn.edu.twt.saishi_android.ui.common.LetterSpacingTextView
+            android:id="@+id/tv_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_welcome_logo"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/color_white"
+            android:textSize="56sp"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_welcome_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/welcome_badge"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
+    <RelativeLayout
+        android:id="@+id/ll_welcome_tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/tv_welcome_EG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="www.twt.edu.cn"
+            android:textSize="13sp"
+            android:textColor="@color/color_white"/>
+        <TextView
+            android:id="@+id/tv_welcome_CN1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tv_welcome_EG"
+            android:layout_above="@id/tv_welcome_EG"
+            android:text="天外天工作室"
+            android:textSize="12sp"
+            android:textColor="@color/color_white"/>
+
+        <TextView
+            android:id="@+id/tv_welcome_CN2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_welcome_CN1"
+            android:layout_above="@id/tv_welcome_EG"
+            android:layout_alignRight="@id/tv_welcome_EG"
+            android:text="出品"
+            android:textSize="10sp"
+            android:textColor="@color/color_white"
+            android:gravity="right"/>
+    </RelativeLayout>
 
 </RelativeLayout>

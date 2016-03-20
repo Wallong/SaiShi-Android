@@ -45,4 +45,9 @@ public class ExitApplication extends Application {
         System.exit(0);
 
     }
+    public void logout() {
+        for(int i = 0; i < activityList.size(); i++){
+            activityList.get(i).finish();
+        }
+    }
 }

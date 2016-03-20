@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/color_login_blue"
     tools:context=".ui.login.LoginActivity">
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="120dp"
         android:clipToPadding="false">
 
         <ImageView
@@ -21,7 +20,8 @@
             android:padding="@dimen/login_padding_control"
             android:layout_marginTop="@dimen/login_padding_top"
             android:layout_marginLeft="@dimen/login_padding_left_right"
-            android:src="@drawable/ic_login_account"/>
+            android:tint="@color/color_login_blue"
+            android:src="@drawable/ic_login_username"/>
 
         <EditText
             android:id="@+id/tv_login_username"
@@ -43,6 +43,7 @@
             android:layout_below="@id/iv_username"
             android:layout_marginTop="@dimen/login_margin_control"
             android:layout_marginLeft="@dimen/login_padding_left_right"
+            android:tint="@color/color_login_blue"
             android:src="@drawable/ic_login_password"/>
 
         <EditText
@@ -71,9 +72,10 @@
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:background="@drawable/btn_selector"
+            android:elevation="2dp"
             android:text="登 录"
             android:textSize="20sp"
-            android:textColor="@color/color_login_white"
+            android:textColor="@color/color_login_text_blue"
             android:layout_below="@id/tv_login_password"
             android:layout_marginTop="@dimen/login_margin_top"
             android:layout_marginLeft="@dimen/login_margin_left_right"

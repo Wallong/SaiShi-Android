@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -22,7 +23,6 @@ import cn.edu.twt.saishi_android.support.LogHelper;
 import cn.edu.twt.saishi_android.support.StringUtils;
 import cn.edu.twt.saishi_android.ui.common.ImageHelper;
 import cn.edu.twt.saishi_android.ui.common.OnItemClickListener;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by clifton on 16-2-27.
@@ -32,14 +32,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private static final int ITEM_VIEW_TYPE_ITEM = 0;
     private static final int ITEM_VIEW_TYPE_UP_ITEM = 1;
-    private static final int ITEM_VIEW_TYPE_BIG_ITEM = 2;
-    private static final int ITEM_VIEW_TYPE_FOOTER = 3;
-
-    private static final String TONGZHI = "tongzhi";
-    private static final String YIJIAN = "yijian";
-    private static final String BIAOZHUN = "biaozhun";
-    private static final String DONGTAI = "dongtai";
-    private static final String HUIWU = "huiwu";
+    private static final int ITEM_VIEW_TYPE_FOOTER = 2;
 
     private Context _context;
     private OnItemClickListener _onItemClicked;
@@ -57,16 +50,14 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     public static class ItemHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.tv_data_item_type)
-        TextView _tvType;
         @Bind(R.id.tv_data_item_title)
         TextView _tvTitle;
-        @Bind(R.id.tv_data_item_subtitle)
-        TextView _tvSubtitle;
         @Bind(R.id.tv_data_item_time)
         TextView _tvTime;
+        @Bind(R.id.tv_data_item_pv)
+        TextView _tvPv;
         @Bind(R.id.iv_data_item_icon)
-        CircleImageView _ivIcon;
+        ImageView _ivIcon;
 
 
         public ItemHolder(View itemView){
@@ -77,41 +68,17 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     public static class ItemUpHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.tv_data_item_type_up)
-        TextView _tvType;
         @Bind(R.id.tv_data_item_title_up)
         TextView _tvTitle;
-        @Bind(R.id.tv_data_item_subtitle_up)
-        TextView _tvSubtitle;
-        @Bind(R.id.tv_time)
-        TextView _tvTopic;
+        @Bind(R.id.tv_data_item_pv_up)
+        TextView _tvPv;
+        @Bind(R.id.tv_data_item_time_up)
+        TextView _tvTime;
         @Bind(R.id.iv_data_item_icon_up)
-        CircleImageView _ivIcon;
+        ImageView _ivIcon;
 
 
         public ItemUpHolder(View itemView){
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-
-        }
-    }
-
-    public static class ItemBigHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.tv_data_item_type)
-        TextView _tvType;
-        @Bind(R.id.tv_data_item_title)
-        TextView _tvTitle;
-        @Bind(R.id.tv_data_item_subtitle)
-        TextView _tvSubtitle;
-        @Bind(R.id.tv_data_item_time)
-        TextView _tvTime;
-        @Bind(R.id.tv_time)
-        TextView _tvTopic;
-        @Bind(R.id.iv_data_item_icon)
-        CircleImageView _ivIcon;
-
-
-        public ItemBigHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this, itemView);
 
@@ -141,10 +108,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         } else if (viewType == ITEM_VIEW_TYPE_UP_ITEM){
             View view = inflater.inflate(R.layout.data_up_list_item,parent,false);
             viewHolder = new ItemUpHolder(view);
-        } else if (viewType == ITEM_VIEW_TYPE_BIG_ITEM){
-            View view = inflater.inflate(R.layout.data_big_list_item,parent,false);
-            viewHolder = new ItemBigHolder(view);
-        }else {
+        } else {
             View view = inflater.inflate(R.layout.recyclerview_footer_load_more, parent, false);
             viewHolder = new FooterHolder(view);
         }
@@ -185,7 +149,6 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             }
         };
 
-
         if(getItemViewType(position) == ITEM_VIEW_TYPE_ITEM) {
             LogHelper.e(LOG_TAG, "小item提供");
             DataItem dataItem = _DataSet.get(position);
@@ -193,22 +156,9 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             if(!(dataItem == null)) {
                 itemHolder._ivIcon.setVisibility(View.GONE);
                 itemHolder._tvTitle.setText(dataItem.title);
-                itemHolder._tvSubtitle.setText(dataItem.subtitle);
+                itemHolder._tvPv.setText("阅读数:" + dataItem.fwl);
                 itemHolder._tvTime.setText(StringUtils.cutString(dataItem.createtime, 2));
-                if(dataItem.url == null) {
-                    itemHolder._tvType.setText("消息");
-                    if (dataItem.type.equals(TONGZHI)) {
-                        itemHolder._tvType.setText("通知");
-                    } else if (dataItem.type.equals(YIJIAN)) {
-                        itemHolder._tvType.setText("意见");
-                    } else if (dataItem.type.equals(BIAOZHUN)) {
-                        itemHolder._tvType.setText("标准");
-                    } else if (dataItem.type.equals(DONGTAI)) {
-                        itemHolder._tvType.setText("动态");
-                    } else if (dataItem.type.equals(HUIWU)) {
-                        itemHolder._tvType.setText("会务");
-                    }
-                } else {
+                if(dataItem.url != null) {
                     ImageHelper.getImageLoder().displayImage(
                             ApiClient.getBaseUrl() + dataItem.url,
                             itemHolder._ivIcon, ImageHelper.getDisplayImageOptions());
@@ -223,65 +173,19 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             ItemUpHolder itemUpHolder = (ItemUpHolder) holder;
 
             if(!(dataItem == null)) {
+                itemUpHolder._ivIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                itemUpHolder._ivIcon.setImageResource(R.mipmap.placeholder_up);
+                itemUpHolder._ivIcon.setAdjustViewBounds(true);
                 itemUpHolder._tvTitle.setText(dataItem.title);
-                itemUpHolder._tvSubtitle.setText(dataItem.subtitle);
-                itemUpHolder._tvTopic.setText(StringUtils.cutString(dataItem.createtime, 0));
-                if(dataItem.url == null) {
-                    itemUpHolder._ivIcon.setVisibility(View.GONE);
-                    itemUpHolder._tvType.setText("消息");
-                    if (dataItem.type.equals(TONGZHI)) {
-                        itemUpHolder._tvType.setText("通知");
-                    } else if (dataItem.type.equals(YIJIAN)) {
-                        itemUpHolder._tvType.setText("意见");
-                    } else if (dataItem.type.equals(BIAOZHUN)) {
-                        itemUpHolder._tvType.setText("标准");
-                    } else if (dataItem.type.equals(DONGTAI)) {
-                        itemUpHolder._tvType.setText("动态");
-                    } else if (dataItem.type.equals(HUIWU)) {
-                        itemUpHolder._tvType.setText("会务");
-                    }
-                }else{
-                    ImageHelper.getImageLoder().displayImage(
-                            ApiClient.getBaseUrl() + dataItem.url,
-                            itemUpHolder._ivIcon, ImageHelper.getDisplayImageOptions());
-                    itemUpHolder._ivIcon.setVisibility(View.VISIBLE);
-                }
+                itemUpHolder._tvPv.setText("阅读数:" + dataItem.fwl);
+                itemUpHolder._tvTime.setText(StringUtils.cutString(dataItem.createtime, 2));
+//                if(dataItem.url != null) {
+//                    ImageHelper.getImageLoder().displayImage(
+//                            ApiClient.getBaseUrl() + dataItem.url,
+//                            itemUpHolder._ivIcon, ImageHelper.getDisplayImageOptions());
+//                }
 
                 ((CardView) (itemUpHolder._tvTitle.getParent()).getParent()).setOnClickListener(onClickListener);
-            }
-        } else if (getItemViewType(position) == ITEM_VIEW_TYPE_BIG_ITEM){
-            LogHelper.e(LOG_TAG, "中item提供");
-            DataItem dataItem = _DataSet.get(position);
-            ItemBigHolder itemBigHolder = (ItemBigHolder) holder;
-
-
-            if(!(dataItem == null)) {
-                itemBigHolder._tvTitle.setText(dataItem.title);
-                itemBigHolder._tvSubtitle.setText(dataItem.subtitle);
-                itemBigHolder._tvTopic.setText(StringUtils.cutString(dataItem.createtime, 1));
-                itemBigHolder._tvTime.setText(StringUtils.cutString(dataItem.createtime, 2));
-                if(dataItem.url == null) {
-                    itemBigHolder._ivIcon.setVisibility(View.GONE);
-                    itemBigHolder._tvType.setText("消息");
-                    if (dataItem.type.equals(TONGZHI)) {
-                        itemBigHolder._tvType.setText("通知");
-                    } else if (dataItem.type.equals(YIJIAN)) {
-                        itemBigHolder._tvType.setText("意见");
-                    } else if (dataItem.type.equals(BIAOZHUN)) {
-                        itemBigHolder._tvType.setText("标准");
-                    } else if (dataItem.type.equals(DONGTAI)) {
-                        itemBigHolder._tvType.setText("动态");
-                    } else if (dataItem.type.equals(HUIWU)) {
-                        itemBigHolder._tvType.setText("会务");
-                    }
-                }else {
-                    ImageHelper.getImageLoder().displayImage(
-                            ApiClient.getBaseUrl() + dataItem.url,
-                            itemBigHolder._ivIcon, ImageHelper.getDisplayImageOptions());
-                    itemBigHolder._ivIcon.setVisibility(View.VISIBLE);
-                }
-
-                ((CardView) (itemBigHolder._tvTitle.getParent()).getParent()).setOnClickListener(onClickListener);
             }
         }
     }
@@ -298,8 +202,6 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             return ITEM_VIEW_TYPE_FOOTER;
         } else if (position == 0) {
             return ITEM_VIEW_TYPE_UP_ITEM;
-        } else if (position == 1 || _dataBigSet.contains(position)) {
-            return ITEM_VIEW_TYPE_BIG_ITEM;
         } else {
             return ITEM_VIEW_TYPE_ITEM;
         }
@@ -317,7 +219,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             _DataSet.remove(0);
         }
 
-        selectItem();
+//        selectItem();
 
         notifyDataSetChanged();
     }
@@ -328,7 +230,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             _DataSet.remove(0);
         }
 
-        selectItem();
+//        selectItem();
         notifyDataSetChanged();
     }
 

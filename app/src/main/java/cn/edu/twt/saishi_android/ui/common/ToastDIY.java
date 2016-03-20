@@ -40,9 +40,9 @@ public class ToastDIY {
         View layout = LayoutInflater.from(context).inflate(R.layout.toast_diy,root);
         ImageView mImageView = (ImageView) layout.findViewById(R.id.iv_toast);
         if(tag == 1) {
-            mImageView.setBackgroundResource(R.drawable.ic_modify_success);
+//            mImageView.setBackgroundResource(R.drawable.ic_modify_success);
         }else {
-            mImageView.setBackgroundResource(R.drawable.ic_modify_failure);
+//            mImageView.setBackgroundResource(R.drawable.ic_modify_failure);
         }
         toast = new Toast(context);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);

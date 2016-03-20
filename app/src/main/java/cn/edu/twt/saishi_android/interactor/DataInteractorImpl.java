@@ -10,6 +10,7 @@ import cn.edu.twt.saishi_android.api.ApiClient;
 import cn.edu.twt.saishi_android.bean.DataItem;
 import cn.edu.twt.saishi_android.bean.ImageInfo;
 import cn.edu.twt.saishi_android.support.LogHelper;
+import cn.edu.twt.saishi_android.ui.main.list.OnAddViewsCallback;
 import cn.edu.twt.saishi_android.ui.main.list.OnGetDataItemsCallback;
 import cz.msebera.android.httpclient.Header;
 
@@ -67,6 +68,21 @@ public class DataInteractorImpl implements DataInteractor {
                     LogHelper.e(LOG_TAG, datum == null ? "" : datum.toString());
                     onGetDataItemsCallback.onSuccess(datum, null);
                 }
+            }
+        });
+    }
+
+    @Override
+    public void addViews(String id, final OnAddViewsCallback onAddViewsCallback) {
+        ApiClient.addViews(id, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                onAddViewsCallback.onFailure(responseString, null);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                onAddViewsCallback.onSuccess(responseString);
             }
         });
     }

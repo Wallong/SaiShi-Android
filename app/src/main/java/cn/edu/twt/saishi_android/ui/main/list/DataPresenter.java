@@ -15,4 +15,6 @@ public interface DataPresenter {
 
     void onItemClicked(View v , int position);
 
+    void addViews(String id);
+
 }

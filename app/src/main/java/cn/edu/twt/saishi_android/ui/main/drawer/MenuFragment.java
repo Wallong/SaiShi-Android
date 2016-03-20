@@ -1,16 +1,24 @@
-package cn.edu.twt.saishi_android.ui.main;
+package cn.edu.twt.saishi_android.ui.main.drawer;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.TreeSet;
 
 import butterknife.Bind;
@@ -18,11 +26,14 @@ import butterknife.ButterKnife;
 import cn.edu.twt.saishi_android.R;
 import cn.edu.twt.saishi_android.api.ApiClient;
 import cn.edu.twt.saishi_android.bean.ImageInfo;
+import cn.edu.twt.saishi_android.bean.MenuModel;
 import cn.edu.twt.saishi_android.support.LogHelper;
 import cn.edu.twt.saishi_android.support.PrefUtils;
 import cn.edu.twt.saishi_android.ui.common.ImageHelper;
 import cn.edu.twt.saishi_android.ui.common.OnGetImageCallback;
+import cn.edu.twt.saishi_android.ui.common.OnItemClickListener;
 import cn.edu.twt.saishi_android.ui.file.FileFragment;
+import cn.edu.twt.saishi_android.ui.main.MainActivity;
 import cn.edu.twt.saishi_android.ui.main.list.DataFragment;
 import cn.edu.twt.saishi_android.ui.schedule.ScheduleFragment;
 import cn.edu.twt.saishi_android.ui.settings.SettingsActivity;
@@ -31,29 +42,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by clifton on 16-2-28.
  */
-public class MenuFragment extends Fragment implements View.OnClickListener, OnGetImageCallback {
+public class MenuFragment extends Fragment implements OnItemClickListener, OnGetImageCallback {
     private static final String LOG_TAG = MenuFragment.class.getSimpleName();
 
-    @Bind(R.id.nav_settings)
-    TextView mTvSettings;
-    @Bind(R.id.nav_notice)
-    TextView mTvNotice;
-    @Bind(R.id.nav_explore)
-    TextView mTvExplore;
-    @Bind(R.id.nav_schedule)
-    TextView mTvSchedule;
-    @Bind(R.id.nav_file)
-    TextView mTvFile;
-    @Bind(R.id.nav_conference)
-    TextView mTvConference;
+    @Bind(R.id.iv_drawer_header)
+    ImageView mIvHeader;
+    @Bind(R.id.lv_menu)
+    ListView lv_menu;
     @Bind(R.id.user_profile_image)
     CircleImageView iv_profile_icon;
     @Bind(R.id.tv_username)
     TextView tv_name;
     @Bind(R.id.tv_user_profile_name)
     TextView tv_profile_username;
-    @Bind(R.id.tv_user_profile_phone)
-    TextView tv_profile_phone;
     @Bind(R.id.tv_user_profile_position)
     TextView tv_profile_position;
 
@@ -61,6 +62,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener, OnGe
     private final static String DONGTAI = "Dongtai";
     private final static String TONGZHI = "Tongzhi";
     private final static String RICHENG = "Richeng";
+    private List<MenuModel> list;
+    private MenuAdapter adapter;
+    private int save = -1;
     private int tag = 0;
     private int tagg = 0;
     private TreeSet<Integer> tags = new TreeSet<>();
@@ -72,6 +76,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener, OnGe
     private ScheduleFragment scheduleFragment;
     private FileFragment fileFragment;
     private Fragment fragment = null;
+    private ImageView ivItemIcon;
+    private ImageView ivItemGo;
+    private TextView tvItemText;
 
     @Nullable
     @Override
@@ -80,20 +87,18 @@ public class MenuFragment extends Fragment implements View.OnClickListener, OnGe
         ButterKnife.bind(this, view);
         mActivity = getActivity();
 
+        if(PrefUtils.getPrefHeader().equals("0")){
+            mIvHeader.setImageResource(R.drawable.ic_drawer_header_old);
+        }
+
         tv_name.setText(PrefUtils.getPrefUsername());
-        tv_profile_username.setText("帐号:" + PrefUtils.getPrefPhone());
-        tv_profile_phone.setText("电话:" + PrefUtils.getPrefPhone());
+        tv_profile_username.setText("电话:" + PrefUtils.getPrefPhone());
         tv_profile_position.setText("单位:" + PrefUtils.getPrefDanwei());
         ImageHelper.downLoadImage(PrefUtils.getPrefIcon(), this);
 
-        mTvSettings.setOnClickListener(this);
-        mTvNotice.setOnClickListener(this);
-        mTvExplore.setOnClickListener(this);
-        mTvSchedule.setOnClickListener(this);
-        mTvFile.setOnClickListener(this);
-        mTvConference.setOnClickListener(this);
-
-
+        initData();
+        adapter = new MenuAdapter(this.getActivity(), list, this);
+        lv_menu.setAdapter(adapter);
 
         return view;
     }
@@ -106,29 +111,61 @@ public class MenuFragment extends Fragment implements View.OnClickListener, OnGe
         ButterKnife.unbind(this);
     }
 
+    private void initData(){
+        list = new ArrayList<>();
+
+        list.add(new MenuModel(R.drawable.ic_menu_notice, R.drawable.ic_item_go, "通知"));
+        list.add(new MenuModel(R.drawable.ic_menu_explore, R.drawable.ic_item_go, "动态"));
+        list.add(new MenuModel(R.drawable.ic_menu_schedule, R.drawable.ic_item_go, "日程"));
+        list.add(new MenuModel(R.drawable.ic_menu_file, R.drawable.ic_item_go, "文件"));
+        list.add(new MenuModel(R.drawable.ic_menu_conference, R.drawable.ic_item_go, "会务"));
+        list.add(new MenuModel(R.drawable.ic_settings, R.drawable.ic_item_go, "设置"));
+    }
+
     @Override
-    public void onClick(View v) {
+    public void onItemClicked(View view, int position) {
+        ((ViewGroup)view).getChildAt(position).setBackgroundColor(
+                Color.parseColor("#E1F5FE"));
+        ivItemGo = (ImageView)((ViewGroup) view).getChildAt(position).findViewById(R.id.nav_item_go);
+        ivItemIcon = (ImageView)((ViewGroup) view).getChildAt(position).findViewById(R.id.nav_item_icon);
+        tvItemText = (TextView)((ViewGroup) view).getChildAt(position).findViewById(R.id.nav_item_text);
+        ivItemGo.setColorFilter(getResources().getColor(R.color.icon_press_blue));
+        ivItemIcon.setColorFilter(getResources().getColor(R.color.icon_press_blue));
+        tvItemText.setTextColor(getResources().getColor(R.color.icon_press_blue));
+
+        if ((save != -1 && save != position)) {
+            ivItemGo = (ImageView)((ViewGroup) view).getChildAt(save).findViewById(R.id.nav_item_go);
+            ivItemIcon = (ImageView)((ViewGroup) view).getChildAt(save).findViewById(R.id.nav_item_icon);
+            tvItemText = (TextView)((ViewGroup) view).getChildAt(save).findViewById(R.id.nav_item_text);
+            ivItemGo.setColorFilter(getResources().getColor(R.color.icon_normal_grey));
+            ivItemIcon.setColorFilter(getResources().getColor(R.color.icon_normal_grey));
+            tvItemText.setTextColor(getResources().getColor(R.color.icon_normal_black));
+            ((ViewGroup)view).getChildAt(save).setBackgroundColor(
+                    Color.parseColor("#ffffff"));
+        }
+        save = position;
+
         String type = null;
         Intent intent = null;
-        switch (v.getId()){
-            case R.id.nav_settings:
+        switch (position){
+            case 5:
                 intent = new Intent(getActivity(), SettingsActivity.class);
                 ((MainActivity)mActivity).closeMenu();
                 startActivity(intent);
                 break;
-            case R.id.nav_notice:
+            case 0:
                 type = TONGZHI;
                 tagg = 1;
                 intiFragment(type);
                 tag = 1;
                 break;
-            case R.id.nav_explore:
+            case 1:
                 type = DONGTAI;
                 tagg = 2;
                 intiFragment(type);
                 tag = 2;
                 break;
-            case R.id.nav_schedule:
+            case 2:
                 if(scheduleFragment == null){
                     scheduleFragment = new ScheduleFragment();
                     LogHelper.e(LOG_TAG, "这是初始化日程" + tag);
@@ -139,7 +176,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, OnGe
                 changeFragment(fragment);
                 tag = 3;
                 break;
-            case R.id.nav_file:
+            case 3:
                 if(fileFragment == null){
                     fileFragment = FileFragment.getInstance();
                     fragment = fileFragment;
@@ -151,7 +188,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, OnGe
                 changeFragment(fragment);
                 tag = 4;
                 break;
-            case R.id.nav_conference:
+            case 4:
                 type = HUIWU;
                 tagg = 5;
                 intiFragment(type);
@@ -258,6 +295,5 @@ public class MenuFragment extends Fragment implements View.OnClickListener, OnGe
     public void onFailure(String errorString) {
 
     }
-
 
 }

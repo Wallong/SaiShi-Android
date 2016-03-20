@@ -15,7 +15,7 @@ import cn.edu.twt.saishi_android.ui.common.ImageProvider;
 /**
  * Created by clifton on 16-2-14.
  */
-public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback{
+public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback, OnAddViewsCallback{
 
     private final static String LOG_TAG = DataPresenterImpl.class.getSimpleName();
 
@@ -78,8 +78,13 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
 
     @Override
     public void onItemClicked(View v, int position) {
-        LogHelper.e(LOG_TAG, ""+position);
+        LogHelper.e(LOG_TAG, "" + position);
         _dataListView.startContentActivity(position);
+    }
+
+    @Override
+    public void addViews(String id) {
+        _dataInteractor.addViews(id, this);
     }
 
     @Override
@@ -138,5 +143,15 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
         isLoadMore = false;
         isRefreshing = false;
 
+    }
+
+    @Override
+    public void onSuccess(String responseString) {
+        LogHelper.e(LOG_TAG, "onSuccess" + responseString);
+    }
+
+    @Override
+    public void onFailure(String errorString, String tag) {
+        LogHelper.e(LOG_TAG, "onFailure" + errorString);
     }
 }

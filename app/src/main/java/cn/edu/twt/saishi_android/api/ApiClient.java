@@ -31,6 +31,8 @@ public class ApiClient {
     public static final String PWD_CHANGE_SUCCESS_CODE = "00009";
     public static final String FILE_NO_FOUND_CODE = "00010";
     public static final String IMG_NO_FOUND_CODE = "00011";
+    public static final String UPDATE_NO_CODE = "10000";
+    public static final String UPDATE_NEW_CODE = "20000";
 
     private static final AsyncHttpClient sClient = new AsyncHttpClient();
     private static final PersistentCookieStore sCookieStore = new PersistentCookieStore(ContestApp.getContext());
@@ -40,12 +42,15 @@ public class ApiClient {
     private static final String LOGIN_URL = "index.php/Api/log_in";
     private static final String LOGOUT_URL = "index.php/Api/log_out";
     private static final String DATA_URL = "index.php/Api/data";
+    private static final String FANGWEN_URL = "index.php/Api/fangwen";
     private static final String FILE_URL = "index.php/Api/wenjian";
     private static final String FILE_GET_URL = "index.php/Api/get_file_url";
     private static final String IMAGE_GET_URL = "index.php/Api/get_img_url";
     private static final String USERINFO_URL = "index.php/Api/get_userinfo";
     private static final String MODIFY_URL = "index.php/Api/change_pwd";
-    public static final String SCHEDULE_URL = "http://news.twt.edu.cn/fdyds/schedule.html";
+//    public static final String SCHEDULE_URL = "http://news.twt.edu.cn/fdyds/schedule.html";
+    public static final String SCHEDULE_URL = "http://www.baidu.com";
+    public static final String UPDATE_URL = "index.php/Api/update";
 
     static {
         sClient.setTimeout(DEFAULT_TIMEOUT);
@@ -140,6 +145,20 @@ public class ApiClient {
         params.put("imgid", icon);
 
         sClient.post(BASE_URL + IMAGE_GET_URL, params, handler);
+    }
+
+    public static void addViews(String id, TextHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("id", id);
+
+        sClient.post(BASE_URL + FANGWEN_URL, params, handler);
+    }
+
+    public static void update(String type, TextHttpResponseHandler handler){
+        RequestParams params = new RequestParams();
+        params.put("type", type);
+
+        sClient.post(BASE_URL + UPDATE_URL, params, handler);
     }
 
 }

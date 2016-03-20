@@ -7,8 +7,6 @@ public class StringUtils {
     public static String cutString(String string, int tag){
         string = string.replaceAll("-", ".");
         String time = string;
-
-
         switch (tag){
             case 0:
                 String total  = string.substring(0,16);
@@ -36,6 +34,12 @@ public class StringUtils {
                 }
                 String path =  string.substring(place,string.length());
                 time = path;
+                break;
+            case 5:
+                if(string.length() == 1){
+                    String hexString = "0" + string;
+                    time = hexString;
+                }
                 break;
         }
         return time;

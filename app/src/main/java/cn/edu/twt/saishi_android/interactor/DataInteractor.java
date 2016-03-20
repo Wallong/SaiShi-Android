@@ -1,5 +1,6 @@
 package cn.edu.twt.saishi_android.interactor;
 
+import cn.edu.twt.saishi_android.ui.main.list.OnAddViewsCallback;
 import cn.edu.twt.saishi_android.ui.main.list.OnGetDataItemsCallback;
 
 /**
@@ -8,5 +9,7 @@ import cn.edu.twt.saishi_android.ui.main.list.OnGetDataItemsCallback;
 public interface DataInteractor {
 
     void getDataItems(String type, int page, OnGetDataItemsCallback onGetDataItemsCallback);
+
+    void addViews(String id , OnAddViewsCallback onAddViewsCallback);
 
 }

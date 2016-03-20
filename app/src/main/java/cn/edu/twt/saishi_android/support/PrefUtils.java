@@ -2,6 +2,7 @@ package cn.edu.twt.saishi_android.support;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.IntegerRes;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -31,9 +32,11 @@ public class PrefUtils {
 
     private static final String PREF_ICON_URL = "iconurl";
 
-    private static final String PREF_FILE_URL_JSON = "fileurl";
-
     private static final String PREF_PASSWORD = "password";
+
+    private static final String PREF_HEADER = "header";
+
+    private static final String PREF_UPDATE = "update";
 
     public static SharedPreferences getDefaultSharedPreferences() {
         return PreferenceManager.getDefaultSharedPreferences(ContestApp.getContext());
@@ -51,12 +54,20 @@ public class PrefUtils {
                 .apply();
     }
 
-    public static void setDefaultPrefFileUrlJson(String json){
-        getDefaultSharedPreferences().edit().putString(PREF_FILE_URL_JSON, json).apply();
+    public static void setDefaultPrefHeader(int header){
+        getDefaultSharedPreferences().edit().putString(PREF_HEADER, Integer.toString(header)).apply();
     }
 
-    public static String getPrefFileUrlJson() {
-        return getDefaultSharedPreferences().getString(PREF_FILE_URL_JSON, null);
+    public static String getPrefHeader() {
+        return getDefaultSharedPreferences().getString(PREF_HEADER, null);
+    }
+
+    public static void setDefaultPrefUpdate(String update){
+        getDefaultSharedPreferences().edit().putString(PREF_UPDATE, update).apply();
+    }
+
+    public static String getPrefUpdate(){
+        return getDefaultSharedPreferences().getString(PREF_UPDATE, null);
     }
 
     public static void setDefaultPrefUserIcon(String iconUrl){

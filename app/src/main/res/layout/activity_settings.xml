@@ -30,11 +30,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/nav_header_height"
+            android:layout_height="180dp"
             android:paddingTop="@dimen/settings_layout_padding"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:background="@color/color_login_blue">
+            android:background="@color/color_settings_blue">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/user_profile_setting_image"
@@ -90,12 +90,19 @@
                 android:orientation="horizontal"
                 android:background="@color/item_color"
                 android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:tint="@color/icon_normal_grey"
+                    android:src="@drawable/ic_settings_update"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:duplicateParentState="true"
                     android:text="检查更新"
+                    android:textColor="@color/color_text_primary"
                     android:textSize="16sp"/>
                 <ImageView
                     android:id="@+id/setting_version"
@@ -115,12 +122,19 @@
                 android:orientation="horizontal"
                 android:background="@color/item_color"
                 android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:tint="@color/icon_normal_grey"
+                    android:src="@drawable/ic_settings_modify"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:duplicateParentState="true"
                     android:text="修改密码"
+                    android:textColor="@color/color_text_primary"
                     android:textSize="16sp"/>
 
             </LinearLayout>
@@ -136,12 +150,19 @@
                 android:orientation="horizontal"
                 android:background="@color/item_color"
                 android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:tint="@color/icon_normal_grey"
+                    android:src="@drawable/ic_settings_logout"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:duplicateParentState="true"
                     android:text="退出登录"
+                    android:textColor="@color/color_text_primary"
                     android:textSize="16sp"/>
 
             </LinearLayout>
