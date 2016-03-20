@@ -15,18 +15,10 @@
     <fragment
         android:id="@+id/nav_menu_fragment"
         android:name="cn.edu.twt.saishi_android.ui.main.drawer.MenuFragment"
-        android:layout_width="304dp"
-        android:clickable="true"
         android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:clickable="true"
         android:layout_gravity="start" />
 
-    <!--<android.support.design.widget.NavigationView-->
-        <!--android:id="@+id/nav_view"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:fitsSystemWindows="true"-->
-        <!--app:headerLayout="@layout/nav_header_main"-->
-        <!--app:menu="@menu/activity_main_drawer" />-->
 
 </android.support.v4.widget.DrawerLayout>

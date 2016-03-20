@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,6 +25,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.edu.twt.saishi_android.R;
 import cn.edu.twt.saishi_android.support.ExitApplication;
+import cn.edu.twt.saishi_android.support.LogHelper;
 import cn.edu.twt.saishi_android.support.PrefUtils;
 import cn.edu.twt.saishi_android.ui.common.LetterSpacingTextView;
 import cn.edu.twt.saishi_android.ui.login.LoginActivity;
@@ -33,9 +35,11 @@ import cn.edu.twt.saishi_android.ui.main.MainActivity;
  * Created by clifton on 16-2-19.
  */
 public class WelcomeActivity extends Activity{
+    private final static String LOG_TAG = WelcomeActivity.class.getSimpleName();
+
     @Bind(R.id.iv_welcome_background)
     ImageView ivBackground;
-    @Bind(R.id.iv_welcome_logo_right)
+    @Bind(R.id.iv_welcome_logo_medium)
     ImageView ivLogoRight;
     @Bind(R.id.tv_welcome)
     LetterSpacingTextView tvWelcome;
@@ -48,6 +52,10 @@ public class WelcomeActivity extends Activity{
     @Bind(R.id.iv_welcome_badge)
     ImageView ivBadge;
 
+    private int heightPixels;
+    private int widthPixels;
+    private int densityDpi;
+    private float density;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +64,7 @@ public class WelcomeActivity extends Activity{
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
         ExitApplication.getInstance().addActivity(this);
+        getInfo();
         initView();
 
         new Handler().postDelayed(new Runnable() {
@@ -74,8 +83,26 @@ public class WelcomeActivity extends Activity{
         }, 4000);
     }
 
+    private void getInfo(){
+        WindowManager manager = this.getWindowManager();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+        heightPixels = outMetrics.heightPixels;
+        widthPixels = outMetrics.widthPixels;
+        densityDpi = outMetrics.densityDpi;
+        density = outMetrics.density;
+        LogHelper.e(LOG_TAG, "屏幕高：" + outMetrics.heightPixels + "  屏幕宽：" + outMetrics.widthPixels +"  " + outMetrics.density +"  "+ outMetrics.densityDpi);
+    }
+
 
     private void initView(){
+        int scaleHeight = Math.round(densityDpi * 0.21f);
+        int scaleWidth = Math.round(densityDpi * 0.21f);
+        int ivLogoHeight = Math.round(density * 200);
+        int ivLogoLeftWidth = Math.round(widthPixels * 0.36f);
+        int deltaX = ivLogoLeftWidth - scaleWidth;
+        int deltaY = ivLogoHeight - scaleHeight;
+        LogHelper.e(LOG_TAG, "deltaX----->" + deltaX + "  deltaY----->" + deltaY);
 
         Random random = new Random();
         int ran = random.nextInt(2);
@@ -96,9 +123,9 @@ public class WelcomeActivity extends Activity{
                 Animation.RELATIVE_TO_SELF, 0f);
         TranslateAnimation translateAnimation = new TranslateAnimation(
                 Animation.RELATIVE_TO_SELF, 0f,
-                Animation.ABSOLUTE, 180,
+                Animation.ABSOLUTE, deltaX,
                 Animation.RELATIVE_TO_SELF, 0f,
-                Animation.ABSOLUTE, 240);
+                Animation.ABSOLUTE, deltaY);
         animationSet.setDuration(1000);
         animationSet.setStartOffset(1000);
         animationSet.setFillAfter(true);
