@@ -96,12 +96,12 @@ public class WelcomeActivity extends Activity{
 
 
     private void initView(){
-        int scaleHeight = Math.round(densityDpi * 0.21f);
-        int scaleWidth = Math.round(densityDpi * 0.21f);
+        int scaleHeight = Math.round(heightPixels * 0.20f);
+        int scaleWidth = Math.round(widthPixels * 0.20f);
         int ivLogoHeight = Math.round(density * 200);
-        int ivLogoLeftWidth = Math.round(widthPixels * 0.36f);
+        int ivLogoLeftWidth = Math.round(widthPixels * 0.50f);
         int deltaX = ivLogoLeftWidth - scaleWidth;
-        int deltaY = ivLogoHeight - scaleHeight;
+        int deltaY = Math.round((ivLogoHeight - scaleHeight) * 2.1f);
         LogHelper.e(LOG_TAG, "deltaX----->" + deltaX + "  deltaY----->" + deltaY);
 
         Random random = new Random();
@@ -118,7 +118,7 @@ public class WelcomeActivity extends Activity{
 
         ivBadge.setVisibility(View.VISIBLE);
         AnimationSet animationSet = new AnimationSet(true);
-        ScaleAnimation scaleAnimation = new ScaleAnimation(1, 0.21f, 1, 0.21f,
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1, 0.20f, 1, 0.20f,
                 Animation.RELATIVE_TO_SELF, 0f,
                 Animation.RELATIVE_TO_SELF, 0f);
         TranslateAnimation translateAnimation = new TranslateAnimation(

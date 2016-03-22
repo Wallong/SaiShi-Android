@@ -85,7 +85,7 @@ public class ScheduleFragment extends Fragment {
         //设置支持缩放
         mWebView.getSettings().setSupportZoom(true);
         //设置缩放工具显示
-        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.getSettings().setBuiltInZoomControls(false);
         mWebView.getSettings().setUseWideViewPort(true);
 
         mWebView.setWebViewClient(wvc);

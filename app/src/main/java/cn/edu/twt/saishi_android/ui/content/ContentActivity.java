@@ -3,6 +3,7 @@ package cn.edu.twt.saishi_android.ui.content;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -34,6 +35,8 @@ public class ContentActivity extends AppCompatActivity {
     TextView mTvContentTime;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+    @Bind(R.id.toolbar_layout)
+    CollapsingToolbarLayout mToolbarLayout;
     @Bind(R.id.toolbar_back)
     ImageView mIvToolbar;
 
@@ -51,7 +54,7 @@ public class ContentActivity extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void init(){
         dataItem = (DataItem)getIntent().getSerializableExtra("bean");
-        mToolbar.setTitle(dataItem.title);
+        mToolbarLayout.setTitle(dataItem.title);
         if(dataItem.url == null){
             switch (PrefUtils.getPrefHeader()){
                 case "0":

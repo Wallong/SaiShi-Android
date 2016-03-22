@@ -1,7 +1,11 @@
 package cn.edu.twt.saishi_android.ui.main;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -114,7 +118,25 @@ public class MainActivity extends AppCompatActivity
             public void onSuccess(UpdateInfo updateInfo) {
                 if(updateInfo.getResult_code().equals(ApiClient.UPDATE_NEW_CODE)){
                     PrefUtils.setDefaultPrefUpdate(ApiClient.UPDATE_NEW_CODE);
-                    toastMessage(updateInfo.getMsg());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("新版本更新");
+                    String msg = "检测到新版本: " + updateInfo.getVersion() + "\n" + updateInfo.getDetail();
+                    final String url = updateInfo.getUrl();
+                    builder.setMessage(msg);
+                    builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Uri uri = Uri.parse(url);
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }
+                    });
+                    builder.setNegativeButton("下次再说", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
                 }
             }
 

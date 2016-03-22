@@ -48,8 +48,8 @@ public class ApiClient {
     private static final String IMAGE_GET_URL = "index.php/Api/get_img_url";
     private static final String USERINFO_URL = "index.php/Api/get_userinfo";
     private static final String MODIFY_URL = "index.php/Api/change_pwd";
-//    public static final String SCHEDULE_URL = "http://news.twt.edu.cn/fdyds/schedule.html";
-    public static final String SCHEDULE_URL = "http://www.baidu.com";
+    public static final String SCHEDULE_URL = "http://news.twt.edu.cn/fdyds/schedule.html";
+//    public static final String SCHEDULE_URL = "http://www.baidu.com";
     public static final String UPDATE_URL = "index.php/Api/update";
 
     static {

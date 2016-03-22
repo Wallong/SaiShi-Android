@@ -32,7 +32,7 @@ import cn.edu.twt.saishi_android.support.StringUtils;
 /**
  * Created by clifton on 16-2-28.
  */
-public class FilePresenterImpl implements FilePresenter, OnGetFileCallback, OnGetFileLoadedCallback {
+public class FilePresenterImpl implements FilePresenter, OnGetFileCallback {
 
     private final static String LOG_TAG = FilePresenterImpl.class.getSimpleName();
 
@@ -105,12 +105,6 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback, OnGe
         _fileView.startFileContentActivity(position);
     }
 
-
-    @Override
-    public void downloadFile(String fileId) {
-        _fileInteractor.beginDownloadFile(fileId, makedirs(), this);
-    }
-
     @Override
     public File makedirs() {
         File fileStorageDir = new File(Environment.getExternalStorageDirectory() + File.separator + "ContestApp");
@@ -136,15 +130,7 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback, OnGe
         handlItems(fileInfos);
     }
 
-    @Override
-    public void onSuccess(File file,FileUrl fileUrl) {
-        if(!(file == null)) {
-            _fileView.hideProgressBar();
-            imageView.setImageResource(R.drawable.ic_downloaded);
 
-            openFile(file);
-        }
-    }
 
     @Override
     public void onFailure(String errorString) {

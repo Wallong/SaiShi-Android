@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/welcome_background">
 
@@ -18,7 +19,8 @@
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/ll_welcome_logo"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="200dp"
+        android:fitsSystemWindows="true">
 
         <ImageView
             android:id="@+id/iv_welcome_logo_left_left"
@@ -79,6 +81,7 @@
         android:id="@+id/iv_welcome_badge"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:src="@drawable/welcome_badge"
         android:layout_centerInParent="true"
         android:visibility="gone"/>
@@ -97,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:text="www.twt.edu.cn"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:textColor="@color/color_white"/>
         <TextView
             android:id="@+id/tv_welcome_CN1"

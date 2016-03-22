@@ -58,7 +58,7 @@ public class FileContentActivity extends AppCompatActivity {
         //设置支持缩放
         mWebView.getSettings().setSupportZoom(true);
         //设置缩放工具显示
-        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.getSettings().setBuiltInZoomControls(false);
 
         int a = 12;
         String html= "<html> \n" +

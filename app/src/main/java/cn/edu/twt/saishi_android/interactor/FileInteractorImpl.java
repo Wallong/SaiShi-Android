@@ -47,49 +47,37 @@ public class FileInteractorImpl implements FileInteractor {
         });
     }
 
-    @Override
-    public void beginDownloadFile(String fileId, final File filePath, final OnGetFileLoadedCallback onGetFileLoadedCallback) {
-        ApiClient.downloadFile(fileId, new TextHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Gson gson = new Gson();
-                LogHelper.e(LOG_TAG, responseString);
-                FileUrl fileUrl = gson.fromJson(responseString, FileUrl.class);
-                onGetFileLoadedCallback.onSuccess(null, fileUrl);
-
-                ApiClient.haveDownloadFile(fileUrl.url, new FileAsyncHttpResponseHandler(filePath) {
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, File file) {
-                        LogHelper.e(LOG_TAG, "下载成功");
-                        onGetFileLoadedCallback.onSuccess(file, null);
-                    }
-                });
-
-            }
-        });
-
-    }
+//    @Override
+//    public void beginDownloadFile(String fileId, final File filePath, final OnGetFileLoadedCallback onGetFileLoadedCallback) {
+//        ApiClient.downloadFile(fileId, new TextHttpResponseHandler() {
 //            @Override
-//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-//                onGetFileLoadedCallback.onFailure("下载失败");
+//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+//
 //            }
 //
 //            @Override
-//            public void onSuccess(int statusCode, Header[] headers, File file) {
-//                if(statusCode==200){
-//                    onGetFileLoadedCallback.onSuccess(file);
-//                }
+//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+//                Gson gson = new Gson();
+//                LogHelper.e(LOG_TAG, responseString);
+//                FileUrl fileUrl = gson.fromJson(responseString, FileUrl.class);
+//                onGetFileLoadedCallback.onSuccess(null, fileUrl);
+//
+//                ApiClient.haveDownloadFile(fileUrl.url, new FileAsyncHttpResponseHandler(filePath) {
+//                    @Override
+//                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(int statusCode, Header[] headers, File file) {
+//                        LogHelper.e(LOG_TAG, "下载成功");
+//                        onGetFileLoadedCallback.onSuccess(file, null);
+//                    }
+//                });
+//
 //            }
 //        });
+//
+//    }
 
 }

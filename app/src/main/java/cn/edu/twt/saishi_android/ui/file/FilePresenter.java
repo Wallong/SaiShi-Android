@@ -16,8 +16,6 @@ public interface FilePresenter {
 
     void onItemClicked(View v , int position);
 
-    void downloadFile(String fileId);
-
     File makedirs();
 
 }
