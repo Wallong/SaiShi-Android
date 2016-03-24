@@ -10,15 +10,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.TreeSet;
 
 import butterknife.Bind;
@@ -30,6 +27,7 @@ import cn.edu.twt.saishi_android.bean.MenuModel;
 import cn.edu.twt.saishi_android.support.LogHelper;
 import cn.edu.twt.saishi_android.support.PrefUtils;
 import cn.edu.twt.saishi_android.ui.common.ImageHelper;
+import cn.edu.twt.saishi_android.ui.common.ListViewDIY;
 import cn.edu.twt.saishi_android.ui.common.OnGetImageCallback;
 import cn.edu.twt.saishi_android.ui.common.OnItemClickListener;
 import cn.edu.twt.saishi_android.ui.file.FileFragment;
@@ -48,7 +46,7 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
     @Bind(R.id.iv_drawer_header)
     ImageView mIvHeader;
     @Bind(R.id.lv_menu)
-    ListView lv_menu;
+    ListViewDIY lv_menu;
     @Bind(R.id.user_profile_image)
     CircleImageView iv_profile_icon;
     @Bind(R.id.tv_username)
@@ -79,6 +77,7 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
     private ImageView ivItemIcon;
     private ImageView ivItemGo;
     private TextView tvItemText;
+    private View view;
 
     @Nullable
     @Override
@@ -88,7 +87,7 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
         mActivity = getActivity();
 
         if(PrefUtils.getPrefHeader().equals("0")){
-            mIvHeader.setImageResource(R.drawable.ic_drawer_header_old);
+            mIvHeader.setImageResource(R.mipmap.ic_drawer_header_old);
         }
 
         tv_name.setText(PrefUtils.getPrefUsername());
@@ -103,6 +102,18 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //设置页面返回时设置item的背景颜色为默认颜色
+        LogHelper.e(LOG_TAG, "This is onPause() function　　" + "save == " + save);
+        if(save == 5 && this.view != null){
+            ((ViewGroup)view).getChildAt(save).setBackgroundColor(Color.parseColor("#ffffff"));
+            ivItemGo.setColorFilter(getResources().getColor(R.color.icon_normal_grey));
+            ivItemIcon.setColorFilter(getResources().getColor(R.color.icon_normal_grey));
+            tvItemText.setTextColor(getResources().getColor(R.color.icon_normal_black));
+        }
+    }
 
 
     @Override
@@ -114,25 +125,16 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
     private void initData(){
         list = new ArrayList<>();
 
-        list.add(new MenuModel(R.drawable.ic_menu_notice, R.drawable.ic_item_go, "通知"));
-        list.add(new MenuModel(R.drawable.ic_menu_explore, R.drawable.ic_item_go, "动态"));
-        list.add(new MenuModel(R.drawable.ic_menu_schedule, R.drawable.ic_item_go, "日程"));
-        list.add(new MenuModel(R.drawable.ic_menu_file, R.drawable.ic_item_go, "文件"));
-        list.add(new MenuModel(R.drawable.ic_menu_conference, R.drawable.ic_item_go, "会务"));
-        list.add(new MenuModel(R.drawable.ic_settings, R.drawable.ic_item_go, "设置"));
+        list.add(new MenuModel(R.mipmap.ic_menu_notice, R.mipmap.ic_item_go, "通知"));
+        list.add(new MenuModel(R.mipmap.ic_menu_explore, R.mipmap.ic_item_go, "动态"));
+        list.add(new MenuModel(R.mipmap.ic_menu_schedule, R.mipmap.ic_item_go, "日程"));
+        list.add(new MenuModel(R.mipmap.ic_menu_file, R.mipmap.ic_item_go, "文件"));
+        list.add(new MenuModel(R.mipmap.ic_menu_conference, R.mipmap.ic_item_go, "会务"));
+        list.add(new MenuModel(R.mipmap.ic_settings, R.mipmap.ic_item_go, "设置"));
     }
 
     @Override
     public void onItemClicked(View view, int position) {
-        ((ViewGroup)view).getChildAt(position).setBackgroundColor(
-                Color.parseColor("#E1F5FE"));
-        ivItemGo = (ImageView)((ViewGroup) view).getChildAt(position).findViewById(R.id.nav_item_go);
-        ivItemIcon = (ImageView)((ViewGroup) view).getChildAt(position).findViewById(R.id.nav_item_icon);
-        tvItemText = (TextView)((ViewGroup) view).getChildAt(position).findViewById(R.id.nav_item_text);
-        ivItemGo.setColorFilter(getResources().getColor(R.color.icon_press_blue));
-        ivItemIcon.setColorFilter(getResources().getColor(R.color.icon_press_blue));
-        tvItemText.setTextColor(getResources().getColor(R.color.icon_press_blue));
-
         if ((save != -1 && save != position)) {
             ivItemGo = (ImageView)((ViewGroup) view).getChildAt(save).findViewById(R.id.nav_item_go);
             ivItemIcon = (ImageView)((ViewGroup) view).getChildAt(save).findViewById(R.id.nav_item_icon);
@@ -143,6 +145,16 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
             ((ViewGroup)view).getChildAt(save).setBackgroundColor(
                     Color.parseColor("#ffffff"));
         }
+        this.view = view;
+        ((ViewGroup)view).getChildAt(position).setBackgroundColor(
+                Color.parseColor("#E1F5FE"));
+        ivItemGo = (ImageView)((ViewGroup) view).getChildAt(position).findViewById(R.id.nav_item_go);
+        ivItemIcon = (ImageView)((ViewGroup) view).getChildAt(position).findViewById(R.id.nav_item_icon);
+        tvItemText = (TextView)((ViewGroup) view).getChildAt(position).findViewById(R.id.nav_item_text);
+        ivItemGo.setColorFilter(getResources().getColor(R.color.icon_press_blue));
+        ivItemIcon.setColorFilter(getResources().getColor(R.color.icon_press_blue));
+        tvItemText.setTextColor(getResources().getColor(R.color.icon_press_blue));
+
         save = position;
 
         String type = null;

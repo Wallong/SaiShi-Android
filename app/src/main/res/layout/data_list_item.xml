@@ -23,7 +23,7 @@
             android:layout_width="96dp"
             android:layout_height="64dp"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_placeholder"
+            android:src="@mipmap/ic_placeholder"
             android:visibility="visible"/>
 
         <TextView

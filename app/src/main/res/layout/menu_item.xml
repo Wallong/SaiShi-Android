@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:tint="@color/icon_normal_grey"
-        android:src="@drawable/ic_settings"/>
+        android:src="@mipmap/ic_settings"/>
     <ImageView
         android:id="@+id/nav_item_go"
         android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:tint="@color/icon_normal_grey"
-        android:src="@drawable/ic_item_go"/>
+        android:src="@mipmap/ic_item_go"/>
     <TextView
         android:id="@+id/nav_item_text"
         android:layout_width="match_parent"

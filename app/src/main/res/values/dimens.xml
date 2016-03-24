@@ -1,13 +1,10 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <!--Login Activity dimens-->
-    <dimen name="login_padding_top">56dp</dimen>
+    <dimen name="login_padding_top">48dp</dimen>
     <dimen name="login_padding_left_right">48dp</dimen>
     <dimen name="login_edit_text_height">48dp</dimen>
     <dimen name="login_margin_top">56dp</dimen>
@@ -23,7 +20,6 @@
     <dimen name="nav_drawer_text_margin_left">24dp</dimen>
     <dimen name="nav_drawer_text_margin_top">56dp</dimen>
     <!--Settings Activity dimens-->
-    <dimen name="settings_icon_margin_top">24dp</dimen>
     <dimen name="settings_layout_padding">16dp</dimen>
     <dimen name="settings_text_margin_top">8dp</dimen>
     <dimen name="settings_user_profile_size">72dp</dimen>

@@ -58,10 +58,10 @@ public class ContentActivity extends AppCompatActivity {
         if(dataItem.url == null){
             switch (PrefUtils.getPrefHeader()){
                 case "0":
-                    mIvToolbar.setImageResource(R.drawable.ic_drawer_header_old);
+                    mIvToolbar.setImageResource(R.mipmap.ic_drawer_header_old);
                     break;
                 case "1":
-                    mIvToolbar.setImageResource(R.drawable.ic_drawer_header_new);
+                    mIvToolbar.setImageResource(R.mipmap.ic_drawer_header_new);
                     break;
             }
         }

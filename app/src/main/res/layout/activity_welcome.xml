@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/welcome_background">
+    android:background="@mipmap/welcome_background">
 
 
     <ImageView
@@ -14,7 +14,7 @@
         android:scaleType="fitEnd"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="32dp"
-        android:src="@drawable/welcome_new"/>
+        android:src="@mipmap/welcome_new"/>
 
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/ll_welcome_logo"
@@ -26,7 +26,7 @@
             android:id="@+id/iv_welcome_logo_left_left"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/welcome_logo_left"
+            android:src="@mipmap/welcome_logo_left"
             app:layout_heightPercent="100%"
             app:layout_widthPercent="4%"
             android:visibility="invisible"/>
@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_toRightOf="@id/iv_welcome_logo_left_left"
-            android:src="@drawable/welcome_logo_left"
+            android:src="@mipmap/welcome_logo_left"
             app:layout_heightPercent="100%"
             app:layout_widthPercent="24%"
             android:visibility="invisible"/>
@@ -47,13 +47,13 @@
             android:layout_toRightOf="@id/iv_welcome_logo_left"
             app:layout_heightPercent="100%"
             app:layout_widthPercent="64%"
-            android:src="@drawable/welcome_logo_right"/>
+            android:src="@mipmap/welcome_logo_right"/>
 
         <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_toRightOf="@id/iv_welcome_logo_medium"
-            android:src="@drawable/welcome_logo_left"
+            android:src="@mipmap/welcome_logo_left"
             app:layout_heightPercent="100%"
             app:layout_widthPercent="8%"
             android:visibility="invisible"/>
@@ -82,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:src="@drawable/welcome_badge"
+        android:src="@mipmap/welcome_badge"
         android:layout_centerInParent="true"
         android:visibility="gone"/>
 

@@ -40,7 +40,7 @@
                 android:id="@+id/user_profile_setting_image"
                 android:layout_width="@dimen/settings_user_profile_size"
                 android:layout_height="@dimen/settings_user_profile_size"
-                android:src="@drawable/ic_user_avatar"
+                android:src="@mipmap/ic_user_avatar"
                 />
 
             <TextView
@@ -95,7 +95,7 @@
                     android:layout_height="24dp"
                     android:layout_marginLeft="8dp"
                     android:tint="@color/icon_normal_grey"
-                    android:src="@drawable/ic_settings_update"/>
+                    android:src="@mipmap/ic_settings_update"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                     android:layout_height="24dp"
                     android:layout_marginLeft="8dp"
                     android:tint="@color/icon_normal_grey"
-                    android:src="@drawable/ic_settings_modify"/>
+                    android:src="@mipmap/ic_settings_modify"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
                     android:layout_height="24dp"
                     android:layout_marginLeft="8dp"
                     android:tint="@color/icon_normal_grey"
-                    android:src="@drawable/ic_settings_logout"/>
+                    android:src="@mipmap/ic_settings_logout"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

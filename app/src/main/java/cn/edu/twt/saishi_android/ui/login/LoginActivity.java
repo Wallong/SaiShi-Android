@@ -3,18 +3,14 @@ package cn.edu.twt.saishi_android.ui.login;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,13 +20,11 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.edu.twt.saishi_android.R;
-import cn.edu.twt.saishi_android.api.ApiClient;
 import cn.edu.twt.saishi_android.support.ExitApplication;
 import cn.edu.twt.saishi_android.support.LogHelper;
 import cn.edu.twt.saishi_android.support.StatusBarHelper;
 import cn.edu.twt.saishi_android.ui.BaseActivity;
 import cn.edu.twt.saishi_android.ui.main.MainActivity;
-import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by clifton on 16-2-19.
@@ -41,10 +35,14 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
 
     @Inject
     LoginPresenter mLoginPresenter;
+    @Bind(R.id.til_username)
+    TextInputLayout mTilUsername;
+    @Bind(R.id.til_password)
+    TextInputLayout mTilPassword;
     @Bind(R.id.tv_login_username)
-    EditText mEtUsername;
+    AppCompatEditText mEtUsername;
     @Bind(R.id.tv_login_password)
-    EditText mEtPassword;
+    AppCompatEditText mEtPassword;
     @Bind(R.id.btn_login)
     Button mBtnLogin;
 //    @Bind(R.id.btn_test)
@@ -61,6 +59,8 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         ButterKnife.bind(this);
         ExitApplication.getInstance().addActivity(this);
 
+        mTilUsername.setHint("账户/手机");
+        mTilPassword.setHint("密码");
         mBtnLogin.setOnClickListener(this);
         mTvQuestion.setOnClickListener(this);
 

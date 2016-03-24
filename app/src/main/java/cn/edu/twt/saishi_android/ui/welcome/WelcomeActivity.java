@@ -107,7 +107,7 @@ public class WelcomeActivity extends Activity{
         Random random = new Random();
         int ran = random.nextInt(2);
         if(ran == 0){
-            ivBackground.setImageResource(R.drawable.welcome_old);
+            ivBackground.setImageResource(R.mipmap.welcome_old);
         }
         PrefUtils.setDefaultPrefHeader(ran);
 

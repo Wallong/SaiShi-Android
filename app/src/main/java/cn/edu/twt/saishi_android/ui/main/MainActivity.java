@@ -23,13 +23,14 @@ import cn.edu.twt.saishi_android.bean.UpdateInfo;
 import cn.edu.twt.saishi_android.interactor.SettingsInteractorImpl;
 import cn.edu.twt.saishi_android.support.CacheDbHelper;
 import cn.edu.twt.saishi_android.support.ExitApplication;
+import cn.edu.twt.saishi_android.support.LogHelper;
 import cn.edu.twt.saishi_android.support.NetWorkHelper;
 import cn.edu.twt.saishi_android.support.PrefUtils;
 import cn.edu.twt.saishi_android.ui.schedule.ScheduleFragment;
 import cn.edu.twt.saishi_android.ui.settings.OnUpdateCallback;
 
-public class MainActivity extends AppCompatActivity
-        implements MainView{
+public class MainActivity extends AppCompatActivity implements MainView{
+    private final static String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -52,7 +53,6 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("日程");
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity
             closeMenu();
         } else {
             long secondTime = System.currentTimeMillis();
+            LogHelper.e(LOG_TAG, "This id the ...currentTimeMillis" + secondTime);
             if (secondTime - firstTime > 2000) {
                 Snackbar sb = Snackbar.make(mFrameLayout, "再按一次退出", Snackbar.LENGTH_SHORT);
                 sb.getView().setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
@@ -110,6 +111,8 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
+
     @Override
     public void checkForUpdate(String type) {
         settingsInteractorImpl = new SettingsInteractorImpl();

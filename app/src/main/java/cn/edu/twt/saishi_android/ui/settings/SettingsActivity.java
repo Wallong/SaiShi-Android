@@ -89,7 +89,7 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
         tv_position.setText("单位:" + PrefUtils.getPrefDanwei());
 
         if (PrefUtils.getPrefUpdate() != null && PrefUtils.getPrefUpdate().equals(ApiClient.UPDATE_NEW_CODE)){
-            iv_version.setImageResource(R.drawable.ic_version);
+            iv_version.setImageResource(R.mipmap.ic_version);
         }
 
         ll_version.setOnClickListener(this);
