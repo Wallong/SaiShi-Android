@@ -19,6 +19,7 @@
     <color name="icon_press_blue">#0288D1</color>
     <color name="icon_normal_black">#212121</color>
     <color name="icon_normal_grey">#757575</color>
+    <color name="listView_item_bg">#E1F5FE</color>
     <color name="color_settings_blue">#bbdefd</color>
 
 

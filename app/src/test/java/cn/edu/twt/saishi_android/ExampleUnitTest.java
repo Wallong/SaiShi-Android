@@ -1,4 +1,4 @@
-package cn.edu.twt.saishi_android;
+package com.twtstudio.coder.saishi_android;
 
 import org.junit.Test;
 

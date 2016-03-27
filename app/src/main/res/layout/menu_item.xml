@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nav_item_rl"
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:minHeight="48dp"
     android:paddingBottom="4dp"
     android:paddingTop="4dp"
     android:paddingRight="4dp"
-    android:paddingLeft="16dp">
+    android:paddingLeft="16dp"
+    android:clickable="true"
+    >
 
     <ImageView
         android:id="@+id/nav_item_icon"

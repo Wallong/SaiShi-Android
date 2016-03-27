@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/nav_menu_fragment"
-        android:name="cn.edu.twt.saishi_android.ui.main.drawer.MenuFragment"
+        android:name="com.twtstudio.coder.saishi_android.ui.main.drawer.MenuFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:clickable="true"

@@ -67,7 +67,7 @@
         android:orientation="vertical"
         android:layout_below="@id/ll_welcome_logo">
 
-        <cn.edu.twt.saishi_android.ui.common.LetterSpacingTextView
+        <com.twtstudio.coder.saishi_android.ui.common.LetterSpacingTextView
             android:id="@+id/tv_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
