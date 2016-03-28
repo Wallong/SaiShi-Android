@@ -32,6 +32,7 @@ import com.twtstudio.coder.saishi_android.ui.common.OnGetImageCallback;
 import com.twtstudio.coder.saishi_android.ui.common.OnItemClickListener;
 import com.twtstudio.coder.saishi_android.ui.file.FileFragment;
 import com.twtstudio.coder.saishi_android.ui.main.MainActivity;
+import com.twtstudio.coder.saishi_android.ui.main.MainView;
 import com.twtstudio.coder.saishi_android.ui.main.list.DataFragment;
 import com.twtstudio.coder.saishi_android.ui.schedule.ScheduleFragment;
 import com.twtstudio.coder.saishi_android.ui.settings.SettingsActivity;
@@ -64,12 +65,11 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
     private final static String RICHENG = "Richeng";
     private List<MenuModel> list;
     private MenuAdapter adapter;
-    private int save = 2;
+    private int save = -1;
     private int tag = 0;
     private int tagg = 0;
     private TreeSet<Integer> tags = new TreeSet<>();
 
-    private Activity mActivity;
     private DataFragment dataFragment_one;
     private DataFragment dataFragment_two;
     private DataFragment dataFragment_three;
@@ -80,13 +80,14 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
     private ImageView ivItemGo;
     private TextView tvItemText;
     private View view;
+    private MainView mainView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.menu, container, false);
         ButterKnife.bind(this, view);
-        mActivity = getActivity();
+        mainView = (MainActivity)getActivity();
 
         if(PrefUtils.getPrefHeader().equals("0")){
             mIvHeader.setImageResource(R.mipmap.ic_drawer_header_old);
@@ -161,13 +162,14 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
         }
 
         save = position;
+        mainView.setFragment(save);
 
         String type ;
         Intent intent ;
         switch (position){
             case 5:
                 intent = new Intent(getActivity(), SettingsActivity.class);
-                ((MainActivity)mActivity).closeMenu();
+                mainView.closeMenu();
                 startActivity(intent);
                 break;
             case 0:
@@ -188,7 +190,7 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
                     LogHelper.e(LOG_TAG, "这是初始化日程" + tag);
                 }
                 fragment = scheduleFragment;
-                ((MainActivity)mActivity).setToolbar("日程");
+                mainView.setToolbar("日程");
                 tagg = 3;
                 changeFragment(fragment);
                 tag = 3;
@@ -199,7 +201,7 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
                     fragment = fileFragment;
                 }
                 fragment = fileFragment;
-                ((MainActivity)mActivity).setToolbar("文件");
+                mainView.setToolbar("文件");
                 LogHelper.e(LOG_TAG, "这里是文件fragment2");
                 tagg = 4;
                 changeFragment(fragment);
@@ -220,28 +222,28 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
 
         switch (type){
             case TONGZHI:
-                ((MainActivity)mActivity).setToolbar("通知");
+                mainView.setToolbar("通知");
                 if(dataFragment_one == null){
                     dataFragment_one = DataFragment.getInstance(type);
                 }
                 changeFragment(dataFragment_one);
                 break;
             case DONGTAI:
-                ((MainActivity)mActivity).setToolbar("动态");
+                mainView.setToolbar("动态");
                 if(dataFragment_two == null){
                     dataFragment_two = DataFragment.getInstance(type);
                 }
                 changeFragment(dataFragment_two);
                 break;
             case HUIWU:
-                ((MainActivity)mActivity).setToolbar("会务");
+                mainView.setToolbar("会务");
                 if(dataFragment_three == null){
                     dataFragment_three = DataFragment.getInstance(type);
                 }
                 changeFragment(dataFragment_three);
                 break;
         }
-        ((MainActivity)mActivity).closeMenu();
+        mainView.closeMenu();
     }
     private void changeFragment(Fragment fragment){
         if(tags.contains(tagg)){
@@ -249,7 +251,7 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
         }else {
             addFragment(fragment);
         }
-        ((MainActivity)mActivity).closeMenu();
+        mainView.closeMenu();
     }
 
     private void replaceFragment(Fragment fragment){

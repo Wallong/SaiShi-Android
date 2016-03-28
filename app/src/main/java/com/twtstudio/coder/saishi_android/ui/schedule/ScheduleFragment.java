@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
-import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,12 +12,15 @@ import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.api.ApiClient;
+import com.twtstudio.coder.saishi_android.ui.main.MainActivity;
+import com.twtstudio.coder.saishi_android.ui.main.MainView;
 
 /**
  * Created by clifton on 16-2-27.
@@ -29,31 +31,17 @@ public class ScheduleFragment extends Fragment {
 
     @Bind(R.id.wv_schedule)
     WebView mWebView;
-    @Bind(R.id.fab)
-    FloatingActionButton floatingActionButton;
 
-    WebChromeClient wcc = new WebChromeClient(){
-        @Override
-        public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-//            super.onGeolocationPermissionsShowPrompt(origin, callback);
-            callback.invoke(origin, true, false);
-        }
-    };
-
+    private MainView mainView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
         ButterKnife.bind(this, view);
+        mainView = (MainActivity)getActivity();
+        mainView.initWebView(mWebView);
         loadSchedule();
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
 
         return view;
     }
@@ -79,7 +67,20 @@ public class ScheduleFragment extends Fragment {
         //设置支持获取位置权限
         mWebView.getSettings().setGeolocationEnabled(true);
 
-        mWebView.setWebChromeClient(wcc);
+        mWebView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+//            super.onGeolocationPermissionsShowPrompt(origin, callback);
+                callback.invoke(origin, true, false);
+            }
+        });
+        mWebView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
 
         mWebView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -100,12 +101,6 @@ public class ScheduleFragment extends Fragment {
                 mWebView.loadUrl(ApiClient.SCHEDULE_URL);
             }
         });
-    }
-
-    private void goBack(){
-        if(mWebView.canGoBack()){
-            mWebView.goBack();
-        }
     }
 
 }

@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -18,11 +19,13 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import com.twtstudio.coder.saishi_android.ContestApp;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.api.ApiClient;
 import com.twtstudio.coder.saishi_android.bean.UpdateInfo;
 import com.twtstudio.coder.saishi_android.interactor.SettingsInteractorImpl;
 import com.twtstudio.coder.saishi_android.support.CacheDbHelper;
+import com.twtstudio.coder.saishi_android.support.DeviceUtils;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.NetWorkHelper;
 import com.twtstudio.coder.saishi_android.support.PrefUtils;
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements MainView{
     private Toolbar toolbar;
     private CacheDbHelper dbHelper;
     private SettingsInteractorImpl settingsInteractorImpl;
+    private WebView webview;
+    private int position = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements MainView{
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
             closeMenu();
+        } else if(webview.canGoBack() && position == 2){
+            webview.goBack();
         } else {
             long secondTime = System.currentTimeMillis();
             LogHelper.e(LOG_TAG, "This id the ...currentTimeMillis" + secondTime);
@@ -125,11 +132,11 @@ public class MainActivity extends AppCompatActivity implements MainView{
             @Override
             public void onSuccess(UpdateInfo updateInfo) {
                 //测试一下更新系统
-//                updateInfo.setResult_code(ApiClient.UPDATE_NEW_CODE);
-//                updateInfo.setDetail("1.本次更新加入了夜间模式  \n 2.好吧，我也不知道我想说啥子");
-//                updateInfo.setUrl("http://fir.im/1a8p");
-//                updateInfo.setVersion("1.5.2");
-                if(updateInfo.getResult_code().equals(ApiClient.UPDATE_NEW_CODE)){
+                updateInfo.setResult_code(ApiClient.UPDATE_NEW_CODE);
+                updateInfo.setDetail("1.本次更新加入了夜间模式  \n 2.好吧，我也不知道我想说啥子");
+                updateInfo.setUrl("http://fir.im/1a8p");
+                updateInfo.setVersion("1.5.2");
+                if(updateInfo.getResult_code().equals(ApiClient.UPDATE_NEW_CODE ) && updateInfo.getVersion().equals(DeviceUtils.getVersionName())){
                     PrefUtils.setDefaultPrefUpdate(ApiClient.UPDATE_NEW_CODE);
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setTitle("新版本更新");
@@ -161,6 +168,14 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 PrefUtils.setDefaultPrefUpdate(ApiClient.UPDATE_NO_CODE);
             }
         });
+    }
+    @Override
+    public void initWebView(WebView webview){
+        this.webview = webview;
+    }
+    @Override
+    public void setFragment(int position){
+        this.position = position;
     }
 
     @Override
