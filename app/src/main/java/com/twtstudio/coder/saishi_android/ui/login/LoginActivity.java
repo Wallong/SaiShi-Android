@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
@@ -24,6 +23,7 @@ import com.twtstudio.coder.saishi_android.support.ExitApplication;
 import com.twtstudio.coder.saishi_android.support.StatusBarHelper;
 import com.twtstudio.coder.saishi_android.ui.BaseActivity;
 import com.twtstudio.coder.saishi_android.ui.main.MainActivity;
+import com.twtstudio.coder.saishi_android.ui.register.RegisterActivity;
 
 /**
  * Created by clifton on 16-2-19.
@@ -44,12 +44,10 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     AppCompatEditText mEtPassword;
     @Bind(R.id.btn_login)
     Button mBtnLogin;
-//    @Bind(R.id.btn_test)
-//    Button mBtnTest;
+    @Bind(R.id.btn_register)
+    Button mBtnRegister;
     @Bind(R.id.pb_login)
     ProgressBar mPbLogin;
-    @Bind(R.id.tv_question)
-    TextView mTvQuestion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +59,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         mTilUsername.setHint("账户/手机");
         mTilPassword.setHint("密码");
         mBtnLogin.setOnClickListener(this);
-        mTvQuestion.setOnClickListener(this);
+        mBtnRegister.setOnClickListener(this);
 
     }
 
@@ -69,10 +67,15 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                mLoginPresenter.validateLogin(mEtUsername.getText().toString(), mEtPassword.getText().toString());
+                if(mEtUsername.getText().toString().equals("") || mEtPassword.getText().toString().equals("")){
+                    toastMessage("请输入用户名和密码");
+                }else {
+                    mLoginPresenter.validateLogin(mEtUsername.getText().toString(), mEtPassword.getText().toString());
+                }
                 break;
-            case R.id.tv_question:
-                toastMessage("初始账户和密码均为您的手机号");
+            case R.id.btn_register:
+                Intent intent = new Intent(this, RegisterActivity.class);
+                startActivity(intent);
                 break;
         }
 

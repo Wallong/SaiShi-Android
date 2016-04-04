@@ -137,7 +137,7 @@
             android:layout_marginTop="48dp"
             android:layout_marginLeft="88dp"
             android:layout_marginRight="88dp"
-            android:background="@color/btn_press"
+            android:background="@drawable/btn_selector_modify"
             android:text="确认更改"
             android:textSize="20sp"
             android:textColor="@color/color_white">

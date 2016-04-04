@@ -39,4 +39,9 @@ public class InteractorsModule {
         return new SettingsInteractorImpl();
     }
 
+    @Provides @Singleton
+    public RegisterInteractor provideRegisterInteractor() {
+        return new RegisterInteractorImpl();
+    }
+
 }

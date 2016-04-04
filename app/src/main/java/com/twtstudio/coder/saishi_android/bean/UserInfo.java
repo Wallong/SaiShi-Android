@@ -34,4 +34,23 @@ public class UserInfo {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "danwei='" + danwei + '\'' +
+                ", result_code=" + result_code +
+                ", msg='" + msg + '\'' +
+                ", token='" + token + '\'' +
+                ", id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", phone='" + phone + '\'' +
+                ", sex='" + sex + '\'' +
+                ", old='" + old + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", zhifu='" + zhifu + '\'' +
+                ", icon='" + icon + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

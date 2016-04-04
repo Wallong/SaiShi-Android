@@ -9,7 +9,13 @@ import com.loopj.android.http.TextHttpResponseHandler;
 
 import com.twtstudio.coder.saishi_android.ContestApp;
 import com.twtstudio.coder.saishi_android.support.DeviceUtils;
+import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.PrefUtils;
+
+import cz.msebera.android.httpclient.client.CookieStore;
+import cz.msebera.android.httpclient.client.protocol.ClientContext;
+import cz.msebera.android.httpclient.cookie.Cookie;
+import cz.msebera.android.httpclient.protocol.HttpContext;
 
 /**
  * Created by clifton on 16-2-20.
@@ -33,12 +39,18 @@ public class ApiClient {
     public static final String IMG_NO_FOUND_CODE = "00011";
     public static final String UPDATE_NO_CODE = "10000";
     public static final String UPDATE_NEW_CODE = "20000";
+    public static final String CANNOT_VERIFY_CODE = "10000";
+    public static final String RXIST_USERNAME_CODE = "10002";
+    public static final String REGISTER_FAILURE_CODE = "10000";
+    public static final String REGISTER_SUCCESS_CODE = "10001";
 
     private static final AsyncHttpClient sClient = new AsyncHttpClient();
     private static final PersistentCookieStore sCookieStore = new PersistentCookieStore(ContestApp.getContext());
     public static final int DEFAULT_TIMEOUT = 20000;
 
     private static final String BASE_URL = "http://121.42.157.180/qgfdyjnds/";
+    private static final String REGISTER_URL = "index.php/Api/register";
+    private static final String VERIFY_URL = "index.php/Api/getverify";
     private static final String LOGIN_URL = "index.php/Api/log_in";
     private static final String LOGOUT_URL = "index.php/Api/log_out";
     private static final String DATA_URL = "index.php/Api/data";
@@ -55,6 +67,10 @@ public class ApiClient {
         sClient.setTimeout(DEFAULT_TIMEOUT);
         sClient.setCookieStore(sCookieStore);
         sClient.addHeader("User-Agent", getUserAgent());
+    }
+
+    public static String getVerifyUrl() {
+        return VERIFY_URL;
     }
 
     public static String getImageUrl() {
@@ -158,6 +174,26 @@ public class ApiClient {
         params.put("type", type);
 
         sClient.post(BASE_URL + UPDATE_URL, params, handler);
+    }
+
+    public static void getverify(){
+
+    }
+
+    public static void register(String username, String sex, String age, String pwd,
+                                String danwei, String zhiwu, String phone, String verify, String cookie, TextHttpResponseHandler handler){
+        RequestParams params = new RequestParams();
+        params.put("username", username);
+        params.put("sex", sex);
+        params.put("age", age);
+        params.put("pwd", pwd);
+        params.put("danwei", danwei);
+        params.put("zhiwu", zhiwu);
+        params.put("phone", phone);
+        params.put("verify", verify);
+        sClient.addHeader("Cookie", cookie);
+
+        sClient.post(BASE_URL + REGISTER_URL, params, handler);
     }
 
 }

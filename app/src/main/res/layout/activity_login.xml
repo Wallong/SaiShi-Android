@@ -35,6 +35,7 @@
                 android:id="@+id/tv_login_username"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/login_edit_text_height"
+                android:inputType="number"
                 android:singleLine="true"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -60,20 +61,10 @@
                 android:id="@+id/tv_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/login_edit_text_height"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:singleLine="true"/>
 
         </android.support.design.widget.TextInputLayout>
-
-        <TextView
-            android:id="@+id/tv_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/til_password"
-            android:layout_alignRight="@id/til_password"
-            android:autoLink="web"
-            android:linksClickable="true"
-            android:text="登录遇到问题？"
-            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/btn_login"
@@ -83,9 +74,23 @@
             android:elevation="2dp"
             android:text="登 录"
             android:textSize="20sp"
-            android:textColor="@color/color_login_text_blue"
+            android:textColor="@color/color_white"
             android:layout_below="@id/til_password"
             android:layout_marginTop="@dimen/login_margin_top"
+            android:layout_marginLeft="@dimen/login_margin_left_right"
+            android:layout_marginRight="@dimen/login_margin_left_right"
+            />
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:background="@drawable/btn_register_bg"
+            android:elevation="2dp"
+            android:text="注 册"
+            android:textSize="20sp"
+            android:textColor="@color/color_grey_text"
+            android:layout_below="@id/btn_login"
+            android:layout_marginTop="12dp"
             android:layout_marginLeft="@dimen/login_margin_left_right"
             android:layout_marginRight="@dimen/login_margin_left_right"
             />
@@ -93,7 +98,7 @@
             android:id="@+id/pb_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btn_login"
+            android:layout_below="@id/btn_register"
             android:layout_marginTop="@dimen/login_margin_control"
             android:visibility="gone"/>
 
@@ -102,11 +107,6 @@
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="Test"/>-->
-
-        <TextView
-            android:id="@+id/tv_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

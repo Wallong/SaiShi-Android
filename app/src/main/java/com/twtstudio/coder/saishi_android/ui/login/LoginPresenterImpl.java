@@ -3,6 +3,7 @@ package com.twtstudio.coder.saishi_android.ui.login;
 import com.twtstudio.coder.saishi_android.api.ApiClient;
 import com.twtstudio.coder.saishi_android.bean.UserInfo;
 import com.twtstudio.coder.saishi_android.interactor.LoginInteractor;
+import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.NetWorkHelper;
 import com.twtstudio.coder.saishi_android.support.PrefUtils;
 
@@ -10,6 +11,7 @@ import com.twtstudio.coder.saishi_android.support.PrefUtils;
  * Created by clifton on 16-2-19.
  */
 public class LoginPresenterImpl implements LoginPresenter, OnLoginCallback{
+    private final static String LOG_TAG = LoginPresenterImpl.class.getSimpleName();
 
     private LoginView mLoginView;
     private LoginInteractor mLoginInteractor;
@@ -38,6 +40,7 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginCallback{
         PrefUtils.setDefaultPrefUserInfo(userInfo);
         PrefUtils.setLogin(true);
         mLoginView.hideProgressBar();
+        LogHelper.e(LOG_TAG, userInfo.toString());
         mLoginView.startMainActivity();
     }
 

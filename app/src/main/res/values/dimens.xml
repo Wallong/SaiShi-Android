@@ -10,7 +10,7 @@
     <dimen name="login_margin_top">56dp</dimen>
     <dimen name="login_margin_left_right">96dp</dimen>
     <dimen name="login_padding_control">8dp</dimen>
-    <dimen name="login_margin_control">8dp</dimen>
+    <dimen name="login_margin_control">16dp</dimen>
     <!--Drawer dimens-->
     <dimen name="nav_drawer_user_profile_size">72dp</dimen>
     <dimen name="nav_drawer_icon_margin_right">32dp</dimen>

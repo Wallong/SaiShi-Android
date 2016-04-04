@@ -27,7 +27,6 @@ import com.twtstudio.coder.saishi_android.ui.BaseActivity;
  * Created by clifton on 16-2-29.
  */
 public class ModifyActivity extends BaseActivity implements View.OnClickListener, ModifyView {
-
     private static final String LOG_TAG = ModifyActivity.class.getSimpleName();
 
     @Inject
@@ -98,7 +97,9 @@ public class ModifyActivity extends BaseActivity implements View.OnClickListener
                 if (s.toString().equals(ev_new_pwd1.getText().toString())) {
                     modify_btn.setBackgroundResource(R.drawable.btn_selector);
                     modify_btn.setOnClickListener(ModifyActivity.this);
-                    LogHelper.e(LOG_TAG, "修改按钮点击属性3");
+                }else {
+                    modify_btn.setBackgroundResource(R.drawable.btn_selector_modify);
+                    modify_btn.setOnClickListener(null);
                 }
             }
         });
@@ -119,7 +120,9 @@ public class ModifyActivity extends BaseActivity implements View.OnClickListener
                 if(s.toString().equals(ev_new_pwd2.getText().toString())){
                     modify_btn.setBackgroundResource(R.drawable.btn_selector);
                     modify_btn.setOnClickListener(ModifyActivity.this);
-                    LogHelper.e(LOG_TAG, "修改按钮点击属性3");
+                }else {
+                    modify_btn.setBackgroundResource(R.drawable.btn_selector_modify);
+                    modify_btn.setOnClickListener(null);
                 }
             }
         });
