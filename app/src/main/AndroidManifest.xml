@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <application
         android:name="com.twtstudio.coder.saishi_android.ContestApp"
@@ -64,6 +65,8 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
         </activity>
+
+        <meta-data android:value="9b3ac59876d11205cae97a964b591c55" android:name="BUG_HD_SDK_GENERAL_KEY" />
 
     </application>
 

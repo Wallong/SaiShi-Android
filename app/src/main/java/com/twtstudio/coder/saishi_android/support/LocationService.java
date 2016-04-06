@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
+import com.twtstudio.coder.saishi_android.ui.schedule.ScheduleFragment;
+
 /**
  * Created by clifton on 16-4-4.
  */
@@ -50,7 +52,6 @@ public class LocationService implements LocationListener {
      * Local constructor
      */
     private LocationService( Context context )     {
-
         initLocationService(context);
     }
 
@@ -94,7 +95,7 @@ public class LocationService implements LocationListener {
                             MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                     if (locationManager != null)   {
                         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//                        updateCoordinates();
+                        updateCoordinates();
                     }
                 }//end if
 
@@ -105,7 +106,7 @@ public class LocationService implements LocationListener {
 
                     if (locationManager != null)  {
                         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//                        updateCoordinates();
+                        updateCoordinates();
                     }
                 }
             }
@@ -114,10 +115,15 @@ public class LocationService implements LocationListener {
         }
     }
 
+    private void updateCoordinates() {
+//        context.setLocation(location);
+    }
+
 
     @Override
     public void onLocationChanged(Location location)     {
         // do stuff here with location object
+        updateCoordinates();
     }
 
     @Override
@@ -134,4 +140,5 @@ public class LocationService implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
+
 }

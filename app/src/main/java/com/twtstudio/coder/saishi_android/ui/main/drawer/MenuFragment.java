@@ -1,11 +1,11 @@
 package com.twtstudio.coder.saishi_android.ui.main.drawer;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,12 +62,13 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
     private final static String HUIWU = "Huiwu";
     private final static String DONGTAI = "Dongtai";
     private final static String TONGZHI = "Tongzhi";
-    private final static String RICHENG = "Richeng";
+    private final static int SCHEDULE = 2;
     private List<MenuModel> list;
     private MenuAdapter adapter;
     private int save = -1;
     private int tag = 0;
     private int tagg = 0;
+    private boolean isSchedule = true;
     private TreeSet<Integer> tags = new TreeSet<>();
 
     private DataFragment dataFragment_one;
@@ -79,7 +80,6 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
     private ImageView ivItemIcon;
     private ImageView ivItemGo;
     private TextView tvItemText;
-    private View view;
     private MainView mainView;
 
     @Nullable
@@ -102,7 +102,7 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
         initData();
         adapter = new MenuAdapter(this.getActivity(), list, this);
         lv_menu.setAdapter(adapter);
-        onItemClicked(null, 2);
+        onItemClicked(null, SCHEDULE);
 
         return view;
     }
@@ -112,12 +112,12 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
         super.onResume();
         //设置页面返回时设置item的背景颜色为默认颜色
         LogHelper.e(LOG_TAG, "This is onPause() function　　" + "save == " + save);
-        if(save == 5 && this.view != null){
-            ((ViewGroup)view).getChildAt(save).setBackgroundColor(Color.parseColor("#ffffff"));
-            ivItemGo.setColorFilter(getResources().getColor(R.color.icon_normal_grey));
-            ivItemIcon.setColorFilter(getResources().getColor(R.color.icon_normal_grey));
-            tvItemText.setTextColor(getResources().getColor(R.color.icon_normal_black));
-        }
+//        if(this.view != null){
+//            if(isSchedule){
+//                adapter.notifyDataSetChanged();
+//                onItemClicked(null, SCHEDULE);
+//            }
+//        }
     }
 
 
@@ -139,7 +139,13 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
 
     @Override
     public void onItemClicked(View view, int position) {
-        if(view != null) {
+        //为了动画一致性
+        if(save == position){
+            mainView.closeMenu();
+            return;
+        }
+        //重点在改变颜色
+        if(view != null && position != 5) {
             if ((save != -1 && save != position)) {
                 ivItemGo = (ImageView) ((ViewGroup) view).getChildAt(save).findViewById(R.id.nav_item_go);
                 ivItemIcon = (ImageView) ((ViewGroup) view).getChildAt(save).findViewById(R.id.nav_item_icon);
@@ -150,7 +156,6 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
                 ((ViewGroup) view).getChildAt(save).setBackgroundColor(
                         Color.parseColor("#ffffff"));
             }
-            this.view = view;
             ((ViewGroup) view).getChildAt(position).setBackgroundColor(
                     Color.parseColor("#E1F5FE"));
             ivItemGo = (ImageView) ((ViewGroup) view).getChildAt(position).findViewById(R.id.nav_item_go);
@@ -160,8 +165,9 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
             ivItemIcon.setColorFilter(getResources().getColor(R.color.icon_press_blue));
             tvItemText.setTextColor(getResources().getColor(R.color.icon_press_blue));
         }
-
-        save = position;
+        if(position != 5) {
+            save = position;
+        }
         mainView.setFragment(save);
 
         String type ;
@@ -217,7 +223,7 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
         tags.add(tag);
 
     }
-
+//初始化数据类Fragment
     private void intiFragment(String type){
 
         switch (type){
@@ -245,6 +251,7 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
         }
         mainView.closeMenu();
     }
+    //作出最初的改变判断
     private void changeFragment(Fragment fragment){
         if(tags.contains(tagg)){
             replaceFragment(fragment);
@@ -254,8 +261,10 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
         mainView.closeMenu();
     }
 
+    //如果存在，进行隐藏和显示
     private void replaceFragment(Fragment fragment){
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
         switch (tag){
             case 1:
                 transaction.hide(dataFragment_one).show(fragment).commit();
@@ -265,6 +274,14 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
                 break;
             case 3:
                 transaction.hide(scheduleFragment).show(fragment).commit();
+                scheduleFragment.onActivityCreated(null);
+                //看不见的时候刷新数据
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        scheduleFragment.onPause();
+                    }
+                }, 2000);
                 break;
             case 4:
                 transaction.hide(fileFragment).show(fragment).commit();
@@ -277,9 +294,10 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
                 break;
         }
     }
-
+//如果不存在就添加一个
     private void addFragment(Fragment fragment){
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
         switch (tag){
             case 1:
                 transaction.hide(dataFragment_one).add(R.id.fl_content, fragment).commit();
@@ -289,6 +307,14 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
                 break;
             case 3:
                 transaction.hide(scheduleFragment).add(R.id.fl_content, fragment).commit();
+                //看不见的时候刷新数据
+                scheduleFragment.onActivityCreated(null);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        scheduleFragment.onPause();
+                    }
+                }, 2000);
                 break;
             case 4:
                 transaction.hide(fileFragment).add(R.id.fl_content, fragment).commit();

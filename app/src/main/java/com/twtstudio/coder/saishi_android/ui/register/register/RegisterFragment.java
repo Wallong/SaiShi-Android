@@ -86,11 +86,7 @@ public class RegisterFragment extends BaseFragment implements RegisterView, View
         et_verify.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (et_pwd.getText().toString().equals("")) {
-                    toastMessage("密码为空");
-                } else if(!et_pwd.getText().toString().equals(et_pwd_repeat.getText().toString())){
-                    toastMessage("两次输入密码不一致");
-                }
+
             }
 
             @Override
@@ -161,8 +157,17 @@ public class RegisterFragment extends BaseFragment implements RegisterView, View
             case R.id.register_btn:
                 String phone = et_phone.getText().toString();
                 String pwd = et_pwd.getText().toString();
+                String pwd_repeat = et_pwd_repeat.getText().toString();
                 String verify = et_verify.getText().toString();
-                registerPresenter.validateRegister(username, sex, "", pwd, danwei, zhiwu, phone, verify, cookie);
+                if(pwd.equals("")){
+                    toastMessage("密码为空");
+                }else if(!pwd.equals(pwd_repeat)) {
+                    toastMessage("两次输入密码不一致");
+                }else if(phone.length()!=11){
+                    toastMessage("手机号码格式不正确");
+                }else {
+                    registerPresenter.validateRegister(username, sex, "", pwd, danwei, zhiwu, phone, verify, cookie);
+                }
                 break;
             case R.id.register_iv_verify:
                 setImage();
@@ -194,6 +199,7 @@ public class RegisterFragment extends BaseFragment implements RegisterView, View
                         @Override
                         public void run() {
                             iv_verify.setImageBitmap(downloadBitmap);
+                            LogHelper.e(LOG_TAG, "uiThread------->" + Thread.currentThread().getId());
                         }
                     });
 
@@ -201,6 +207,7 @@ public class RegisterFragment extends BaseFragment implements RegisterView, View
                     e.printStackTrace();
                 } finally {
                 }
+                LogHelper.e(LOG_TAG, "new Thread------>" + Thread.currentThread().getId());
             }
         }).start();
     }

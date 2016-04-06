@@ -20,6 +20,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.bean.DataItem;
+import com.twtstudio.coder.saishi_android.support.ExitApplication;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.SpacesItemDecoration;
 import com.twtstudio.coder.saishi_android.ui.BaseFragment;
@@ -156,7 +157,7 @@ public class DataFragment extends BaseFragment implements DataListView, SwipeRef
     public void startLoginActivity() {
         Intent intent = new Intent(this.getActivity(), LoginActivity.class);
         startActivity(intent);
-        this.getActivity().finish();
+        ExitApplication.getInstance().logout();
     }
 
     @Override

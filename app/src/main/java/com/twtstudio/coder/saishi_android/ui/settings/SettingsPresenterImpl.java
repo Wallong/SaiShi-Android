@@ -34,11 +34,11 @@ public class SettingsPresenterImpl implements SettingsPresenter, OnUpdateCallbac
     public void onSuccess(UpdateInfo updateInfo) {
 //        {result_code='10000', msg='已经是最新版', version='null', detail='null', url='null'}
         LogHelper.v(LOG_TAG, updateInfo);
-        if(updateInfo.getResult_code().equals(ApiClient.UPDATE_NO_CODE)) {
-            mSettingsView.toastMessage(updateInfo.getMsg());
-        } else if (updateInfo.getUrl() != null && updateInfo.getResult_code().equals(ApiClient.UPDATE_NEW_CODE) && updateInfo.getVersion().equals(DeviceUtils.getVersionName())) {
+        if(updateInfo.getUrl() != null && updateInfo.getResult_code().equals(ApiClient.UPDATE_NEW_CODE) && !updateInfo.getVersion().equals(DeviceUtils.getVersionName())) {
             //跳转浏览器
             mSettingsView.showDialog("1", updateInfo);
+        }else {
+            mSettingsView.toastMessage("已是最新版本");
         }
     }
 

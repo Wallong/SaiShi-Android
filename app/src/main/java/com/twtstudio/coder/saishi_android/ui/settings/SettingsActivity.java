@@ -22,6 +22,8 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import com.twtstudio.coder.saishi_android.ContestApp;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.api.ApiClient;
 import com.twtstudio.coder.saishi_android.bean.UpdateInfo;
@@ -69,6 +71,7 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
+        ExitApplication.getInstance().addActivity(this);
 
         mToolbar.setTitle("设置");
         setSupportActionBar(mToolbar);
@@ -180,28 +183,10 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-//    public static String getVersionName(Context context) {
-//        return getPackageInfo(context).versionName;
-//    }
-//
-//    //版本号
-//    public static int getVersionCode(Context context) {
-//        return getPackageInfo(context).versionCode;
-//    }
-//
-//    private static PackageInfo getPackageInfo(Context context) {
-//        PackageInfo pi = null;
-//
-//        try {
-//            PackageManager pm = context.getPackageManager();
-//            pi = pm.getPackageInfo(context.getPackageName(),
-//                    PackageManager.GET_CONFIGURATIONS);
-//
-//            return pi;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return pi;
-//    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ExitApplication.getInstance().removeActivity();
+//        ContestApp.getRefWatcher().watch(this);
+    }
 }

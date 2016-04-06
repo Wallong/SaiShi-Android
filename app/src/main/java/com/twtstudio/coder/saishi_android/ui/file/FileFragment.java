@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.bean.FileInfo;
 import com.twtstudio.coder.saishi_android.support.CacheDbHelper;
+import com.twtstudio.coder.saishi_android.support.ExitApplication;
 import com.twtstudio.coder.saishi_android.ui.BaseFragment;
 import com.twtstudio.coder.saishi_android.ui.common.OnItemClickListener;
 import com.twtstudio.coder.saishi_android.ui.file.filecontent.FileContentActivity;
@@ -111,7 +112,7 @@ public class FileFragment extends BaseFragment implements FileView, SwipeRefresh
     public void startLoginActivity() {
         Intent intent = new Intent(this.getActivity(), LoginActivity.class);
         startActivity(intent);
-        this.getActivity().finish();
+        ExitApplication.getInstance().logout();
     }
 
     @Override

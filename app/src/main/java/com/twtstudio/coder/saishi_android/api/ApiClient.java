@@ -39,10 +39,10 @@ public class ApiClient {
     public static final String IMG_NO_FOUND_CODE = "00011";
     public static final String UPDATE_NO_CODE = "10000";
     public static final String UPDATE_NEW_CODE = "20000";
-    public static final String CANNOT_VERIFY_CODE = "10000";
+    public static final String CANNOT_VERIFY_CODE = "10010";
     public static final String RXIST_USERNAME_CODE = "10002";
-    public static final String REGISTER_FAILURE_CODE = "10000";
-    public static final String REGISTER_SUCCESS_CODE = "10001";
+    public static final String REGISTER_FAILURE_CODE = "10001";
+    public static final String REGISTER_SUCCESS_CODE = "10000";
 
     private static final AsyncHttpClient sClient = new AsyncHttpClient();
     private static final PersistentCookieStore sCookieStore = new PersistentCookieStore(ContestApp.getContext());

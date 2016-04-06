@@ -13,6 +13,7 @@ public class ExitApplication extends Application {
 
     private List<Activity> activityList = new LinkedList();
     private static ExitApplication instance;
+    private int totalSize = -1;
 
     private ExitApplication()
     {
@@ -32,6 +33,17 @@ public class ExitApplication extends Application {
     {
         activityList.add(activity);
     }
+    //删除顶部Activity
+    public void removeActivity()
+    {
+        LogHelper.e("activity.size()", "" + activityList.size());
+        if(totalSize == 0){
+            totalSize = -1;
+        }
+        if(totalSize == -1 && activityList.size() != 0) {
+            activityList.remove(activityList.size() - 1);
+        }
+    }
     //遍历所有Activity并finish
 
     public void exit()
@@ -46,8 +58,12 @@ public class ExitApplication extends Application {
 
     }
     public void logout() {
-        for(int i = 0; i < activityList.size(); i++){
+        totalSize = activityList.size();
+        for(int i = activityList.size()-1; i > -1; i--){
+            LogHelper.e("activity.size()", i +"" + activityList.size());
             activityList.get(i).finish();
+            activityList.remove(i);
+            totalSize = i;
         }
     }
 }

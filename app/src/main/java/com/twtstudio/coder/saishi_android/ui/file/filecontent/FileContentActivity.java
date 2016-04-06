@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import com.twtstudio.coder.saishi_android.ContestApp;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.bean.FileInfo;
+import com.twtstudio.coder.saishi_android.support.ExitApplication;
 
 /**
  * Created by clifton on 16-3-11.
@@ -31,6 +32,7 @@ public class FileContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_content);
         ButterKnife.bind(this);
+        ExitApplication.getInstance().addActivity(this);
         init();
     }
 
@@ -79,6 +81,7 @@ public class FileContentActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ExitApplication.getInstance().removeActivity();
 //        ContestApp.getRefWatcher().watch(this);
     }
 }

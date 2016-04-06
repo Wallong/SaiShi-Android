@@ -19,6 +19,7 @@ import com.twtstudio.coder.saishi_android.ContestApp;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.api.ApiClient;
 import com.twtstudio.coder.saishi_android.bean.DataItem;
+import com.twtstudio.coder.saishi_android.support.ExitApplication;
 import com.twtstudio.coder.saishi_android.support.PrefUtils;
 import com.twtstudio.coder.saishi_android.support.StringUtils;
 import com.twtstudio.coder.saishi_android.ui.common.ImageHelper;
@@ -48,6 +49,7 @@ public class ContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
         ButterKnife.bind(this);
+        ExitApplication.getInstance().addActivity(this);
         init();
     }
 
@@ -113,6 +115,7 @@ public class ContentActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ExitApplication.getInstance().removeActivity();
 //        ContestApp.getRefWatcher().watch(this);
     }
 }

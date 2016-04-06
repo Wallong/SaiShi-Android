@@ -19,6 +19,7 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import com.google.common.escape.Escaper;
 import com.twtstudio.coder.saishi_android.ContestApp;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.api.ApiClient;
@@ -26,6 +27,7 @@ import com.twtstudio.coder.saishi_android.bean.UpdateInfo;
 import com.twtstudio.coder.saishi_android.interactor.SettingsInteractorImpl;
 import com.twtstudio.coder.saishi_android.support.CacheDbHelper;
 import com.twtstudio.coder.saishi_android.support.DeviceUtils;
+import com.twtstudio.coder.saishi_android.support.ExitApplication;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.NetWorkHelper;
 import com.twtstudio.coder.saishi_android.support.PrefUtils;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        ExitApplication.getInstance().addActivity(this);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -118,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 sb.show();
                 firstTime = secondTime;
             } else {
-                this.finish();
+                ExitApplication.getInstance().exit();
             }
         }
 
@@ -132,11 +135,11 @@ public class MainActivity extends AppCompatActivity implements MainView{
             @Override
             public void onSuccess(UpdateInfo updateInfo) {
                 //测试一下更新系统
-                updateInfo.setResult_code(ApiClient.UPDATE_NEW_CODE);
-                updateInfo.setDetail("1.本次更新加入了夜间模式  \n 2.好吧，我也不知道我想说啥子");
-                updateInfo.setUrl("http://fir.im/1a8p");
-                updateInfo.setVersion("1.5.2");
-                if(updateInfo.getResult_code().equals(ApiClient.UPDATE_NEW_CODE ) && updateInfo.getVersion().equals(DeviceUtils.getVersionName())){
+//                updateInfo.setResult_code(ApiClient.UPDATE_NEW_CODE);
+//                updateInfo.setDetail("1.本次更新加入了夜间模式  \n 2.好吧，我也不知道我想说啥子");
+//                updateInfo.setUrl("http://fir.im/1a8q");
+//                updateInfo.setVersion("1.4.2");
+                if(updateInfo.getResult_code().equals(ApiClient.UPDATE_NEW_CODE ) && !updateInfo.getVersion().equals(DeviceUtils.getVersionName())){
                     PrefUtils.setDefaultPrefUpdate(ApiClient.UPDATE_NEW_CODE);
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setTitle("新版本更新");
@@ -181,6 +184,8 @@ public class MainActivity extends AppCompatActivity implements MainView{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        LogHelper.e(LOG_TAG, "removeMainActivity");
+        ExitApplication.getInstance().removeActivity();
 //        ContestApp.getRefWatcher().watch(this);
     }
 

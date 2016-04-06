@@ -14,6 +14,8 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 //import com.squareup.leakcanary.LeakCanary;
 //import com.squareup.leakcanary.RefWatcher;
 
+import im.fir.sdk.FIR;
+
 /**
  * Created by clifton on 16-2-20.
  */
@@ -29,6 +31,10 @@ public class ContestApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        FIR.init(this);
+        FIR.addCustomizeValue("sdk", android.os.Build.VERSION.SDK_INT + "");
+        FIR.addCustomizeValue("cpu", android.os.Build.CPU_ABI);
+        FIR.addCustomizeValue("rom_provider", android.os.Build.MANUFACTURER);
 
         objectGraph = ObjectGraph.create(getModules().toArray());
         objectGraph.inject(this);

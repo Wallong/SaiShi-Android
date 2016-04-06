@@ -36,9 +36,9 @@ public class RegisterPresenterImpl implements RegisterPresenter, OnRegisterCallb
         _registerView.hideProgressBar();
         if(normalInfo.getResult_code().equals(ApiClient.REGISTER_SUCCESS_CODE)) {
             _registerView.finishActivity();
-        }else {
-            _registerView.toastMessage(normalInfo.getMsg());
         }
+        _registerView.toastMessage(normalInfo.getMsg());
+
     }
 
     @Override

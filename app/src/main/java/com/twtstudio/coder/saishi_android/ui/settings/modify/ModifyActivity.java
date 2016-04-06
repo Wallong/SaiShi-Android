@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.twtstudio.coder.saishi_android.R;
+import com.twtstudio.coder.saishi_android.support.ExitApplication;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.PrefUtils;
 import com.twtstudio.coder.saishi_android.ui.BaseActivity;
@@ -169,5 +170,10 @@ public class ModifyActivity extends BaseActivity implements View.OnClickListener
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

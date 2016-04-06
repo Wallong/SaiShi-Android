@@ -18,8 +18,11 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import com.twtstudio.coder.saishi_android.ContestApp;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.support.ExitApplication;
+import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.StatusBarHelper;
 import com.twtstudio.coder.saishi_android.ui.BaseActivity;
 import com.twtstudio.coder.saishi_android.ui.main.MainActivity;
@@ -54,7 +57,6 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        ExitApplication.getInstance().addActivity(this);
 
         mTilUsername.setHint("账户/手机");
         mTilPassword.setHint("密码");
@@ -129,6 +131,13 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         StatusBarHelper.setStatusBar(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LogHelper.e(LOG_TAG,"leakLoginActivity");
+//        ContestApp.getRefWatcher().watch(this);
     }
 
 
