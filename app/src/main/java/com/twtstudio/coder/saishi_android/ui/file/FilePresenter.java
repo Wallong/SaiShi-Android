@@ -16,6 +16,4 @@ public interface FilePresenter {
 
     void onItemClicked(View v , int position);
 
-    File makedirs();
-
 }

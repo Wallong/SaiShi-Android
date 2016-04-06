@@ -1,21 +1,14 @@
 package com.twtstudio.coder.saishi_android.ui.file;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Environment;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import java.io.File;
 import java.util.List;
 
 import com.twtstudio.coder.saishi_android.bean.FileInfo;
 import com.twtstudio.coder.saishi_android.interactor.FileInteractor;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
-import com.twtstudio.coder.saishi_android.support.MIMETypeUtils;
 import com.twtstudio.coder.saishi_android.support.NetWorkHelper;
 
 /**
@@ -27,15 +20,9 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback {
 
     private FileView _fileView;
     private FileInteractor _fileInteractor;
-    private ImageView imageView;
-    private TextView tv_Type;
-    private TextView tv_Time;
-    private TextView tv_Title;
 
     private boolean isLoadMore = false;
     private boolean isFirstTimeLoad = true;
-    private String fileId;
-    private FileInfo fileInfo;
 
     private boolean isRefreshing = false;
 
@@ -54,16 +41,6 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback {
     }
 
     private void getFileItems() {
-//        SQLiteDatabase db = _fileView.getCacheDbHelper().getReadableDatabase();
-//        Cursor cursor = db.rawQuery("select * from CacheList where date = " + Integer.MAX_VALUE, null);
-//        if (cursor.moveToFirst()) {
-//            String json = cursor.getString(cursor.getColumnIndex("json"));
-//            Gson gson = new Gson();
-//            FileInfo[] items = gson.fromJson(json, FileInfo[].class);
-//            List<FileInfo> fileInfos = Arrays.asList(items);
-//
-//            handlItems(fileInfos);
-//        }
         if(NetWorkHelper.isOnline()) {
             this._fileInteractor.getFileItems(this);
         }else{
@@ -94,19 +71,6 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback {
         _fileView.startFileContentActivity(position);
     }
 
-    @Override
-    public File makedirs() {
-        File fileStorageDir = new File(Environment.getExternalStorageDirectory() + File.separator + "ContestApp");
-        if(! fileStorageDir.exists()){
-            if(!fileStorageDir.mkdirs()){
-                LogHelper.v(LOG_TAG, "创建目录失败");
-                return null;
-            } else{
-                LogHelper.v(LOG_TAG, "创建目录成功" + fileStorageDir.toString());
-            }
-        }
-        return fileStorageDir;
-    }
 
     @Override
     public void onSuccess(List<FileInfo> fileInfos, String responseString) {
@@ -119,8 +83,6 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback {
         handlItems(fileInfos);
     }
 
-
-
     @Override
     public void onFailure(String errorString) {
         if(errorString.equals("请重新登录")) {
@@ -129,25 +91,6 @@ public class FilePresenterImpl implements FilePresenter, OnGetFileCallback {
         _fileView.hideProgressBar();
         _fileView.toastMessage(errorString);
 
-    }
-
-    private void openFile(File file){
-        Uri path1 = Uri.fromFile(file);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        //设置intent的Action属性
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //获取文件file的MIME类型
-        String type = MIMETypeUtils.getMIMEType(file);
-        //设置intent的data和Type属性。
-        intent.setDataAndType(path1, type);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        try {
-            _fileView.startActivity(intent);
-        }
-        catch (ActivityNotFoundException e) {
-            _fileView.toastMessage("没有可以打开该文件的应用");
-        }
     }
 
     private void handlItems(List<FileInfo> fileInfos){

@@ -176,10 +176,6 @@ public class ApiClient {
         sClient.post(BASE_URL + UPDATE_URL, params, handler);
     }
 
-    public static void getverify(){
-
-    }
-
     public static void register(String username, String sex, String age, String pwd,
                                 String danwei, String zhiwu, String phone, String verify, String cookie, TextHttpResponseHandler handler){
         RequestParams params = new RequestParams();

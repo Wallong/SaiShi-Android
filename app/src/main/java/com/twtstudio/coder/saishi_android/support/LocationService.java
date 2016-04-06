@@ -10,8 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
-import com.twtstudio.coder.saishi_android.ui.schedule.ScheduleFragment;
-
 /**
  * Created by clifton on 16-4-4.
  */

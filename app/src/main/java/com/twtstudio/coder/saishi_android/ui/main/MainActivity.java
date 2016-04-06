@@ -19,8 +19,6 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import com.google.common.escape.Escaper;
-import com.twtstudio.coder.saishi_android.ContestApp;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.api.ApiClient;
 import com.twtstudio.coder.saishi_android.bean.UpdateInfo;
@@ -66,12 +64,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
         toggle.syncState();
         dbHelper = new CacheDbHelper(this, 1);
         toolbar.setTitle("日程");
-
-//        getFragmentManager().beginTransaction().commit();
-//        getFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.fl_content,
-//                        new ScheduleFragment()).commit();
 
         if(!NetWorkHelper.isOnline()) {
             toastMessage("网络未连接");
@@ -126,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
         }
 
     }
-
 
     @Override
     public void checkForUpdate(String type) {

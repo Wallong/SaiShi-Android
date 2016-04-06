@@ -5,7 +5,6 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +67,6 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
     private int save = -1;
     private int tag = 0;
     private int tagg = 0;
-    private boolean isSchedule = true;
     private TreeSet<Integer> tags = new TreeSet<>();
 
     private DataFragment dataFragment_one;
@@ -106,20 +104,6 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
 
         return view;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //设置页面返回时设置item的背景颜色为默认颜色
-        LogHelper.e(LOG_TAG, "This is onPause() function　　" + "save == " + save);
-//        if(this.view != null){
-//            if(isSchedule){
-//                adapter.notifyDataSetChanged();
-//                onItemClicked(null, SCHEDULE);
-//            }
-//        }
-    }
-
 
     @Override
     public void onDestroyView() {
@@ -274,14 +258,8 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
                 break;
             case 3:
                 transaction.hide(scheduleFragment).show(fragment).commit();
-                scheduleFragment.onActivityCreated(null);
                 //看不见的时候刷新数据
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        scheduleFragment.onPause();
-                    }
-                }, 2000);
+                scheduleFragment.onActivityCreated(null);
                 break;
             case 4:
                 transaction.hide(fileFragment).show(fragment).commit();
@@ -309,12 +287,6 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
                 transaction.hide(scheduleFragment).add(R.id.fl_content, fragment).commit();
                 //看不见的时候刷新数据
                 scheduleFragment.onActivityCreated(null);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        scheduleFragment.onPause();
-                    }
-                }, 2000);
                 break;
             case 4:
                 transaction.hide(fileFragment).add(R.id.fl_content, fragment).commit();
