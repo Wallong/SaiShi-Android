@@ -34,7 +34,7 @@ import com.twtstudio.coder.saishi_android.ui.login.LoginActivity;
 public class DataFragment extends BaseFragment implements DataListView, SwipeRefreshLayout.OnRefreshListener,OnItemClickListener {
     public final static String LOG_TAG = DataFragment.class.getSimpleName();
     public final static String PARAM_TYPE = "type";
-    public static String type;
+    private String type;
 
     @Inject
     DataPresenter _dataPresenter;
@@ -76,6 +76,7 @@ public class DataFragment extends BaseFragment implements DataListView, SwipeRef
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        type = getArguments().getString(PARAM_TYPE);
         LogHelper.v(LOG_TAG, "onCreateView" + type);
 
         View rootView = inflater.inflate(R.layout.fragment_data_list, container, false);
@@ -117,6 +118,11 @@ public class DataFragment extends BaseFragment implements DataListView, SwipeRef
         if(!_swipeRefreshLayout.isRefreshing()){
             _swipeRefreshLayout.setRefreshing(true);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        _dataPresenter.loadDataItems(type);
     }
 
     @Override
@@ -168,11 +174,6 @@ public class DataFragment extends BaseFragment implements DataListView, SwipeRef
     @Override
     public void hideFooter() {
         _dataAdapter.setUseFooter(false);
-    }
-
-    @Override
-    public void onRefresh() {
-        _dataPresenter.loadDataItems(type);
     }
 
     @Override

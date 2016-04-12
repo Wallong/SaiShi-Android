@@ -86,6 +86,7 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
         _dataInteractor.addViews(id, this);
     }
 
+    //加载消息条目
     @Override
     public void onSuccess(List<DataItem> datum, ImageInfo imageInfo) {
         total ++;
@@ -94,10 +95,11 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
         }else if(imageInfo != null){
             imageInfos.add(imageInfo);
         }
+        //判断是否全部条目均获得url
         if((dataItems != null) &&(dataItems.get(0)==null?(total == dataItems.size()):(total==dataItems.size()+1))){
             for(int i = (dataItems.get(0)==null?1:0); i < dataItems.size(); i++){
                 for(int j = 0; j < imageInfos.size(); j++){
-                    if(dataItems.get(i).icon.equals(imageInfos.get(j).id)){
+                    if(dataItems.get(i).icon != null && (dataItems.get(i).icon.equals(imageInfos.get(j).id))){
                         dataItems.get(i).setUrl(imageInfos.get(j).url);
                     }
                 }
@@ -144,6 +146,7 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
 
     }
 
+    //增加访问量
     @Override
     public void onSuccess(String responseString) {
         LogHelper.e(LOG_TAG, "onSuccess" + responseString);

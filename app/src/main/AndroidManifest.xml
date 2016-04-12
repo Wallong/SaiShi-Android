@@ -66,7 +66,9 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <meta-data android:value="9b3ac59876d11205cae97a964b591c55" android:name="BUG_HD_SDK_GENERAL_KEY" />
+        <meta-data
+            android:name="BUG_HD_SDK_GENERAL_KEY"
+            android:value="9b3ac59876d11205cae97a964b591c55"  />
 
     </application>
 

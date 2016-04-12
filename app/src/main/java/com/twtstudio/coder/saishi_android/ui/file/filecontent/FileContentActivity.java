@@ -60,15 +60,16 @@ public class FileContentActivity extends AppCompatActivity {
         //设置支持缩放
         mWebView.getSettings().setSupportZoom(true);
 
-        int a = 12;
+        int a = 6;
         String html= "<html> \n" +
                 "<head> \n" +
                 "<style type=\"text/css\"> \n" +
-                "p {text-indent:2em; margin-top:"+(a+a)+"pt}" +
-                "body {text-align:justify; font-size: "+a+"pt;}\n" +
+//                "p {text-indent:2em; margin-top:"+(a+a)+"pt}" +
+//                "body {text-align:justify; font-size: "+a+"pt;}\n" +
                 "body {padding-left: "+a+"pt;padding-right: "+a+"pt;} " +
 //                "h2 {text-align:center; line-height: "+(a+10)+"pt}" +
-                "p {line-height: "+(a+6)+"pt}" +
+                "img { max-width:100%;height:auto; }" +
+                "p {line-height: "+(a+12)+"pt}" +
                 "</style> \n" +
                 "</head> \n" +
                 "<body>" +

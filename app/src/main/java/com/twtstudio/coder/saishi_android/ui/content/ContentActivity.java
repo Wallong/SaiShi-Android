@@ -20,6 +20,7 @@ import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.api.ApiClient;
 import com.twtstudio.coder.saishi_android.bean.DataItem;
 import com.twtstudio.coder.saishi_android.support.ExitApplication;
+import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.PrefUtils;
 import com.twtstudio.coder.saishi_android.support.StringUtils;
 import com.twtstudio.coder.saishi_android.ui.common.ImageHelper;
@@ -89,26 +90,29 @@ public class ContentActivity extends AppCompatActivity {
         mWebView.getSettings().setDatabaseEnabled(true);
         // 开启Application Cache功能
         mWebView.getSettings().setAppCacheEnabled(true);
+        //设置单行显示
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         //设置支持缩放
         mWebView.getSettings().setSupportZoom(true);
 
-        int a = 12;
+        int a = 6;
         String html= "<html> \n" +
                 "<head> \n" +
                 "<style type=\"text/css\"> \n" +
-                "p {text-indent:2em; margin-top:"+(a+a)+"pt}" +
-                "body {text-align:justify; font-size: "+a+"pt;}\n" +
+//                "p {text-indent:2em; margin-top:"+(a+a)+"pt}" +
+//                "body {text-align:justify; font-size: "+a+"pt;}\n" +
                 "body {padding-left: "+a+"pt;padding-right: "+a+"pt;} " +
-                "h3 {line-height: "+(a+10)+"pt}" +
-                "p {line-height: "+(a+6)+"pt}" +
+                "img { max-width:100%;height:auto; }" +
+                "h3 {line-height: "+(a+16)+"pt; text-align: center;}" +
+                "p {line-height: "+(a+12)+"pt; }" +
                 "</style> \n" +
                 "</head> \n" +
-                "<body><h3>" + dataItem.subtitle + "</h3>"+
+                "<body><h3>" + dataItem.title + "</h3>"+
                 "<p>" + dataItem.content + "</p>" +
                 "</body> \n </html>";
 
         mWebView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
+        LogHelper.e(LOG_TAG, dataItem.content);
 
     }
 

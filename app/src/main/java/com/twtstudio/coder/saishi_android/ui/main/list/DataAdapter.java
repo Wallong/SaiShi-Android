@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -138,8 +140,10 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     ImageHelper.getImageLoder().displayImage(
                             ApiClient.getBaseUrl() + dataItem.url,
                             itemHolder._ivIcon, ImageHelper.getDisplayImageOptions());
-                    itemHolder._ivIcon.setVisibility(View.VISIBLE);
+                }else {
+                    itemHolder._ivIcon.setImageResource(R.mipmap.ic_placeholder);
                 }
+                itemHolder._ivIcon.setVisibility(View.VISIBLE);
 
                 ((CardView)(itemHolder._tvTitle.getParent()).getParent()).setOnClickListener(onClickListener);
             }
@@ -151,6 +155,10 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             if(!(dataItem == null)) {
                 itemUpHolder._ivIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 itemUpHolder._ivIcon.setImageResource(R.mipmap.placeholder_up);
+//                itemUpHolder._ivIcon.requestLayout();
+//                int width = itemUpHolder._ivIcon.getWidth();
+//                itemUpHolder._ivIcon.getLayoutParams().width = width;
+//                itemUpHolder._ivIcon.getLayoutParams().height = width / 2;
                 itemUpHolder._ivIcon.setAdjustViewBounds(true);
                 itemUpHolder._tvTitle.setText(dataItem.title);
                 itemUpHolder._tvPv.setText("阅读数:" + dataItem.fwl);
@@ -194,7 +202,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         if (_DataSet.get(0) == null){
             _DataSet.remove(0);
         }
-//        Collections.sort(_DataSet, icc);//排序
+        Collections.sort(_DataSet, icc);//排序
         selectItem();
         notifyDataSetChanged();
     }
@@ -204,7 +212,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         if (_DataSet.get(0) == null){
             _DataSet.remove(0);
         }
-//        Collections.sort(_DataSet, icc);//排序
+        Collections.sort(_DataSet, icc);//排序
         selectItem();
         notifyDataSetChanged();
     }

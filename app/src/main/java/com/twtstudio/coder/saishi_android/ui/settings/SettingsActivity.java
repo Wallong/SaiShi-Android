@@ -156,7 +156,7 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
                 break;
             case "1":
                 builder.setTitle("新版本更新");
-                String msg = "检测到新版本: " + updateInfo.getVersion() + "\n" + updateInfo.getDetail();
+                String msg = "检测到新版本: " + updateInfo.getVersion() + "\n\n" + updateInfo.getDetail();
                 final String url = updateInfo.getUrl();
                 builder.setMessage(msg);
                 builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {

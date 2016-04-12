@@ -44,6 +44,7 @@ public class ScheduleFragment extends LocationBaseFragment {
     private ProgressDialog progressDialog;
     private double longitude = 0.0;
     private double latitude = 0.0;
+    private int i = 0;
 
     @Nullable
     @Override
@@ -165,9 +166,22 @@ public class ScheduleFragment extends LocationBaseFragment {
     @Override
     public void onLocationChanged(Location location) {
         dismissProgress();
-        LogHelper.e(LOG_TAG, "print location");
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
+        if(latitude == 0.0 && longitude == 0.0){
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            loadSchedule();
+        }else {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
+
+//        mWebView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                mWebView.loadUrl("javascript:+ change_zuobiao( " + latitude + "," + longitude + ",0)");
+//                LogHelper.e(LOG_TAG,"ln" + latitude + "la" + longitude );
+//            }
+//        });
     }
 
     @Override
@@ -189,21 +203,21 @@ public class ScheduleFragment extends LocationBaseFragment {
     }
 
     private void displayProgress() {
-        if(progressDialog == null) {
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.getWindow().addFlags(Window.FEATURE_NO_TITLE);
-            progressDialog.setMessage("正在获取当前位置...");
-        }
-
-        if(!progressDialog.isShowing()) {
-            progressDialog.show();
-        }
+//        if(progressDialog == null) {
+//            progressDialog = new ProgressDialog(getActivity());
+//            progressDialog.getWindow().addFlags(Window.FEATURE_NO_TITLE);
+//            progressDialog.setMessage("正在获取当前位置...");
+//        }
+//
+//        if(!progressDialog.isShowing()) {
+//            progressDialog.show();
+//        }
     }
 
     private void dismissProgress(){
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
+//        if (progressDialog != null && progressDialog.isShowing()) {
+//            progressDialog.dismiss();
+//        }
     }
 
 }

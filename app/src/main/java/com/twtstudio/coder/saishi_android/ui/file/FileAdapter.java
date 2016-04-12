@@ -97,12 +97,13 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void selectItem(){
         if(!(_FileSet.size() == 0)){
             _fileBigSet.clear();
+            _fileBigSet.add(0);
             for(int j = 0; j < _FileSet.size(); j++){
-                if(! (j==(_FileSet.size()-1))){
+                if(!(j==(_FileSet.size()-1))){
                     anotherTime = StringUtils.cutString(_FileSet.get(j).createtime, 1);
                     eachTime = StringUtils.cutString(_FileSet.get(j + 1).createtime, 1);
-                    if(!(eachTime.equals(anotherTime)) && !(_fileBigSet.contains(j))){
-                        _fileBigSet.add(j);
+                    if(!(eachTime.equals(anotherTime)) && !(_fileBigSet.contains(j+1))){
+                        _fileBigSet.add(j+1);
                     }
                 }
             }
@@ -188,26 +189,6 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-//    private void markFileInfo(List<FileInfo> items) {
-//        if (PrefUtils.getPrefFileUrlJson() != null && PrefUtils.getPrefFileUrlJson().contains("[")) {
-//            Gson gson = new Gson();
-//            FileUrl[] urls = gson.fromJson(PrefUtils.getPrefFileUrlJson(), FileUrl[].class);
-//            List<FileUrl> fileList = new ArrayList<>();
-//            Collections.addAll(fileList, urls);
-//            for (int i = 0; i < fileList.size(); i++) {
-//                for (int j = 0; j < items.size(); j++) {
-//                    if (fileList.get(i).id.equals(items.get(j).file)) {
-//                        items.get(j).setMark("1");
-//                        LogHelper.e(LOG_TAG, "这里是标记每一个元素1");
-//                    }
-//                    LogHelper.e(LOG_TAG, "这里是标记每一个元素2");
-//                }
-//                LogHelper.e(LOG_TAG, "这里是标记每一个元素3");
-//            }
-//        }
-//    }
-
-
     @Override
     public int getItemCount() {
         int count = _FileSet.size();
@@ -230,7 +211,6 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void updateFile(List<FileInfo> items){
-//        markFileInfo(items);
         ArrayList <FileInfo> list = new ArrayList<>();
         list.addAll(items);
         _FileSet.clear();
