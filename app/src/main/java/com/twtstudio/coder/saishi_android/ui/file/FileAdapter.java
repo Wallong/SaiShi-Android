@@ -143,12 +143,7 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if(getItemViewType(position) == ITEM_VIEW_TYPE_ITEM) {
             FileInfo fileInfo = _FileSet.get(position);
             ItemHolder itemHolder = (ItemHolder) holder;
-
-            if(fileInfo.title.contains("《")){
-                itemHolder._tvTitle.setText(fileInfo.title);
-            }else{
-                itemHolder._tvTitle.setText("《" + fileInfo.title + "》");
-            }
+            itemHolder._tvTitle.setText(fileInfo.title);
             itemHolder._tvTime.setText(StringUtils.cutString(fileInfo.createtime, 2));
             itemHolder._tvType.setText(fileInfo.tag);
             r = Integer.parseInt(fileInfo.r);
@@ -163,12 +158,7 @@ public class FileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }else if(getItemViewType(position) == ITEM_VIEW_TYPE_BIG_ITEM){
             FileInfo fileInfo = _FileSet.get(position);
             ItemBigHolder itemBigHolder = (ItemBigHolder) holder;
-
-            if(fileInfo.title.contains("《")){
-                itemBigHolder._tvTitle.setText(fileInfo.title);
-            }else{
-                itemBigHolder._tvTitle.setText("《" + fileInfo.title + "》");
-            }
+            itemBigHolder._tvTitle.setText(fileInfo.title);
             itemBigHolder._tvTime.setText(StringUtils.cutString(fileInfo.createtime, 2));
             itemBigHolder._tvType.setText(fileInfo.tag);
             r = Integer.parseInt(fileInfo.r);

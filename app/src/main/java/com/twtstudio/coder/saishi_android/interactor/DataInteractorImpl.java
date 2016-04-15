@@ -31,9 +31,10 @@ public class DataInteractorImpl implements DataInteractor {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 boolean res = responseString.contains("result_code");
+//                boolean zero = responseString.equals("[]");
                 if(res){
                     onGetDataItemsCallback.onFailure("请重新登录");
-                }else{
+                }else {
                     Gson gson = new Gson();
                     DataItem [] dataItems = null;
                     LogHelper.v(LOG_TAG, responseString.toString());
@@ -42,17 +43,19 @@ public class DataInteractorImpl implements DataInteractor {
                     if(!(dataItems == null)){
                         datum = Arrays.asList(dataItems);
                     }
-                    if(datum != null) {
+                    if(datum != null && datum.size() != 0){
                         for (int i = (datum.get(0) == null ? 1 : 0); i < datum.size(); i++) {
+                            LogHelper.e(LOG_TAG, "dataItem id -------->" + datum.get(i).getId());
                             ApiClient.getImage(datum.get(i).icon, new TextHttpResponseHandler() {
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                                     onGetDataItemsCallback.onSuccess(null, null);
+                                    LogHelper.e(LOG_TAG, "图片url获取失败");
                                 }
 
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                                    LogHelper.e(LOG_TAG, "居然成功了" + responseString);
+                                    LogHelper.e(LOG_TAG, "图片url获取成功" + responseString);
                                     Gson gson1 = new Gson();
                                     if (responseString.contains("url")) {
                                         ImageInfo imageInfo = gson1.fromJson(responseString, ImageInfo.class);
@@ -63,10 +66,12 @@ public class DataInteractorImpl implements DataInteractor {
                                 }
                             });
                         }
+                        LogHelper.e(LOG_TAG, datum == null ? "" : datum.toString());
+                        onGetDataItemsCallback.onSuccess(datum, null);
+                    }else {
+                        onGetDataItemsCallback.onSuccess(datum, null);
                     }
 
-                    LogHelper.e(LOG_TAG, datum == null ? "" : datum.toString());
-                    onGetDataItemsCallback.onSuccess(datum, null);
                 }
             }
         });

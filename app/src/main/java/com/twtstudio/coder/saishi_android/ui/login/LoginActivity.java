@@ -127,11 +127,11 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         return Arrays.<Object>asList(new LoginModule(this));
     }
 
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        StatusBarHelper.setStatusBar(this);
-    }
+//    @Override
+//    public void setContentView(int layoutResID) {
+//        super.setContentView(layoutResID);
+//        StatusBarHelper.setStatusBar(this);
+//    }
 
     @Override
     protected void onDestroy() {

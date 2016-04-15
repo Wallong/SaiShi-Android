@@ -58,6 +58,7 @@ public class ContentActivity extends AppCompatActivity {
     private void init(){
         dataItem = (DataItem)getIntent().getSerializableExtra("bean");
         mToolbarLayout.setTitle(dataItem.title);
+        mToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         if(dataItem.url == null){
             switch (PrefUtils.getPrefHeader()){
                 case "0":
@@ -94,20 +95,21 @@ public class ContentActivity extends AppCompatActivity {
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         //设置支持缩放
         mWebView.getSettings().setSupportZoom(true);
+        //防止ScrollBar与WebView冲突，导致WebView出现大面积空白
+        mWebView.setVerticalScrollBarEnabled(false);
+        mWebView.setVerticalScrollbarOverlay(false);
+        mWebView.setHorizontalScrollBarEnabled(false);
+        mWebView.setHorizontalScrollbarOverlay(false);
 
         int a = 6;
         String html= "<html> \n" +
                 "<head> \n" +
                 "<style type=\"text/css\"> \n" +
-//                "p {text-indent:2em; margin-top:"+(a+a)+"pt}" +
-//                "body {text-align:justify; font-size: "+a+"pt;}\n" +
                 "body {padding-left: "+a+"pt;padding-right: "+a+"pt;} " +
-                "img { max-width:100%;height:auto; }" +
-                "h3 {line-height: "+(a+16)+"pt; text-align: center;}" +
-                "p {line-height: "+(a+12)+"pt; }" +
+                "h2 {line-height: "+(a+16)+"pt; text-align: center;}" +
                 "</style> \n" +
                 "</head> \n" +
-                "<body><h3>" + dataItem.title + "</h3>"+
+                "<body><h2>" + dataItem.title + "</h2>"+
                 "<p>" + dataItem.content + "</p>" +
                 "</body> \n </html>";
 

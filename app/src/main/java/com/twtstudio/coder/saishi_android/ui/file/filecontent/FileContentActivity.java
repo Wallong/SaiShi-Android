@@ -68,7 +68,7 @@ public class FileContentActivity extends AppCompatActivity {
 //                "body {text-align:justify; font-size: "+a+"pt;}\n" +
                 "body {padding-left: "+a+"pt;padding-right: "+a+"pt;} " +
 //                "h2 {text-align:center; line-height: "+(a+10)+"pt}" +
-                "img { max-width:100%;height:auto; }" +
+//                "img { max-width:100%;height:auto; }" +
                 "p {line-height: "+(a+12)+"pt}" +
                 "</style> \n" +
                 "</head> \n" +

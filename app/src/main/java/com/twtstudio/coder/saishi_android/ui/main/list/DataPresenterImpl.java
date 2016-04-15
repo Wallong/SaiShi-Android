@@ -92,11 +92,12 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
         total ++;
         if(datum != null){
             dataItems = datum;
+            LogHelper.e(LOG_TAG, "dataItems.size()-------->" + dataItems.size());
         }else if(imageInfo != null){
             imageInfos.add(imageInfo);
         }
         //判断是否全部条目均获得url
-        if((dataItems != null) &&(dataItems.get(0)==null?(total == dataItems.size()):(total==dataItems.size()+1))){
+        if((dataItems != null) && dataItems.size()!=0 &&(dataItems.get(0)==null?(total == dataItems.size()):(total==dataItems.size()+1))){
             for(int i = (dataItems.get(0)==null?1:0); i < dataItems.size(); i++){
                 for(int j = 0; j < imageInfos.size(); j++){
                     if(dataItems.get(i).icon != null && (dataItems.get(i).icon.equals(imageInfos.get(j).id))){
@@ -104,7 +105,6 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
                     }
                 }
             }
-
             this._dataListView.stopRefresh();
             if(isLoadMore) {
                 _dataListView.addListData(dataItems);
@@ -123,10 +123,11 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
             imageInfos.clear();
             dataItems = null;
             total = 0;
-        }else if(dataItems == null){
+        }else if(dataItems != null && dataItems.size() == 0){
             isLoadMore = false;
             _dataListView.hideFooter();
             this._dataListView.toastMessage("触底了～没有更多信息");
+            total = 0;
         }
         isRefreshing = false;
 

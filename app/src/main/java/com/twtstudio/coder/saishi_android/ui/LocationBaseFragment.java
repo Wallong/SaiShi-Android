@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.yayandroid.locationmanager.LocationConfiguration;
 import com.yayandroid.locationmanager.LocationManager;

@@ -34,7 +34,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:text="文件"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/color_black"
             android:layout_toRightOf="@id/tv_file_item_type"/>
 

@@ -26,7 +26,7 @@ import com.twtstudio.coder.saishi_android.support.DeviceUtils;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.PrefUtils;
 import com.twtstudio.coder.saishi_android.ui.common.ImageHelper;
-import com.twtstudio.coder.saishi_android.ui.common.ListViewDIY;
+import com.twtstudio.coder.saishi_android.ui.common.DiyListView;
 import com.twtstudio.coder.saishi_android.ui.common.OnGetImageCallback;
 import com.twtstudio.coder.saishi_android.ui.common.OnItemClickListener;
 import com.twtstudio.coder.saishi_android.ui.file.FileFragment;
@@ -46,7 +46,7 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
     @Bind(R.id.iv_drawer_header)
     ImageView mIvHeader;
     @Bind(R.id.lv_menu)
-    ListViewDIY lv_menu;
+    DiyListView lv_menu;
     @Bind(R.id.user_profile_image)
     CircleImageView iv_profile_icon;
     @Bind(R.id.tv_username)

@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterActiv
     public void showFragment(Fragment fragment){
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
-        transaction.setCustomAnimations(R.anim.fragment_left_enter, R.anim.fragment_left_exit);
+//        transaction.setCustomAnimations(R.anim.fragment_left_enter, R.anim.fragment_left_exit);
         transaction.replace(R.id.register_fragment, fragment).commit();
         LogHelper.e(LOG_TAG, "transaction");
     }

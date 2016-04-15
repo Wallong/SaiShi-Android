@@ -13,14 +13,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.api.ApiClient;
 import com.twtstudio.coder.saishi_android.bean.DataItem;
-import com.twtstudio.coder.saishi_android.support.IgnoreCaseComparator;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.StringUtils;
 import com.twtstudio.coder.saishi_android.ui.common.ImageHelper;
@@ -40,7 +41,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private OnItemClickListener _onItemClicked;
 
     private ArrayList<DataItem> _DataSet = new ArrayList<>();
-    IgnoreCaseComparator icc = new IgnoreCaseComparator();
+    private TreeSet<String> isups = new TreeSet<>();
     private boolean _useFooter;
 
     public DataAdapter(Context context, OnItemClickListener onItemClickListener){
@@ -155,10 +156,6 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             if(!(dataItem == null)) {
                 itemUpHolder._ivIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 itemUpHolder._ivIcon.setImageResource(R.mipmap.placeholder_up);
-//                itemUpHolder._ivIcon.requestLayout();
-//                int width = itemUpHolder._ivIcon.getWidth();
-//                itemUpHolder._ivIcon.getLayoutParams().width = width;
-//                itemUpHolder._ivIcon.getLayoutParams().height = width / 2;
                 itemUpHolder._ivIcon.setAdjustViewBounds(true);
                 itemUpHolder._tvTitle.setText(dataItem.title);
                 itemUpHolder._tvPv.setText("阅读数:" + dataItem.fwl);
@@ -202,7 +199,6 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         if (_DataSet.get(0) == null){
             _DataSet.remove(0);
         }
-        Collections.sort(_DataSet, icc);//排序
         selectItem();
         notifyDataSetChanged();
     }
@@ -212,7 +208,6 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         if (_DataSet.get(0) == null){
             _DataSet.remove(0);
         }
-        Collections.sort(_DataSet, icc);//排序
         selectItem();
         notifyDataSetChanged();
     }
@@ -222,18 +217,23 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         notifyDataSetChanged();
     }
 
-    //将置顶条目置顶
+    //将置顶条目置顶,删除相同元素
     private void selectItem(){
         if(!(_DataSet.size() == 0)){
             for(int j = 0; j < _DataSet.size(); j++){
                 DataItem everyItem = _DataSet.get(j);
                 if(!(everyItem.isup.equals("0"))){
-                    _DataSet.add(0, _DataSet.get(j));
-                    _DataSet.remove(j);
-                    break;
+                    if(!isups.contains(everyItem.getId())) {
+                        isups.add(everyItem.getId());
+                        _DataSet.add(0, _DataSet.get(j));
+                        _DataSet.remove(j);
+                    }else {
+                        _DataSet.remove(j);
+                    }
                 }
             }
         }
+        isups.clear();
     }
 
 }
