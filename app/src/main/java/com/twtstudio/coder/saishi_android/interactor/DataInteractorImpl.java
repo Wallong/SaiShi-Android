@@ -31,7 +31,6 @@ public class DataInteractorImpl implements DataInteractor {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 boolean res = responseString.contains("result_code");
-//                boolean zero = responseString.equals("[]");
                 if(res){
                     onGetDataItemsCallback.onFailure("请重新登录");
                 }else {

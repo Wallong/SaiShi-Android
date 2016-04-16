@@ -64,15 +64,12 @@ public class FileContentActivity extends AppCompatActivity {
         String html= "<html> \n" +
                 "<head> \n" +
                 "<style type=\"text/css\"> \n" +
-//                "p {text-indent:2em; margin-top:"+(a+a)+"pt}" +
-//                "body {text-align:justify; font-size: "+a+"pt;}\n" +
                 "body {padding-left: "+a+"pt;padding-right: "+a+"pt;} " +
-//                "h2 {text-align:center; line-height: "+(a+10)+"pt}" +
-//                "img { max-width:100%;height:auto; }" +
-                "p {line-height: "+(a+12)+"pt}" +
+                "h2 {text-align:center; line-height: "+(a+10)+"pt}" +
                 "</style> \n" +
                 "</head> \n" +
                 "<body>" +
+                "<h2>" + fileInfo.title + "</h2>" +
                 "<p>" + fileInfo.content + "</p>" +
                 "</body> \n </html>";
 

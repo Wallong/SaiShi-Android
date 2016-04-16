@@ -133,9 +133,12 @@ public class ScheduleFragment extends LocationBaseFragment {
         return new LocationConfiguration()
                 .keepTracking(true)
                 .setMinAccuracy(200.0f)
-                .setWaitPeriod(ProviderType.GPS, 10 * 1000)
-                .setWaitPeriod(ProviderType.NETWORK, 5 * 1000)
-                .setGPSMessage("请确认是否已打开GPS定位功能?")
+                .useOnlyGPServices(false)
+                .askForGooglePlayServices(false)
+                .doNotUseGooglePlayServices(true)
+                .setWaitPeriod(ProviderType.GPS, 5 * 1000)
+                .setWaitPeriod(ProviderType.NETWORK, 3 * 1000)
+                .askForEnableGPS(false)
                 .setRationalMessage("请求位置权限~");
     }
 

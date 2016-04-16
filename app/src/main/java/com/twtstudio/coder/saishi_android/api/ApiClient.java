@@ -12,10 +12,8 @@ import com.twtstudio.coder.saishi_android.support.DeviceUtils;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.PrefUtils;
 
-import cz.msebera.android.httpclient.client.CookieStore;
-import cz.msebera.android.httpclient.client.protocol.ClientContext;
 import cz.msebera.android.httpclient.cookie.Cookie;
-import cz.msebera.android.httpclient.protocol.HttpContext;
+
 
 /**
  * Created by clifton on 16-2-20.
@@ -62,11 +60,21 @@ public class ApiClient {
     private static final String MODIFY_URL = "index.php/Api/change_pwd";
     public static final String SCHEDULE_URL = "http://121.42.157.180/qgfdyjnds/index.php/Index/schedule";
     public static final String UPDATE_URL = "index.php/Api/update";
+    private static String cookie;
 
     static {
         sClient.setTimeout(DEFAULT_TIMEOUT);
         sClient.setCookieStore(sCookieStore);
+//        if(sCookieStore != null){
+//            for(Cookie c:sCookieStore.getCookies()){
+//                cookie = c.getName() + "=" + c.getValue();
+//                LogHelper.e("main after ~~", cookie);
+//            }
+//        }else{
+//            LogHelper.e("main  after~~","cookies is null");
+//        }
         sClient.addHeader("User-Agent", getUserAgent());
+//        sClient.addHeader("Cookie", cookie);
     }
 
     public static String getVerifyUrl() {

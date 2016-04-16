@@ -95,7 +95,12 @@ public class MenuFragment extends Fragment implements OnItemClickListener, OnGet
         tv_name.setText(PrefUtils.getPrefUsername());
         tv_profile_username.setText("电话:" + PrefUtils.getPrefPhone());
         tv_profile_position.setText("单位:" + PrefUtils.getPrefDanwei());
-        ImageHelper.downLoadImage(PrefUtils.getPrefIcon(), this);
+        if(PrefUtils.getPrefIconUrl() == null) {
+            ImageHelper.downLoadImage(PrefUtils.getPrefIcon(), this);
+        }else {
+            ImageHelper.getImageLoder().displayImage(ApiClient.getBaseUrl() + PrefUtils.getPrefIconUrl(),
+                    iv_profile_icon, ImageHelper.getDisplayImageOptions());
+        }
 
         initData();
         adapter = new MenuAdapter(this.getActivity(), list, this);

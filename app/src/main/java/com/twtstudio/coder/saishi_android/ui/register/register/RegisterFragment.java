@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.twtstudio.coder.saishi_android.api.ApiClient;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
-import com.twtstudio.coder.saishi_android.support.PrefUtils;
 import com.twtstudio.coder.saishi_android.ui.BaseFragment;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.ui.register.RegisterActivityView;

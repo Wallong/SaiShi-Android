@@ -55,6 +55,8 @@ public class WelcomeActivity extends Activity{
     private int widthPixels;
     private int densityDpi;
     private float density;
+
+    private WelcomePresenter welcomePresenter = new WelcomePresenterImpl();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,7 @@ public class WelcomeActivity extends Activity{
         ButterKnife.bind(this);
         getInfo();
         initView();
+        welcomePresenter.reLogin();
 
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -10,6 +10,7 @@ import com.twtstudio.coder.saishi_android.bean.ImageInfo;
 import com.twtstudio.coder.saishi_android.interactor.DataInteractor;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.NetWorkHelper;
+import com.twtstudio.coder.saishi_android.support.PrefUtils;
 
 /**
  * Created by clifton on 16-2-14.
@@ -138,6 +139,7 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
     public void onFailure(String errorString) {
         if(errorString.equals("请重新登录")) {
             _dataListView.startLoginActivity();
+            PrefUtils.setLogin(false);
         }
         page -= 1;
         this._dataListView.stopRefresh();

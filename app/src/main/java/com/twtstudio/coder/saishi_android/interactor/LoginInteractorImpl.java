@@ -43,6 +43,7 @@ public class LoginInteractorImpl implements LoginInteractor {
                                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
                                     Gson gson = new Gson();
                                     UserInfo userInfo = gson.fromJson(responseString, UserInfo.class);
+                                    LogHelper.e(LOG_TAG, responseString);
                                     onLoginCallback.onSuccess(userInfo);
                                 }
                             });
