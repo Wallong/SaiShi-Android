@@ -8,7 +8,7 @@ javascript: (function() {
 		objs[i].pos = i;
 		objs[i].onclick = function() {
 			var pos = this.pos;
-			window.imagelistener.openImage(array.join(","), pos);
+			window.android.openImage(array.join(","), pos);
 		}
 	}
 })()

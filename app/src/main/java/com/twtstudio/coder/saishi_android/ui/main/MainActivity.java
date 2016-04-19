@@ -174,6 +174,9 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
     @Override
     protected void onDestroy() {
+        if(webview != null){
+            webview.destroy();
+        }
         super.onDestroy();
         LogHelper.e(LOG_TAG, "removeMainActivity");
         ExitApplication.getInstance().removeActivity();

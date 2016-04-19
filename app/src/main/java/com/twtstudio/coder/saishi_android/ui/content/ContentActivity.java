@@ -1,18 +1,17 @@
 package com.twtstudio.coder.saishi_android.ui.content;
 
 import android.annotation.TargetApi;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
@@ -92,8 +91,7 @@ public class ContentActivity extends AppCompatActivity {
         });
 
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.addJavascriptInterface(new JavascriptInterface(this),
-                "imagelistener");
+        mWebView.addJavascriptInterface(new JavascriptInterface(this), "android");
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 //        // 开启DOM storage API 功能
 //        mWebView.getSettings().setDomStorageEnabled(false);
@@ -135,7 +133,7 @@ public class ContentActivity extends AppCompatActivity {
                 "</head> \n" +
                 "<body><h2>" + dataItem.getTitle() + "</h2>" +
                 "<p>" + dataItem.getContent() + "</p>" +
-                "</body> \n </html>";
+                 "</body> \n </html>";
 
         mWebView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
         LogHelper.e(LOG_TAG, dataItem.content);
@@ -211,4 +209,5 @@ public class ContentActivity extends AppCompatActivity {
         ExitApplication.getInstance().removeActivity();
 //        ContestApp.getRefWatcher().watch(this);
     }
+
 }

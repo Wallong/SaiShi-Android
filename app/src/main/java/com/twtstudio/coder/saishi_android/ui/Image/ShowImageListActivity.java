@@ -18,6 +18,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.twtstudio.coder.saishi_android.R;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by clifton on 16-4-16.
@@ -55,6 +57,7 @@ public class ShowImageListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_img_list);
+        ButterKnife.bind(this);
         getIntentValue();
         imageLoader = ImageLoader.getInstance();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
@@ -66,6 +69,7 @@ public class ShowImageListActivity extends Activity {
         imageLoader.init(config);
         options = new DisplayImageOptions.Builder().cacheInMemory(true)
                 .cacheOnDisk(true).considerExifParams(true)
+                .imageScaleType(ImageScaleType.NONE)
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
         initViews();
         LogHelper.e(LOG_TAG, LOG_TAG + " is onCreate");

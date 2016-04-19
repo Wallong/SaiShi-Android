@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.twtstudio.coder.saishi_android.ui.Image.ShowImageListActivity;
+import com.twtstudio.coder.saishi_android.ui.content.ContentActivity;
 
 /**
  * Created by clifton on 16-4-16.
@@ -26,4 +27,5 @@ public class JavascriptInterface {
         intent.setClass(context, ShowImageListActivity.class);
         context.startActivity(intent);
     }
+
 }

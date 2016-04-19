@@ -127,11 +127,11 @@ public class DataPresenterImpl implements  DataPresenter, OnGetDataItemsCallback
         }else if(dataItems != null && dataItems.size() == 0){
             isLoadMore = false;
             _dataListView.hideFooter();
+            this._dataListView.stopRefresh();
             this._dataListView.toastMessage("触底了～没有更多信息");
             total = 0;
         }
         isRefreshing = false;
-
 
     }
 
