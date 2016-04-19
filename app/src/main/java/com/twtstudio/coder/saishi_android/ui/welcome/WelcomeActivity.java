@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.PrefUtils;
-import com.twtstudio.coder.saishi_android.ui.common.LetterSpacingTextView;
+import com.twtstudio.coder.saishi_android.myview.LetterSpacingTextView;
 import com.twtstudio.coder.saishi_android.ui.login.LoginActivity;
 import com.twtstudio.coder.saishi_android.ui.main.MainActivity;
 
@@ -66,7 +66,6 @@ public class WelcomeActivity extends Activity{
         ButterKnife.bind(this);
         getInfo();
         initView();
-        welcomePresenter.reLogin();
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -82,6 +81,7 @@ public class WelcomeActivity extends Activity{
                 WelcomeActivity.this.finish();
             }
         }, 4000);
+        welcomePresenter.reLogin();
     }
 
     private void getInfo(){

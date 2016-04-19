@@ -65,6 +65,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".ui.Image.ShowImageListActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait">
+        </activity>
 
         <meta-data
             android:name="BUG_HD_SDK_GENERAL_KEY"

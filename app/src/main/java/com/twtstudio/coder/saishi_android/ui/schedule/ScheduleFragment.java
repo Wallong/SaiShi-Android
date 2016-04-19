@@ -62,9 +62,9 @@ public class ScheduleFragment extends LocationBaseFragment {
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         // 开启DOM storage API 功能
-        mWebView.getSettings().setDomStorageEnabled(true);
+//        mWebView.getSettings().setDomStorageEnabled(true);
         // 开启database storage API功能
-        mWebView.getSettings().setDatabaseEnabled(true);
+//        mWebView.getSettings().setDatabaseEnabled(true);
         // 开启Application Cache功能
         // mWebView.getSettings().setAppCacheEnabled(true);
         // mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
@@ -109,7 +109,8 @@ public class ScheduleFragment extends LocationBaseFragment {
             @Override
             public void run() {
                 LogHelper.e(LOG_TAG, ApiClient.SCHEDULE_URL + "?la=" + longitude + "&ln=" + latitude);
-                mWebView.loadUrl(ApiClient.SCHEDULE_URL + "?la=" + longitude + "&ln=" + latitude);
+//                mWebView.loadUrl(ApiClient.SCHEDULE_URL + "?la=" + longitude + "&ln=" + latitude);
+//                mWebView.loadUrl("https://www.baidu.com");
             }
         }, 1000);
         mWebView.postDelayed(new Runnable() {
@@ -131,7 +132,7 @@ public class ScheduleFragment extends LocationBaseFragment {
     @Override
     public LocationConfiguration getLocationConfiguration() {
         return new LocationConfiguration()
-                .keepTracking(true)
+                .keepTracking(false)
                 .setMinAccuracy(200.0f)
                 .useOnlyGPServices(false)
                 .askForGooglePlayServices(false)
@@ -177,14 +178,6 @@ public class ScheduleFragment extends LocationBaseFragment {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
         }
-
-//        mWebView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                mWebView.loadUrl("javascript:+ change_zuobiao( " + latitude + "," + longitude + ",0)");
-//                LogHelper.e(LOG_TAG,"ln" + latitude + "la" + longitude );
-//            }
-//        });
     }
 
     @Override

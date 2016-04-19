@@ -49,16 +49,14 @@ public class FileContentActivity extends AppCompatActivity {
         });
 
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        // 开启DOM storage API 功能
-        mWebView.getSettings().setDomStorageEnabled(true);
-        // 开启database storage API功能
-        mWebView.getSettings().setDatabaseEnabled(true);
-        // 开启Application Cache功能
-        mWebView.getSettings().setAppCacheEnabled(true);
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        // 开启DOM storage API 功能
+//        mWebView.getSettings().setDomStorageEnabled(true);
+//        // 开启database storage API功能
+//        mWebView.getSettings().setDatabaseEnabled(true);
+//        // 开启Application Cache功能
+//        mWebView.getSettings().setAppCacheEnabled(true);
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        //设置支持缩放
-        mWebView.getSettings().setSupportZoom(true);
 
         int a = 6;
         String html= "<html> \n" +
@@ -78,6 +76,9 @@ public class FileContentActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        if(mWebView != null){
+            mWebView.destroy();
+        }
         super.onDestroy();
         ExitApplication.getInstance().removeActivity();
 //        ContestApp.getRefWatcher().watch(this);

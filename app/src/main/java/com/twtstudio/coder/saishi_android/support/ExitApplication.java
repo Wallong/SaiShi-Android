@@ -65,5 +65,6 @@ public class ExitApplication extends Application {
             activityList.remove(i);
             totalSize = i;
         }
+        PrefUtils.setDefaultPrefUserIcon(null);
     }
 }

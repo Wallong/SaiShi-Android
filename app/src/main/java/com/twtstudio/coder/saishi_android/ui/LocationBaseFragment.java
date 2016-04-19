@@ -56,7 +56,7 @@ public abstract class LocationBaseFragment extends Fragment implements LocationL
 
     @Override
     public void onDestroy() {
-        locationManager.onDestroy();
+//        locationManager.onDestroy();
         super.onDestroy();
     }
 

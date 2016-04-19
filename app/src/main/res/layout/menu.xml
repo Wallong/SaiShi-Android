@@ -70,7 +70,7 @@
 
         </RelativeLayout>
 
-        <com.twtstudio.coder.saishi_android.ui.common.DiyListView
+        <com.twtstudio.coder.saishi_android.myview.DiyListView
             android:id="@+id/lv_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

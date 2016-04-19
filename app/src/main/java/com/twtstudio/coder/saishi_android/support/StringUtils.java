@@ -5,7 +5,7 @@ package com.twtstudio.coder.saishi_android.support;
  */
 public class StringUtils {
     public static String cutString(String string, int tag){
-        string = string.replaceAll("-", ".");
+//        string = string.replaceAll("-", ".");
         String time = string;
         switch (tag){
             case 0:
@@ -19,6 +19,10 @@ public class StringUtils {
             case 2:
                 String hour = string.substring(11,16);
                 time = hour;
+                break;
+            case 6:
+                String dateTime = string.substring(5, 16);
+                time = dateTime;
                 break;
             case 3:
                 String chinese = string.substring(0,4) + "年" + string.substring(5,7) + "月" + string.substring(8,10) + "日";

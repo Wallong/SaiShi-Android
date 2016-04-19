@@ -1,4 +1,4 @@
-package com.twtstudio.coder.saishi_android.ui.common;
+package com.twtstudio.coder.saishi_android.support;
 
 import com.google.gson.Gson;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -7,6 +7,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import com.twtstudio.coder.saishi_android.api.ApiClient;
 import com.twtstudio.coder.saishi_android.bean.ImageInfo;
+import com.twtstudio.coder.saishi_android.ui.common.OnGetImageCallback;
+
 import cz.msebera.android.httpclient.Header;
 
 /**

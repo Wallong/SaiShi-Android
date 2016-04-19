@@ -42,7 +42,7 @@
             android:id="@+id/tv_data_item_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10:30"
+            android:text="00-00 00:00"
             android:textSize="14sp"
             android:layout_alignLeft="@id/tv_data_item_title"
             android:layout_alignParentBottom="true"/>

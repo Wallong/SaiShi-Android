@@ -23,7 +23,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import com.twtstudio.coder.saishi_android.ContestApp;
 import com.twtstudio.coder.saishi_android.R;
 import com.twtstudio.coder.saishi_android.api.ApiClient;
 import com.twtstudio.coder.saishi_android.bean.UpdateInfo;
@@ -31,7 +30,7 @@ import com.twtstudio.coder.saishi_android.support.ExitApplication;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.PrefUtils;
 import com.twtstudio.coder.saishi_android.ui.BaseActivity;
-import com.twtstudio.coder.saishi_android.ui.common.ImageHelper;
+import com.twtstudio.coder.saishi_android.support.ImageHelper;
 import com.twtstudio.coder.saishi_android.ui.login.LoginActivity;
 import com.twtstudio.coder.saishi_android.ui.settings.modify.ModifyActivity;
 import cz.msebera.android.httpclient.Header;
@@ -131,6 +130,10 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
+                        LogHelper.v("注销-------------＞", "注销成功");
+                        startActivity(intent);
+                        ExitApplication.getInstance().logout();
                         ApiClient.userLogout(new TextHttpResponseHandler() {
                             @Override
                             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
@@ -139,9 +142,6 @@ public class SettingsActivity extends BaseActivity implements SettingsView, View
 
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                                Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
-                                LogHelper.v("zhuxiao-------------＞", "注销成功" + responseString);
-                                startActivity(intent);
                                 ExitApplication.getInstance().logout();
                             }
                         });

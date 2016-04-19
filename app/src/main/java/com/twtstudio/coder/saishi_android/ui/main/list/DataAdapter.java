@@ -8,12 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -24,7 +21,7 @@ import com.twtstudio.coder.saishi_android.api.ApiClient;
 import com.twtstudio.coder.saishi_android.bean.DataItem;
 import com.twtstudio.coder.saishi_android.support.LogHelper;
 import com.twtstudio.coder.saishi_android.support.StringUtils;
-import com.twtstudio.coder.saishi_android.ui.common.ImageHelper;
+import com.twtstudio.coder.saishi_android.support.ImageHelper;
 import com.twtstudio.coder.saishi_android.ui.common.OnItemClickListener;
 
 /**
@@ -136,7 +133,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 itemHolder._ivIcon.setVisibility(View.GONE);
                 itemHolder._tvTitle.setText(dataItem.title);
                 itemHolder._tvPv.setText("阅读数:" + dataItem.fwl);
-                itemHolder._tvTime.setText(StringUtils.cutString(dataItem.createtime, 2));
+                itemHolder._tvTime.setText(StringUtils.cutString(dataItem.createtime, 6));
                 if(dataItem.url != null) {
                     ImageHelper.getImageLoder().displayImage(
                             ApiClient.getBaseUrl() + dataItem.url,
@@ -159,7 +156,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 itemUpHolder._ivIcon.setAdjustViewBounds(true);
                 itemUpHolder._tvTitle.setText(dataItem.title);
                 itemUpHolder._tvPv.setText("阅读数:" + dataItem.fwl);
-                itemUpHolder._tvTime.setText(StringUtils.cutString(dataItem.createtime, 2));
+                itemUpHolder._tvTime.setText(StringUtils.cutString(dataItem.createtime, 0));
                 if(dataItem.url != null) {
                     ImageHelper.getImageLoder().displayImage(
                             ApiClient.getBaseUrl() + dataItem.url,

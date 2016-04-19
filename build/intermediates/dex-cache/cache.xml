@@ -1,12 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" >
-
-    <item
-        jar="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="23.0.2"
-        sha1="0bd13913947db45bc0331d0c88289282a7e8c415">
-        <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_32594d865cc0779b08c38f4624a7d38f8995cff4/classes.dex" />
-    </item>
-
-</items>
+<items version="2" />
