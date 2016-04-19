@@ -66,8 +66,8 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.Image.ShowImageListActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:name=".ui.image.ShowImageListActivity"
+            android:theme="@style/ShowImageTheme"
             android:screenOrientation="portrait">
         </activity>
 

@@ -29,7 +29,7 @@ public class StringUtils {
                 time = chinese;
                 break;
             case 4:
-//                String str = "public\\/file\\/wuyun.docx";
+//                "http://121.42.157.180/qgfdyjnds/public/img/photo/57145662b6a2b.png";
                 int place = 0;
                 for(int i = 0 ; i < string.length(); i++){
                     if(string.charAt(i) == '/'){

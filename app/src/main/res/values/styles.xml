@@ -18,6 +18,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="ShowImageTheme" parent="AppTheme.NoActionBar">
+
+        <item name="colorPrimary">@color/primary_dark_material_dark</item>
+        <item name="colorPrimaryDark">@color/primary_dark_material_dark</item>
+        <item name="colorAccent">@color/primary_material_dark</item>
+    </style>
+
     <!--&lt;!&ndash;日间主题&ndash;&gt;-->
     <!--<style name="DayTheme" parent="AppTheme">-->
         <!--<item name="textColorFirst">@color/textColorFirst_Day</item>-->

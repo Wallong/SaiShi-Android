@@ -3,8 +3,7 @@ package com.twtstudio.coder.saishi_android.support;
 import android.content.Context;
 import android.content.Intent;
 
-import com.twtstudio.coder.saishi_android.ui.Image.ShowImageListActivity;
-import com.twtstudio.coder.saishi_android.ui.content.ContentActivity;
+import com.twtstudio.coder.saishi_android.ui.image.ShowImageListActivity;
 
 /**
  * Created by clifton on 16-4-16.

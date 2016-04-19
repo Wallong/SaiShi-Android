@@ -20,6 +20,7 @@
     <color name="icon_normal_grey">#757575</color>
     <color name="listView_item_bg">#E1F5FE</color>
     <color name="color_settings_blue">#bbdefd</color>
+    <color name="black_background">#DD000000</color>
 
 
     <!--日间模式-->

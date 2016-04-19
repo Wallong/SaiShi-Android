@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.twtstudio.coder.saishi_android.ui.Image.gestureimage.GestureImageView
+    <com.twtstudio.coder.saishi_android.ui.image.gestureimage.GestureImageView
         android:id="@+id/gesture_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

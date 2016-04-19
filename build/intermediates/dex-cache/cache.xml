@@ -30,18 +30,18 @@
         <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/pre-dexed/release/com.android.support-percent-23.1.1_700e43fb542287c76db4a6e3829ca07f93827c1d.jar" />
     </item>
     <item
-        jar="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
-        <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/pre-dexed/release/internal_impl-23.1.1_bc08a623b158c565d06409b3bc1c7d0503208e62.jar" />
-    </item>
-    <item
         jar="/home/clifton/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.9/386a4339ffe52d5d63e80f9bed8d2b1d1a418249/android-async-http-1.4.9.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="386a4339ffe52d5d63e80f9bed8d2b1d1a418249">
         <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/pre-dexed/release/android-async-http-1.4.9_3b7c6f814dcc378abd90e64b320afab5b6604a81.jar" />
+    </item>
+    <item
+        jar="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/pre-dexed/release/internal_impl-23.1.1_bc08a623b158c565d06409b3bc1c7d0503208e62.jar" />
     </item>
     <item
         jar="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/jars/classes.jar"
@@ -65,18 +65,18 @@
         <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/pre-dexed/release/universal-image-loader-1.9.4_efc6b767fbd2e51e207678b06149b7bc716e0827.jar" />
     </item>
     <item
-        jar="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
-        <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/pre-dexed/release/com.google.android.gms-play-services-base-8.4.0_bc31219a0f438891d704a2bf5e6aeedba9988a7b.jar" />
-    </item>
-    <item
         jar="/home/clifton/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/7.0.1/d5d13ea991eab0252e3710e5df3d6a9d4b21d461/butterknife-7.0.1.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
         <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/pre-dexed/release/butterknife-7.0.1_dea7d28efb1f313bc4f99822d38f4df8898bf68e.jar" />
+    </item>
+    <item
+        jar="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/pre-dexed/release/com.google.android.gms-play-services-base-8.4.0_bc31219a0f438891d704a2bf5e6aeedba9988a7b.jar" />
     </item>
     <item
         jar="/home/clifton/.gradle/caches/modules-2/files-2.1/com.squareup.dagger/dagger/1.2.2/e8f912ee19ad84958510883ea191135276b091f8/dagger-1.2.2.jar"
@@ -93,6 +93,13 @@
         <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/pre-dexed/release/javax.inject-1_8641951a616d56ed4896c482cefbb376c9061061.jar" />
     </item>
     <item
+        jar="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/pre-dexed/release/com.android.support-appcompat-v7-23.1.1_0d395ef7409dbdac81dff6a5e41c80b24c46bb0e.jar" />
+    </item>
+    <item
         jar="/home/clifton/.gradle/caches/modules-2/files-2.1/cz.msebera.android/httpclient/4.3.6/526a9f794eab830eae4f23a62c572878b3f491ab/httpclient-4.3.6.jar"
         jumboMode="false"
         revision="23.0.2"
@@ -105,13 +112,6 @@
         revision="23.0.2"
         sha1="57725930b5eef4883850fb373cb44e1fb32b17f9">
         <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/pre-dexed/release/com.yayandroid-LocationManager-1.0.9_20f7ea1126eee6c0524163a3e4eb52608d500990.jar" />
-    </item>
-    <item
-        jar="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
-        <dex dex="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/pre-dexed/release/com.android.support-appcompat-v7-23.1.1_0d395ef7409dbdac81dff6a5e41c80b24c46bb0e.jar" />
     </item>
     <item
         jar="/home/clifton/文档/Clifton/SaiShi-Android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/jars/classes.jar"
