@@ -63,7 +63,7 @@ public class FileContentActivity extends AppCompatActivity {
                 "<head> \n" +
                 "<style type=\"text/css\"> \n" +
                 "body {padding-left: "+a+"pt;padding-right: "+a+"pt;} " +
-                "h2 {text-align:center; line-height: "+(a+10)+"pt}" +
+                "h2 {text-align:center; line-height: "+(a+16)+"pt}" +
                 "</style> \n" +
                 "</head> \n" +
                 "<body>" +
