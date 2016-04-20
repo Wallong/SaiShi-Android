@@ -60,6 +60,7 @@ public class ShowImageListActivity extends AppCompatActivity implements ShowImag
     private int position;
     private GestureImageView[] mImageViews;
     private int count;
+    private boolean isLoading = true;
 
     private ShowImageListPresenter presenter;
 
@@ -102,7 +103,7 @@ public class ShowImageListActivity extends AppCompatActivity implements ShowImag
         options = new DisplayImageOptions.Builder().cacheInMemory(true)
                 .cacheOnDisk(true).considerExifParams(true)
                 .imageScaleType(ImageScaleType.NONE)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
+                .bitmapConfig(Bitmap.Config.ARGB_8888).build();
         initViews();
         LogHelper.e(LOG_TAG, LOG_TAG + " is onCreate");
     }
@@ -173,17 +174,21 @@ public class ShowImageListActivity extends AppCompatActivity implements ShowImag
                         public void onLoadingComplete(String imageUri,
                                                       View view, Bitmap loadedImage) {
                             progressBar.setVisibility(View.GONE);
+                            isLoading = false;
+
                         }
 
                         @Override
                         public void onLoadingFailed(String imageUri, View view,
                                                     FailReason failReason) {
                             progressBar.setVisibility(View.GONE);
+                            toastMessage("很抱歉,加载失败了~");
                         }
 
                         @Override
                         public void onLoadingStarted(String imageUri, View view) {
                             progressBar.setVisibility(View.VISIBLE);
+                            isLoading = true;
                         }
 
                     });
@@ -211,13 +216,17 @@ public class ShowImageListActivity extends AppCompatActivity implements ShowImag
 
     @Override
     public void toastMessage(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void saveImage() {
-        String url = imageArray[position];
-        presenter.saveImage(url);
+        if(isLoading){
+            toastMessage("玩命加载中...");
+        }else {
+            String url = imageArray[position];
+            presenter.saveImage(url);
+        }
     }
 
     @Override

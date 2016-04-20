@@ -22,16 +22,17 @@
 
         <item name="colorPrimary">@color/primary_dark_material_dark</item>
         <item name="colorPrimaryDark">@color/primary_dark_material_dark</item>
-        <item name="colorAccent">@color/primary_material_dark</item>
+        <item name="colorAccent">@color/material_grey_300</item>
     </style>
 
     <!--&lt;!&ndash;日间主题&ndash;&gt;-->
     <!--<style name="DayTheme" parent="AppTheme">-->
         <!--<item name="textColorFirst">@color/textColorFirst_Day</item>-->
     <!--</style>-->
-    <!--&lt;!&ndash;夜间主题&ndash;&gt;-->
-    <!--<style name="NightTheme" parent="AppTheme">-->
-        <!--<item name="textColorFirst">@color/textColorFirst_Night</item>-->
-    <!--</style>-->
+    <!--夜间主题-->
+    <style name="NightTheme" parent="Theme.AppCompat.DayNight">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
 </resources>
